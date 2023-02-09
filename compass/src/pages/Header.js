@@ -14,7 +14,7 @@ function logout(){
 }
 return(
         <div className="header"> 
-            <img src={compasslogo} width="90px"/>
+            <img src={compasslogo} alt="compass" width="90px"/>
             <span>Compass</span>
             <span></span>
             <button type="button" id="logout" onClick={logout}>Logout</button>

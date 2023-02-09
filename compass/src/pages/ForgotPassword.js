@@ -15,7 +15,7 @@ const ForgotPassword = () => {
             const q = query(collection(db, "users"), where("userId", "==", userId));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-                if(doc.data().email != email){
+                if(doc.data().email !== email){
                     alert("No account was found with this info")
                 } else {
                     //ask security questions
@@ -24,7 +24,8 @@ const ForgotPassword = () => {
         }
     }
     return(
-        <div className="forgotPassword">
+        <div className="forgotpassword">
+
            <label for="email">Email:</label>
            <input type="email" id="email"></input>
 

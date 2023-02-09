@@ -1,22 +1,24 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword} from "firebase/auth";
 import { auth, db }  from "../index"
 import { collection, query, where, getDocs } from "firebase/firestore"
+import compasslogo from '../images/compasslogo.png';
 
 
 
 const Login = () => {
+    const navigate = useNavigate();
     //navigate to forgot password screen
     const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
     if(goToForgotPassword){
-        return <Navigate to="/forgotpassword"/>;
-    }
+        navigate('/forgotpassword')
+    };
     //navigate to new user screen
     const [goToNewUser, setgoToNewUser] = React.useState(false);
     if(goToNewUser){
-        return <Navigate to="/newuser"/>;
-    }
+        navigate('/newuser')
+    };
 
     let userObj = {
         accountStatus: "",
@@ -40,7 +42,6 @@ const Login = () => {
         } else if(passWord === ""){
             alert("Password can't be empty");
         } else {
-            console.log(userName);
             const q = query(collection(db, "users"), where("userId", "==", userName));
             
             const querySnapshot = await getDocs(q);
@@ -80,6 +81,7 @@ const Login = () => {
     
     return(
         <div className="login">
+            <img src={compasslogo} alt="compass" width="90px"/>
             <div>
                 <label for="username">UserName: </label>
                 <input type="text" id="username"></input>
