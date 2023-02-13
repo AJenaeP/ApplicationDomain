@@ -63,19 +63,40 @@ const Login = () => {
             <form onSubmit={handleSignIn}>
                 <div>
                     <label htmlfor="username">UserName: </label>
-                    <input type="text" id="username" onChange={(e) => setUserName(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        onChange={(e) => setUserName(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="password">Password: </label>
-                    <input type="password" id="password" onChange={(e) => setPassword(e.target.value)}></input>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        onChange={(e) => setPassword(e.target.value)}
+                    ></input>
                 </div>
-                <button type="submit" class="login-btn" id="login" onClick={signIn}>Submit</button>
+                <button 
+                    type="submit" 
+                    class="login-btn" 
+                    id="login" 
+                    onClick={signIn}
+                >Submit</button>
             </form>
             <div>
-                <button type="button" class="forgotbtn" onClick={() => {setgoToForgotPassword(true)}}>Forgot Password?</button>
+                <button 
+                    type="button" 
+                    class="forgotbtn" 
+                    onClick={() => {setgoToForgotPassword(true)}}
+                >Forgot Password?</button>
             </div>
             <div>
-                <button type="button" class="new-user-btn" onClick={() => {setgoToNewUser(true)}}>New User?</button>
+                <button 
+                    type="button" 
+                    class="new-user-btn" 
+                    onClick={() => {setgoToNewUser(true)}}
+                >New User?</button>
             </div>
         </div>
     );

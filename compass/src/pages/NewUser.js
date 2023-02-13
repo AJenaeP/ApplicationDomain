@@ -30,6 +30,10 @@ const options3 = [
 
 const NewUser = () => {
     const navigate = useNavigate();
+    const [goToLogin, setgoToLogin] = React.useState(false);
+    if (goToLogin) {
+        navigate('/login')
+    };
     var date = new Date(Date.now() + 3)
     const dateSliced = '0' + String(date.getMonth() + 1).slice(-2) + String(date.getFullYear()).slice(-2)
 
@@ -93,23 +97,52 @@ const NewUser = () => {
             <form onSubmit={handleSumbit}>
                 <div>
                     <label htmlfor="firstName">First Name:</label>
-                    <input type="text" name="first-name" id="firstName" onChange={(e) => setFirstName(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        name="first-name" 
+                        placeholder="First Name"
+                        id="firstName" 
+                        onChange={(e) => setFirstName(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="lastName">Last Name:</label>
-                    <input type="text" name="last-name" id="lastName" onChange={(e) => setLastName(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        name="last-name" 
+                        placeholder="Last Name"
+                        id="lastName" 
+                        onChange={(e) => setLastName(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="email">Email:</label>
-                    <input type="email" name="email" placeholder="Enter Email" id="email" onChange={(e)=> setEmail(e.target.value)}></input>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Enter Email" 
+                        id="email" 
+                        onChange={(e)=> setEmail(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="address">Address:</label>
-                    <input type="text" name="address" id="address" onChange={(e) => setAddress(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        name="address"
+                        placeholder="address" 
+                        id="address" 
+                        onChange={(e) => setAddress(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="dateOfBirth">Date of Birth:</label>
-                    <input type="date" name="Birthdate" id="dateOfBirth" onChange={(e) => setDateOfBirth(e.target.value)}></input>
+                    <input 
+                        type="date" 
+                        name="Birthdate" 
+                        id="dateOfBirth" 
+                        onChange={(e) => setDateOfBirth(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="role">Role:</label>
@@ -122,11 +155,21 @@ const NewUser = () => {
                 </div>
                 <div>
                     <label htmlfor="password">Password:</label>
-                    <input type="password" required placeholder="Enter Password" id="password" onChange={e => setPassword(e.target.value)}></input>
+                    <input 
+                        type="password" 
+                        required placeholder="Enter Password" 
+                        id="password" 
+                        onChange={e => setPassword(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="passwordAgain">Confirm Password:</label>
-                    <input type="password" required placeholder="Confirm Password" id="passwordAgain" onChange={e => setPasswordAgain(e.target.value)}></input>
+                    <input 
+                        type="password" 
+                        required placeholder="Confirm Password" 
+                        id="passwordAgain" 
+                        onChange={e => setPasswordAgain(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <PasswordChecklist
@@ -147,7 +190,12 @@ const NewUser = () => {
                         onChange={setSelectedQ1}
                         options={options1}
                     />
-                    <input type="text" id="secretQA1" onChange={(e) => setSelectedQ1A(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        id="secretQA1" 
+                        placeholder="Secret Question 1 Answer"
+                        onChange={(e) => setSelectedQ1A(e.target.value)}
+                    ></input>
                 </div>
                 <div>
                     <label htmlfor="SecretQ2">Choose a secret question:</label>
@@ -157,10 +205,23 @@ const NewUser = () => {
                         onChange={setSelectedQ2}
                         options={options2}
                     />
-                    <input type="text" id="secretQA2" onChange={(e) => setSelectedQ2A(e.target.value)}></input>
+                    <input 
+                        type="text" 
+                        id="secretQA2" 
+                        placeholder="Secret Question 2 Answer"
+                        onChange={(e) => setSelectedQ2A(e.target.value)}
+                    ></input>
                 </div>
-                <button class="sign-up-btn" type="submit">Sign Up</button>
-                <button class="cancel-btn" type="submit">Cancel</button>
+                <button 
+                    class="sign-up-btn" 
+                    type="submit" 
+                    onClick={() => { setgoToLogin(true) }}
+                >Sign Up</button>
+                <button
+                    class="cancel-btn" 
+                    type="submit" 
+                    onClick={() => { setgoToLogin(true) }}
+                >Cancel</button>
             </form> 
         </div>
     );

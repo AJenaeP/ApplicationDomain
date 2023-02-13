@@ -46,13 +46,28 @@ const ForgotPassword = () => {
             <h2>Please enter your username and email to reset your password:</h2>
             <form>
                 <label htmlfor="email">Email:</label>
-                <input type="email" id="email"></input>
+                <input 
+                    type="email" 
+                    id="email"
+                ></input>
 
                 <label htmlfor="username">User Id:</label>
-                <input type="text" name="uname" id="username"></input>
+                <input 
+                    type="text" 
+                    name="uname" 
+                    id="username"
+                ></input>
 
-                <button class="continue-btn" type="submit" onClick={() => { setgoToLogin(true) }}>Continue</button>
-                <button class="cancel-btn" type="submit" onClick={() => { setgoToLogin(true) }}>Cancel</button>
+                <button 
+                    class="continue-btn" 
+                    type="submit" 
+                    onClick={() => { setgoToLogin(true) }}
+                >Continue</button>
+                <button 
+                    class="cancel-btn" 
+                    type="submit" 
+                    onClick={() => { setgoToLogin(true) }}
+                >Cancel</button>
             </form>
         </div>
     );
