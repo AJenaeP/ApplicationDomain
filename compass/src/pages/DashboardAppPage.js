@@ -9,7 +9,7 @@ import { Grid, Container, Typography } from '@mui/material';
 import {
   AppTasks,
   
-} from '../sections/@dashboard/app';
+} from '../../../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 

@@ -5,20 +5,21 @@ import ForgotPassword from './pages/ForgotPassword';
 import React from 'react'
 import Header from './pages/Header';
 import NewUser from './pages/NewUser';
+import { AuthProvider } from './AuthContext';
 
 function App() {
   return (
     <> 
-    <div>
-      <Header/>
-    </div>
-    <Router>
-      <Routes>
-        <Route path='/' element={<Login/>} />
-        <Route path='/forgotpassword' element={<ForgotPassword/>} />
-        <Route path='/newuser' element={<NewUser/>} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+          <Routes>
+            <Route path='/header' element={<Header/>}></Route>
+            <Route path='/login' element={<Login />} />
+            <Route path='/forgotpassword' element={<ForgotPassword />} />
+            <Route path='/newuser' element={<NewUser />} />
+          </Routes>
+      </Router>
+    </AuthProvider>
     </>
   );
 }

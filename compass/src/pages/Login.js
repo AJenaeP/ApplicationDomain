@@ -1,102 +1,86 @@
 import React from 'react'
 import {  useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword} from "firebase/auth";
-import { auth, db }  from "../index"
+//import { auth, db }  from "../index"
+//import { auth } from '../AuthContext'
 import { collection, query, where, getDocs } from "firebase/firestore"
 import compasslogo from '../images/compasslogo.png';
+import { UserAuth } from '../AuthContext';
+import Header from './Header';
+import '../css/Login.css'
+
+export class user {
+    firstName;
+    lastName;
+}
 
 
 
 const Login = () => {
     const navigate = useNavigate();
-    //navigate to forgot password screen
     const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
-    if(goToForgotPassword){
+    if (goToForgotPassword) {
         navigate('/forgotpassword')
     };
     //navigate to new user screen
     const [goToNewUser, setgoToNewUser] = React.useState(false);
-    if(goToNewUser){
+    if (goToNewUser) {
         navigate('/newuser')
     };
-
-    let userObj = {
-        accountStatus: "",
-        address: "",
-        dateOfBirth: "",
-        email: "",
-        firstName: "",
-        lastName: "",
-        passwordExpiration: "",
-        role: "",
-        startDate: "",
-        userId: ""
-    }
-
-    async function signIn(){
-        let userName = document.getElementById('username').value;
-        let passWord = document.getElementById('password').value;
-
-        if(userName === ""){
+    const [error, setError] = React.useState('')
+    const { signIn } = UserAuth();
+    const [UserName, setUserName] = React.useState("")
+    const [Password, setPassword] = React.useState("")
+    //navigate to forgot password screen
+    
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        setError("")
+        if (UserName === "") {
             alert("Username can't be empty");
-        } else if(passWord === ""){
+        } else if (Password === "") {
             alert("Password can't be empty");
-        } else {
-            const q = query(collection(db, "users"), where("userId", "==", userName));
-            
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-              signInWithEmailAndPassword(auth, doc.data().email, passWord)
-                .then((userCredential) => {
-                    // Signed in 
-                    alert("signed in!");
-                    const user = userCredential.user;
-                    console.log(user);
-                    document.getElementById('username').value = "";
-                    document.getElementById('password').value = "";
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorCode);
-                    alert(errorMessage);
-                });
-               const userData = {
-                    userId: doc.data().userId,
-                    firstName: doc.data().firstName,
-                    lastName: doc.data().lastName,
-                    address: doc.data().address,
-                    dateOfBirth: doc.data().dateOfBirth,
-                    email: doc.data().email,
-                    passwordExpiration: doc.data().passwordExpire,
-                    startDate: doc.data().startDate,
-                    accountStatus: doc.data().accountStatus,
-                    role: doc.data().role,
-                }
-                userObj = userData;
-            });
-        };   
-        
+        }
+        try{
+            signIn(UserName,Password)
+            //useNavigate('/header')
+        }catch(e){
+            setError(e.message)
+            console.log(e.message)
+        }
     }
     
     return(
         <div className="login">
-            <img src={compasslogo} alt="compass" width="90px"/>
+        <header>
+                <p class="slogan">
+                    Helping navigate the way for financial freedom yesterday, today, and
+                    tomorrow
+                </p>
+                <img src={compasslogo} class="picture" alt="compass" width="90px" />
+        </header>
+            
+            <form onSubmit={handleSignIn}>
+                <div>
+                    <label htmlfor="username">UserName: </label>
+                    <input type="text" id="username" onChange={(e) => setUserName(e.target.value)}></input>
+                </div>
+                <div>
+                    <label htmlfor="password">Password: </label>
+                    <input type="password" id="password" onChange={(e) => setPassword(e.target.value)}></input>
+                </div>
+                <button type="submit" class="login-btn" id="login" onClick={signIn}>Submit</button>
+            </form>
             <div>
-                <label for="username">UserName: </label>
-                <input type="text" id="username"></input>
+                <button type="button" class="forgotbtn" onClick={() => {setgoToForgotPassword(true)}}>Forgot Password?</button>
             </div>
             <div>
-                <label for="password">Password: </label>
-                <input type="password" id="password"></input>
-            </div>
-                <button type="submit" id="login" onClick={signIn}>Submit</button>
-            <div>
-                <button type="button" onClick={() => {setgoToForgotPassword(true)}}>Forgot Password?</button>
-                <button type="button" onClick={() => {setgoToNewUser(true)}}>New User?</button>
+                <button type="button" class="new-user-btn" onClick={() => {setgoToNewUser(true)}}>New User?</button>
             </div>
         </div>
     );
 }
-//export { userObj }
+
+//export { userData };
+//export { userObj };
 export default Login;
