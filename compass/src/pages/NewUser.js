@@ -4,7 +4,7 @@ import PasswordChecklist from "react-password-checklist"
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import { UserAuth } from '../AuthContext'
-import compasslogo from '../images/compasslogo.png';
+import compasslogo from '../images/compasslogo.jpg';
 import '../css/NewUser.css'
 
 //secret question 1
@@ -83,20 +83,20 @@ const NewUser = () => {
     return(
         <div className="NewUser">
             <header>
-                <h1 class="company-name">Compass Credit Union</h1>
-                <p class="slogan">
+                <h1 className="company-name">Compass Credit Union</h1>
+                <p className="slogan">
                     Helping navigate the way for financial freedom yesterday, today, and
                     tomorrow
                 </p>
-                <div class="imgcontainer">
-                    <img src={compasslogo} alt="Avatar" class="picture" />
+                <div className="imgcontainer">
+                    <img src={compasslogo} alt="Avatar" className="picture" />
                 </div>
             </header>
             <h1>Sign Up</h1>
             <p>Please fill in this form to create an account.</p>
             <form onSubmit={handleSumbit}>
                 <div>
-                    <label htmlfor="firstName">First Name:</label>
+                    <label htmlFor="firstName">First Name:</label>
                     <input 
                         type="text" 
                         name="first-name" 
@@ -106,7 +106,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="lastName">Last Name:</label>
+                    <label htmlFor="lastName">Last Name:</label>
                     <input 
                         type="text" 
                         name="last-name" 
@@ -116,7 +116,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="email">Email:</label>
+                    <label htmlFor="email">Email:</label>
                     <input 
                         type="email" 
                         name="email" 
@@ -126,7 +126,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="address">Address:</label>
+                    <label htmlFor="address">Address:</label>
                     <input 
                         type="text" 
                         name="address"
@@ -136,7 +136,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="dateOfBirth">Date of Birth:</label>
+                    <label htmlFor="dateOfBirth">Date of Birth:</label>
                     <input 
                         type="date" 
                         name="Birthdate" 
@@ -145,7 +145,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="role">Role:</label>
+                    <label htmlFor="role">Role:</label>
                     <Select
                         id="role"
                         value={SelectedRole}
@@ -154,7 +154,7 @@ const NewUser = () => {
                     />
                 </div>
                 <div>
-                    <label htmlfor="password">Password:</label>
+                    <label htmlFor="password">Password:</label>
                     <input 
                         type="password" 
                         required placeholder="Enter Password" 
@@ -163,7 +163,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="passwordAgain">Confirm Password:</label>
+                    <label htmlFor="passwordAgain">Confirm Password:</label>
                     <input 
                         type="password" 
                         required placeholder="Confirm Password" 
@@ -183,7 +183,7 @@ const NewUser = () => {
                         }}
                     />
 
-                    <label htmlfor="secretQ1">Choose a secret quesion:</label>
+                    <label htmlFor="secretQ1">Choose a secret quesion:</label>
                     <Select
                         id="secretQ1"
                         value={SelectedQ1}
@@ -198,7 +198,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="SecretQ2">Choose a secret question:</label>
+                    <label htmlFor="SecretQ2">Choose a secret question:</label>
                     <Select
                         id="secretQ2"
                         value={SelectedQ2}
@@ -213,12 +213,12 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <button 
-                    class="sign-up-btn" 
+                    className="sign-up-btn" 
                     type="submit" 
                     onClick={() => { setgoToLogin(true) }}
                 >Sign Up</button>
                 <button
-                    class="cancel-btn" 
+                    className="cancel-btn" 
                     type="submit" 
                     onClick={() => { setgoToLogin(true) }}
                 >Cancel</button>

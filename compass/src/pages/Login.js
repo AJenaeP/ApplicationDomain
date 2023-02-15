@@ -1,10 +1,6 @@
 import React from 'react'
 import {  useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword} from "firebase/auth";
-//import { auth, db }  from "../index"
-//import { auth } from '../AuthContext'
-import { collection, query, where, getDocs } from "firebase/firestore"
-import compasslogo from '../images/compasslogo.png';
+import compasslogo from '../images/compasslogo.jpg';
 import { UserAuth } from '../AuthContext';
 import Header from './Header';
 import '../css/Login.css'
@@ -29,21 +25,21 @@ const Login = () => {
     };
     const [error, setError] = React.useState('')
     const { signIn } = UserAuth();
-    const [UserName, setUserName] = React.useState("")
-    const [Password, setPassword] = React.useState("")
+    const [username, setUserName] = React.useState("")
+    const [password, setPassword] = React.useState("")
     //navigate to forgot password screen
     
     const handleSignIn = async (e) => {
         e.preventDefault();
         setError("")
-        if (UserName === "") {
+        if (username === "") {
             alert("Username can't be empty");
-        } else if (Password === "") {
+        } else if (password === "") {
             alert("Password can't be empty");
         }
         try{
-            signIn(UserName,Password)
-            //useNavigate('/header')
+            await signIn(username,password)
+            navigate('/header')
         }catch(e){
             setError(e.message)
             console.log(e.message)
@@ -53,16 +49,17 @@ const Login = () => {
     return(
         <div className="login">
         <header>
-                <p class="slogan">
+                <p className="slogan">
                     Helping navigate the way for financial freedom yesterday, today, and
                     tomorrow
                 </p>
-                <img src={compasslogo} class="picture" alt="compass" width="90px" />
+                <img src={compasslogo} className="picture" alt="compass" width="90px" />
+                <p>Hi, Welcome Back to Compass Credit Union</p>
         </header>
             
             <form onSubmit={handleSignIn}>
                 <div>
-                    <label htmlfor="username">UserName: </label>
+                    <label htmlFor="username">UserName: </label>
                     <input 
                         type="text" 
                         id="username" 
@@ -70,7 +67,7 @@ const Login = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlfor="password">Password: </label>
+                    <label htmlFor="password">Password: </label>
                     <input 
                         type="password" 
                         id="password" 
@@ -79,7 +76,7 @@ const Login = () => {
                 </div>
                 <button 
                     type="submit" 
-                    class="login-btn" 
+                    className="login-btn" 
                     id="login" 
                     onClick={signIn}
                 >Submit</button>
@@ -87,14 +84,14 @@ const Login = () => {
             <div>
                 <button 
                     type="button" 
-                    class="forgotbtn" 
+                    className="forgotbtn" 
                     onClick={() => {setgoToForgotPassword(true)}}
                 >Forgot Password?</button>
             </div>
             <div>
                 <button 
                     type="button" 
-                    class="new-user-btn" 
+                    className="new-user-btn" 
                     onClick={() => {setgoToNewUser(true)}}
                 >New User?</button>
             </div>

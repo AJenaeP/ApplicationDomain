@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Header from './pages/Header';
 import { auth, db } from './Firebase';
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import { 
     createUserWithEmailAndPassword,
@@ -12,7 +12,7 @@ from 'firebase/auth'
 import { 
     getFirestore, 
     collection, 
-    getDoc, 
+    getDocs, 
     addDoc, 
     deleteDoc, 
     setDoc, 
@@ -27,12 +27,10 @@ const AuthContext = React.createContext();
 export const AuthProvider = ({children}) => {
     const [user, setUser ] = useState({});
 
-    const createUser = (email,password, userInfo) => {
-        return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            setDoc(doc(db, "users", user.uid), userInfo);
-        })
+    const createUser = async (email,password, userInfo) => {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        setDoc(doc(db, "users", user.uid), userInfo);
         //send email to admin account with userId, firstName, LastName and email
     }
     const logout = () => {
@@ -43,26 +41,32 @@ export const AuthProvider = ({children}) => {
         });
     }
 
-    const signIn = async (userName,password) => {
-        const q = query(collection(db, "users"), where("userId", "==", userName));
+    const signIn = async (username,password) => {
+        const q = query(collection(db, "users"), where("userId", "==", username));
 
-        const querySnapshot = await getDoc(q);
-        querySnapshot.forEach(async (doc) => {
-            const userCredential = await signInWithEmailAndPassword(auth, doc.data().email, password);
-            const user = userCredential.user;
-            //console.log(doc.data().firstName);
-        })
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            signInWithEmailAndPassword(auth, doc.data().email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    console.log(doc.data())
+                    const user = userCredential.user;
+                    
+                    setUser(doc.data());
+                })
+            });
+        
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setUser(user)
-            console.log(user)
+            //console.log(user)
         })
         return () => {
             unsubscribe()
         }
-    }, [])
+    }, [])*/
     
     const value = {
         createUser,

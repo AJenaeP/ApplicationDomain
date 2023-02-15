@@ -1,5 +1,5 @@
 import React from 'react'
-import compasslogo from '../images/compasslogo.png';
+import compasslogo from '../images/compasslogo.jpg';
 import { UserAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,20 +7,21 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
- 
-  const handleLogout = async () => {
+  
+  const handleLogout = () => {
     try {
-      await logout()
+      logout()
       navigate('/login')
     } catch (e) {
       console.log(e.message)
     }
   }
-  return(
+  return (
+  
           <div className="header"> 
               <img src={compasslogo} alt="compass" width="90px"/>
-              <span>Compass</span>
-              <span>{user && user.firstName}</span>
+              <span>Compass </span>
+              <span>{user.firstName} {user.lastName}</span>
               <button type="button" id="logout" onClick={handleLogout}>Logout</button>
           </div>
   );

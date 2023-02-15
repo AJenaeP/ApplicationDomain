@@ -6,6 +6,7 @@ import React from 'react'
 import Header from './pages/Header';
 import NewUser from './pages/NewUser';
 import { AuthProvider } from './AuthContext';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -13,7 +14,11 @@ function App() {
     <AuthProvider>
       <Router>
           <Routes>
-            <Route path='/header' element={<Header/>}></Route>
+            <Route path='/' element={<Login/>}></Route>
+            <Route 
+              path='/header' 
+              element={<ProtectedRoute><Header /></ProtectedRoute>}>
+            </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/forgotpassword' element={<ForgotPassword />} />
             <Route path='/newuser' element={<NewUser />} />
