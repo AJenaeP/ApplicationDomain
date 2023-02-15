@@ -2,15 +2,12 @@ import React from 'react'
 import {  useNavigate } from 'react-router-dom'
 import compasslogo from '../images/compasslogo.jpg';
 import { UserAuth } from '../AuthContext';
-import Header from './Header';
 import '../css/Login.css'
 
 export class user {
     firstName;
     lastName;
 }
-
-
 
 const Login = () => {
     const navigate = useNavigate();
@@ -24,12 +21,12 @@ const Login = () => {
         navigate('/newuser')
     };
     const [error, setError] = React.useState('')
-    const { signIn } = UserAuth();
+    const { signIn, user, isLoggedIn } = UserAuth();
     const [username, setUserName] = React.useState("")
     const [password, setPassword] = React.useState("")
     //navigate to forgot password screen
-    
-    const handleSignIn = async (e) => {
+
+    const handleSignIn = (e) => {
         e.preventDefault();
         setError("")
         if (username === "") {
@@ -38,13 +35,14 @@ const Login = () => {
             alert("Password can't be empty");
         }
         try{
-            await signIn(username,password)
+            signIn(username,password)
             navigate('/header')
         }catch(e){
             setError(e.message)
-            console.log(e.message)
+            console.log(error)
         }
     }
+
     
     return(
         <div className="login">
@@ -57,7 +55,7 @@ const Login = () => {
                 <p>Hi, Welcome Back to Compass Credit Union</p>
         </header>
             
-            <form onSubmit={handleSignIn}>
+            <form>
                 <div>
                     <label htmlFor="username">UserName: </label>
                     <input 
@@ -77,8 +75,8 @@ const Login = () => {
                 <button 
                     type="submit" 
                     className="login-btn" 
-                    id="login" 
-                    onClick={signIn}
+                    id="login"
+                    onClick={handleSignIn} 
                 >Submit</button>
             </form>
             <div>

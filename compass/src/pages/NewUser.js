@@ -1,4 +1,3 @@
-import { getAdditionalUserInfo } from "firebase/auth";
 import React from "react";
 import PasswordChecklist from "react-password-checklist"
 import { useNavigate } from "react-router-dom";
@@ -7,20 +6,6 @@ import { UserAuth } from '../AuthContext'
 import compasslogo from '../images/compasslogo.jpg';
 import '../css/NewUser.css'
 
-//secret question 1
-const options1 = [
-    { value: 'favColor', label: 'What is your favorite color?'},
-    { value: 'favAnimal', label: 'What is your favorite Animal?' },
-    { value: 'favMusician', label: 'Who is your favorite Musician?' },
-    { value: 'favShow', label: 'What is your favorite tv show?' },
-];
-//secret question 2
-const options2 = [
-    { value: 'mothersMaidenName', label: 'What is your mothers maiden name?' },
-    { value: 'birthState', label: 'What state were you born in?' },
-    { value: 'favMovie', label: 'What is your favorite movie?' },
-    { value: 'bestfriendName', label: 'What is your bestfriends first name?' },
-];
 //roles
 const options3 = [
     { value: 'Administrator', label: 'Administrator' },
@@ -47,11 +32,11 @@ const NewUser = () => {
     const [error, setError] = React.useState("")
     const [passwordAgain, setPasswordAgain] = React.useState("")
     const [SelectedRole, setSelectedRole] = React.useState(null);
-    const [SelectedQ1, setSelectedQ1] = React.useState(null);
+    const [secretQ1] = "What is your favorite Color?"
     const [SelectedQ1A, setSelectedQ1A] = React.useState("");
-    const [SelectedQ2, setSelectedQ2] = React.useState(null);
+    const [secretQ2] = "What is your bestfriends FIRST name?"
     const [SelectedQ2A, setSelectedQ2A] = React.useState("");
-
+   
     const { createUser } = UserAuth();
 
     const userInfo = {
@@ -62,9 +47,9 @@ const NewUser = () => {
         userId: UserId,
         email: Email,
         role: SelectedRole,
-        secretQ1: SelectedQ1,
+        secretQ1,
         secretQ1A: SelectedQ1A,
-        secretQ2: SelectedQ2,
+        secretQ2,
         secretQ2A: SelectedQ2A,
     }
     
@@ -147,6 +132,7 @@ const NewUser = () => {
                 <div>
                     <label htmlFor="role">Role:</label>
                     <Select
+                        className="select"
                         id="role"
                         value={SelectedRole}
                         onChange={setSelectedRole}
@@ -182,14 +168,9 @@ const NewUser = () => {
                             firstLetter: "First character must be a letter"
                         }}
                     />
-
-                    <label htmlFor="secretQ1">Choose a secret quesion:</label>
-                    <Select
-                        id="secretQ1"
-                        value={SelectedQ1}
-                        onChange={setSelectedQ1}
-                        options={options1}
-                    />
+                </div>
+                <div>
+                    <label htmlFor="secretQ1"> Secret Question 1: What is your favorite Color?</label>
                     <input 
                         type="text" 
                         id="secretQA1" 
@@ -198,13 +179,7 @@ const NewUser = () => {
                     ></input>
                 </div>
                 <div>
-                    <label htmlFor="SecretQ2">Choose a secret question:</label>
-                    <Select
-                        id="secretQ2"
-                        value={SelectedQ2}
-                        onChange={setSelectedQ2}
-                        options={options2}
-                    />
+                    <label htmlFor="SecretQ2">Secret Question 2: What is your bestfriends first name?</label>
                     <input 
                         type="text" 
                         id="secretQA2" 

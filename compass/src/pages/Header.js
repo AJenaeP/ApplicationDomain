@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 //import { auth } from '../index'
 const Header = () => {
-  const { user, logout } = UserAuth();
+  const { userData, logout } = UserAuth();
   const navigate = useNavigate();
   
   const handleLogout = () => {
@@ -16,12 +16,14 @@ const Header = () => {
       console.log(e.message)
     }
   }
+
+  
   return (
   
           <div className="header"> 
               <img src={compasslogo} alt="compass" width="90px"/>
               <span>Compass </span>
-              <span>{user.firstName} {user.lastName}</span>
+              <span>{userData.firstName} {userData.lastName}</span>
               <button type="button" id="logout" onClick={handleLogout}>Logout</button>
           </div>
   );
