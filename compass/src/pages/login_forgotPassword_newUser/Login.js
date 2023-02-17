@@ -1,8 +1,8 @@
 import React from 'react'
-import {  useNavigate } from 'react-router-dom'
-import compasslogo from '../images/compasslogo.jpg';
-import { UserAuth } from '../AuthContext';
-import '../css/Login.css'
+import {  useNavigate, Link, useLocation } from 'react-router-dom'
+import compasslogo from '../../images/compassLogo.png';
+import { UserAuth } from '../../utilities/AuthContext';
+import '../../css/Login.css'
 
 export class user {
     firstName;
@@ -11,6 +11,8 @@ export class user {
 
 const Login = () => {
     const navigate = useNavigate();
+    const { signIn, user, isLoggedIn } = UserAuth();
+    //const from = location.state?.from?.pathname || "/";
     const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
     if (goToForgotPassword) {
         navigate('/forgotpassword')
@@ -21,7 +23,6 @@ const Login = () => {
         navigate('/newuser')
     };
     const [error, setError] = React.useState('')
-    const { signIn, user, isLoggedIn } = UserAuth();
     const [username, setUserName] = React.useState("")
     const [password, setPassword] = React.useState("")
     //navigate to forgot password screen
@@ -37,6 +38,7 @@ const Login = () => {
         try{
             signIn(username,password)
             navigate('/header')
+            //navigate('/dashboard')
         }catch(e){
             setError(e.message)
             console.log(error)

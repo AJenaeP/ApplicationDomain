@@ -1,6 +1,6 @@
 import React from 'react'
-import compasslogo from '../images/compasslogo.jpg';
-import { UserAuth } from '../AuthContext';
+import compasslogo from '../images/compassLogo.png';
+import { UserAuth } from '../utilities/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 //import { auth } from '../index'

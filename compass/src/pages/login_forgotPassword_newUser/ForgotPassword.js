@@ -1,9 +1,9 @@
 import React from 'react'
-import compasslogo from '../images/compasslogo.jpg';
+import compasslogo from '../../images/compassLogo.png';
 import PasswordChecklist from "react-password-checklist"
-import '../css/ForgotPassword.css'
+import '../../css/ForgotPassword.css'
 import { useNavigate } from 'react-router-dom';
-import { UserAuth } from '../AuthContext';
+import { UserAuth } from '../../utilities/AuthContext';
 import { query, where, collection, getDocs } from 'firebase/firestore';
 
 const ForgotPassword = () => {

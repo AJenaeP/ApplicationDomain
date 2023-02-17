@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import Header from './pages/Header';
+import Header from '../pages/Header';
 import { auth, db } from './Firebase';
 import { useNavigate, Navigate} from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -131,5 +131,5 @@ export const AuthProvider = ({children}) => {
 }
 
 export const UserAuth = () => {
-    return React.useContext(AuthContext)
+    return useContext(AuthContext)
 }

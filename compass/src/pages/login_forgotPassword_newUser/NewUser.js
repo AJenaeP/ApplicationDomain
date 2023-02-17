@@ -2,9 +2,9 @@ import React from "react";
 import PasswordChecklist from "react-password-checklist"
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
-import { UserAuth } from '../AuthContext'
-import compasslogo from '../images/compasslogo.jpg';
-import '../css/NewUser.css'
+import { UserAuth } from '../../utilities/AuthContext'
+import compasslogo from '../../images/compassLogo.png';
+import '../../css/NewUser.css'
 
 //roles
 const options3 = [
