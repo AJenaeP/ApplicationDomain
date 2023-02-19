@@ -7,21 +7,6 @@ import Button from '@mui/material/Button'
 import LoginIcon from '@mui/icons-material/Login';
 import CreateIcon from '@mui/icons-material/Create';
 
-const styles = {
-    
-    "&.MuiButton-outlined": {
-        border: '1px solid #000000',
-        color: '#000000',
-        size: 'large',
-        borderRadius: 10,
-       
-        
-    },
-    "&:hover": {
-        backgroundColor: '#58d0fe',
-        opacity: 0.7,
-    },
-}
 const Home = () => {
     const navigate = useNavigate();
     const [goToLogin, setgoToLogin] = useState(false);
@@ -47,7 +32,7 @@ const Home = () => {
                 <Button 
                     variant='outlined' 
                     size='large' 
-                    sx={styles} 
+                    style={{ borderRadius: 20, marginRight: 10}}
                     startIcon={<LoginIcon/>}
                     className='loginB'
                     onClick={() => { setgoToLogin(true) }}
@@ -57,7 +42,7 @@ const Home = () => {
                 <Button 
                     variant='outlined'
                     size='large' 
-                    sx={styles} 
+                    style={{ borderRadius: 20}} 
                     startIcon={<CreateIcon/>}
                     className='signupB'
                     onClick={() => { setgoToSignUp(true) }}

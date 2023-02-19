@@ -28,18 +28,23 @@ const AuthContext = React.createContext();
 
 export const AuthProvider = ({children}) => {
    
+    //holds current 
     const [user, setUser ] = useState({});
+    //holds current users data
     const [userData, setUserData] = useState({});
+    //boolean if user is logged in
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    //boolean if user has been verified(this connects to forgot password)
     const [isVerified, setIsVerified] = useState(false)
 
+    //creates a user
     const createUser = async (email,password, userInfo) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         setDoc(doc(db, "users", user.uid), userInfo);
         //send email to admin account with userId, firstName, LastName and email
     }
-
+    //logs out user
     const logout = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
@@ -49,14 +54,15 @@ export const AuthProvider = ({children}) => {
             alert(error)
         });
     }
-
+    //signs in user
     const signIn = async (username,password) => {
         const userName = username
-        //console.log(userName)
+        //finds username in database
         const q = query(collection(db, "users"), where("userId", "==", userName));
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
+            // signs user in with email from account
             signInWithEmailAndPassword(auth, doc.data().email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -72,6 +78,7 @@ export const AuthProvider = ({children}) => {
                 });
             });
     }
+    //checks if user info is correct before allowing password reset
     const forgotPassword = async (email, username, secretQ1A, secretQ2A ) => {
         const q = query(collection(db, "users"), where("userId", "==", username));
         const querySnapshot = await getDocs(q);
@@ -86,6 +93,7 @@ export const AuthProvider = ({children}) => {
             }
         });
     }
+    //sets new password [not working]
     const newPassword = async (email, username, password) => {
         const userName = username
         //console.log(userName)
@@ -111,6 +119,7 @@ export const AuthProvider = ({children}) => {
         }
     }, [])
     
+    //exported values
     const value = {
         createUser,
         user,
@@ -129,7 +138,6 @@ export const AuthProvider = ({children}) => {
         </AuthContext.Provider>
     )
 }
-
 export const UserAuth = () => {
     return useContext(AuthContext)
 }

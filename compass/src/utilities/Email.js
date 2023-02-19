@@ -1,6 +1,5 @@
 const MailDev = require('maildev')
 
-
 const maildev = new MailDev({
     smtp: 1025,
     outgoingHost: 'stmp.compass.com',

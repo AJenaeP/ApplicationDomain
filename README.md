@@ -9,6 +9,7 @@
 **react-select:** (npm i react-select)
 **mui-material:** (npm install @mui/material @emotion/react @emotion/styled @mui/icons-material)
 **iconify:** (npm i iconify)
+**react-scrollbar** (npm install react-scrollbar --save)
 
 ## Email
 **mailDev for emails:** (npm install -g maildev)

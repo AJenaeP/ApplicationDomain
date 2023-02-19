@@ -8,18 +8,17 @@ const Header = () => {
   const { userData, logout } = UserAuth();
   const navigate = useNavigate();
   
+  //this calls the logout function from authcontext
   const handleLogout = () => {
     try {
       logout()
-      navigate('/login')
+      navigate('/home')
     } catch (e) {
       console.log(e.message)
     }
   }
 
-  
   return (
-  
           <div className="header"> 
               <img src={compasslogo} alt="compass" width="90px"/>
               <span>Compass </span>
