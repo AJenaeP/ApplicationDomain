@@ -1,15 +1,15 @@
 # ApplicationDomain
 
-## Please make sure you 'cd compass' before installing any packages and development in this app
+** Please make sure you 'cd compass' before installing any packages and development in this app
 
 ## Tools and Packages used:
-**react:** (npm i react)
-**react-router-dom:** (npm i react-router-dom)
-**react-password-checklist:** (npm i react-password-checklist)
-**react-select:** (npm i react-select)
-**mui-material:** (npm install @mui/material @emotion/react @emotion/styled @mui/icons-material)
-**iconify:** (npm i iconify)
-**react-scrollbar** (npm install react-scrollbar --save)
+**react:** (npm i react) <br>
+**react-router-dom:** (npm i react-router-dom) <br>
+**react-password-checklist:** (npm i react-password-checklist) <br>
+**react-select:** (npm i react-select) <br>
+**mui-material:** (npm install @mui/material @emotion/react @emotion/styled @mui/icons-material) <br>
+**iconify:** (npm i iconify) <br>
+**react-scrollbar** (npm install react-scrollbar --save) <br>
 
 ## Email
 **mailDev for emails:** (npm install -g maildev)
