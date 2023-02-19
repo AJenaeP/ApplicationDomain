@@ -11,6 +11,6 @@
 **iconify:** (npm i iconify) <br>
 **react-scrollbar** (npm install react-scrollbar --save) <br>
 
-## Email
+## Email [NOT WORKING, NOT A SOLUTION]
 **mailDev for emails:** (npm install -g maildev)
 #### run 'maildev' in terminal for localhost address
