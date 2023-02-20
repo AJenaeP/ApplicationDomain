@@ -54,6 +54,8 @@ const Login = () => {
             signIn(username,password)
             navigate('/header')
             //navigate('/dashboard')
+            //Hayley: navigate('/admindashboard') is the route name I created. Will need to adjust to route to Manager and accountant as pages are built
+            
         }catch(e){
             setError(e.message)
             console.log(error)
