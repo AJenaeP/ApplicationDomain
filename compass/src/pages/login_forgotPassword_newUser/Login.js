@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {  useNavigate, Link, useLocation } from 'react-router-dom'
 import compasslogo from '../../images/compassLogo.png';
 import { UserAuth } from '../../utilities/AuthContext'; 
@@ -18,28 +18,38 @@ export class user {
 
 const Login = () => {
     const navigate = useNavigate();
-    //values pulled from authcontext
-    const { signIn, user, isLoggedIn } = UserAuth();
-    
-    //navigate to forgot password
-    const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
-    if (goToForgotPassword) {
-        navigate('/forgotpassword')
-    };
-    //navigate to new user screen
-    const [goToNewUser, setgoToNewUser] = React.useState(false);
-    if (goToNewUser) {
-        navigate('/newuser')
-    };
-    //navigate to home screen
-    const [goToHome, setgoToHome] = React.useState(false);
-    if (goToHome) {
-        navigate('/home')
-    };
     const [error, setError] = React.useState('')
     const [username, setUserName] = React.useState("")
     const [password, setPassword] = React.useState("")
-    //navigate to forgot password screen
+    //values pulled from authcontext
+    const { signIn, user, isLoggedIn, userData } = UserAuth();
+    const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
+    const [goToHome, setgoToHome] = React.useState(false);
+    const [goToDashboard, setGoToDashboard] = React.useState(false);
+
+useEffect (() => {
+    //navigate to specific dashboard
+    if(user) {
+        navigate('/admindashboard')
+        if (goToDashboard) {
+            if(userData.role == "Administrator"){
+                navigate('/admindashboard')
+            } else if (userData.role == "Manager"){
+                navigate('/header')
+            } else if(userData.role == "Accountant"){
+                navigate('/header')
+            } 
+        };
+    }
+    //navigate to forgot password page
+    if (goToForgotPassword) {
+        navigate('/forgotpassword')
+    };
+    //navigate to home screen
+    if (goToHome) {
+        navigate('/home')
+    };
+})
 
     //this calls signin function from authcontext
     const handleSignIn = (e) => {
@@ -52,10 +62,7 @@ const Login = () => {
         }
         try{
             signIn(username,password)
-            navigate('/header')
-            //navigate('/dashboard')
-            //Hayley: navigate('/admindashboard') is the route name I created. Will need to adjust to route to Manager and accountant as pages are built
-            
+            setGoToDashboard(true)
         }catch(e){
             setError(e.message)
             console.log(error)
@@ -81,7 +88,7 @@ const Login = () => {
                     <h1>Login</h1>
                     <p>Please fill in this form to login to your account.</p>
                 </div>
-                <FormControl id="formcontrol" onSubmit={handleSignIn}>
+                <FormControl id="formcontrol">
                         <TextField
                             id="outlined-password-input Username"
                             label="Username"
@@ -104,7 +111,7 @@ const Login = () => {
                             style={{ width: 225, marginBottom:10 }}
                             startIcon={<DoneIcon />}
                             className='submit'
-                            onClick={() => { setgoToHome(true) }}
+                            onClick={handleSignIn}
                             sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)'}}}
                         >
                             Login

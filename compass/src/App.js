@@ -9,6 +9,7 @@ import { AuthProvider } from './utilities/AuthContext';
 import ProtectedRoute from './utilities/ProtectedRoute';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Home from './pages/Home';
+import PermissionDenied from './pages/PermissionDenied';
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
             <Route path='/login' element={<Login/>}></Route>
             <Route path='/forgotpassword' element={<ForgotPassword/>}></Route>
             <Route path='/newuser' element={<NewUser/>}></Route>
-            <Route path='/dashboard' element={<DashboardAppPage/>}></Route>
+            <Route path='/' element={<ProtectedRoute roleRequired='Administrator'/>}>
+              <Route path='/admindashboard' element={<DashboardAppPage />}></Route>
+            </Route>
+            <Route path='/denied' element={<PermissionDenied/>}></Route>
           </Routes>
         </Router>
       </AuthProvider>

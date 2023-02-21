@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Home.css'
@@ -10,14 +10,18 @@ import CreateIcon from '@mui/icons-material/Create';
 const Home = () => {
     const navigate = useNavigate();
     const [goToLogin, setgoToLogin] = useState(false);
-    if (goToLogin) {
-        navigate('/login')
-    };
-    //navigate to new user screen
     const [goToSignUp, setgoToSignUp] = useState(false);
-    if (goToSignUp) {
-        navigate('/newuser')
-    };
+    
+    useEffect(() => {
+        if (goToLogin) {
+            navigate('/login')
+        };
+
+        if (goToSignUp) {
+            navigate('/newuser')
+        };
+    })
+
     return (
         <div className='Home'>
             <div className='title'>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
+import Header from './Header';
 // components
 import compassLogo from '../images/compassLogo.png';
 // sections
@@ -12,6 +13,7 @@ export default function DashboardAppPage() {
 
   return (
     <>
+    <Header/>
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
         Compass Credit Union
