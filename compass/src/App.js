@@ -10,7 +10,8 @@ import ProtectedRoute from './utilities/ProtectedRoute';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Home from './pages/Home';
 import PermissionDenied from './pages/PermissionDenied';
-/*import DashboardAdmin from './pages/DashboardAdmin';
+/*import Sidebar from './utilities/Sidebar';
+import DashboardAdmin from './pages/DashboardAdmin';
 import CreateNewUser from './pages/AdminPages/CreateNewUser';
 import Accounts from './pages/AdminPages/Accounts';
 import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
