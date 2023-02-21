@@ -10,6 +10,10 @@ import ProtectedRoute from './utilities/ProtectedRoute';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Home from './pages/Home';
 import PermissionDenied from './pages/PermissionDenied';
+/*import DashboardAdmin from './pages/DashboardAdmin';
+import CreateNewUser from './pages/AdminPages/CreateNewUser';
+import Accounts from './pages/AdminPages/Accounts';
+import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
 
 function App() {
   return (
@@ -17,6 +21,7 @@ function App() {
     <AuthProvider>
       <Router>
           <Routes>
+   
             <Route path='/' element={<Home/>}></Route>
             <Route path='/home' element={<Home/>}></Route>
             <Route path='/header' element={<Header/>}></Route>
@@ -25,6 +30,10 @@ function App() {
             <Route path='/newuser' element={<NewUser/>}></Route>
             <Route path='/' element={<ProtectedRoute roleRequired='Administrator'/>}>
               <Route path='/admindashboard' element={<DashboardAppPage />}></Route>
+/*            <Route path='/admindashboard' element={<DashboardAdmin/>}></Route>
+            <Route path='/CreateNewUsers' element={<CreateNewUser/>}></Route>
+            <Route path='/Accounts' element={<Accounts/>}></Route>
+            <Route path='/ExpiredPasswords' element={<ExpiredPasswords/>}></Route>*/
             </Route>
             <Route path='/denied' element={<PermissionDenied/>}></Route>
           </Routes>
