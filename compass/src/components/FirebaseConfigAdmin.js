@@ -25,4 +25,5 @@ export default StartFirebase;
 //export const app = initializeApp(firebaseConfig);
 //accessing authorization and database
 //export const auth = getAuth(app);
+
 //export const db = getFirestore(app);
