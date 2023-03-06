@@ -1,40 +1,68 @@
-import React from 'react'
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
-import Header from './Header';
-// components
+
+
 import compassLogo from '../images/compassLogo.png';
-// sections
-import { AppTasks } from '../utilities/AppTasks';
+import { Typography, Container } from '@mui/material';
+import { bubble as Menu } from 'react-burger-menu';
+import Sidebar from '../utilities/Sidebar';
+//Logo import:
+
+import React from 'react'
 
 
-export default function DashboardAppPage() {
-  const theme = useTheme();
 
-  return (
-    <>
-    <Header/>
-      <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-        Compass Credit Union
-        </Typography>
+//need to create if statement (if user is admin)
+/*const DashboardAdmin = () => {
+  const navigate = useNavigate();
+  const [goToLogin, setgoToLogin] = useState(false);
+  if (goToLogin) {
+      navigate('/login')
+  };
+  //navigate to new user screen
+  const [goToSignUp, setgoToSignUp] = useState(false);
+  if (goToSignUp) {
+      navigate('/newuser')
+  };
+  */
 
-        <img src={compassLogo} alt="Avatar" className="picture" />
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Check Email' },
-                { id: '2', label: 'Pay Lawn Service Invoice' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Journal Entries' },
-                { id: '5', label: 'Sprint 1 Presentation' },
-              ]}
-            />
-         
-            </Grid>
-      </Container>
-    </>
-  );
-}
+
+  //create code for image
+  export default function DashboardAdmin() {
+
+return (
+      <>
+
+<div className="DashboardAdmin" id="outer-container">
+      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+      <div id="page-wrap">
+      </div>
+    </div>
+        <Container maxWidth="xl">
+          <Typography variant="h4" sx={{ mb: 5 }}>
+          Compass Credit Union 
+          </Typography>
+  
+          <img src={compassLogo} alt="Avatar" className="picture" />
+       
+     </Container>
+
+     
+      </>
+
+      //LAYOUT:
+
+//login username, picture, should be displayed clearly on the top right corner of the login page
+
+
+
+//<p>Welcome Admin: [insert name from login].</p>
+//could use window.open()
+//An alert box is often used if you want to make sure information comes through to the user.
+//window.alert("sometext")
+
+
+
+
+    );
+  }
+  
