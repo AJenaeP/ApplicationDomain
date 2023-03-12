@@ -8,7 +8,11 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
-    updatePassword
+    updatePassword,
+    getAuth,
+    reauthenticateWithCredential,
+    signInWithCredential,
+    EmailAuthProvider
 }
     from 'firebase/auth'
 import {
@@ -32,6 +36,25 @@ export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({});
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
+    const [loginAttempts, setLoginAttempts] = useState(3)
+    const decrementCounter = () => setLoginAttempts(loginAttempts - 1)
+    //checks if a user is logged after refresh
+    useEffect(() => {
+        const loggedInUser = window.localStorage.getItem('user');
+        const loggedInData = window.localStorage.getItem('userData')
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            const foundUserData = JSON.parse(loggedInData);
+            localStorage.setItem('we are', 'here')
+            setUser(foundUser);
+            setUserData(foundUserData);
+            console.log(foundUser);
+            console.log(foundUserData);
+            console.log(user);
+            console.log(userData);
+        }
+    }, []);
 
     const createUser = async (email, password, userInfo) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -44,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         signOut(auth).then(() => {
             // Sign-out successful.
             setIsLoggedIn(false)
+            localStorage.clear()
         }).catch((error) => {
             // An error happened.
             alert(error)
@@ -63,14 +87,24 @@ export const AuthProvider = ({ children }) => {
                     setUser(user);
                     setUserData(doc.data());
                     setIsLoggedIn(true)
+                    console.log(user)
+                    console.log(auth)
+                    window.localStorage.setItem('user', JSON.stringify(user))
+                    window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
                 }).catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     alert(errorCode);
-                    alert(errorMessage);
+                    if(errorCode === 'auth/wrong-password') {
+                       decrementCounter()
+                       if(loginAttempts == 0) {
+                        isDisabled(true)
+                       }
+                    }
                 });
         });
     }
+
     const forgotPassword = async (email, username, secretQ1A, secretQ2A) => {
         const q = query(collection(db, "users"), where("userId", "==", username));
         const querySnapshot = await getDocs(q);
@@ -84,9 +118,29 @@ export const AuthProvider = ({ children }) => {
                 setIsVerified(true)
             }
         });
+
     }
+
+
+
     const newPassword = async (email, username, password) => {
-        const userName = username
+        console.log(auth.currentUser)
+        /*reauthenticate = (email) => {
+            var user = firebase.auth().currentUser;
+            var cred = firebase.auth.EmailAuthProvider.credential(user.email, email);
+            return user.reauthenticateWithCredential(cred);
+
+        }*/
+
+            /*const user = auth.getUser;
+            updatePassword(user, password)
+            .then(()=> {
+                console.log('update successful')
+            })
+            .catch((error) => {
+                console.log(error)
+            })*/
+        /*const userName = username
         //console.log(userName)
         const q = query(collection(db, "users"), where("userId", "==", userName));
         const querySnapshot = await getDocs(q);
@@ -98,13 +152,15 @@ export const AuthProvider = ({ children }) => {
             }).catch((error) => {
                 console.log(error)
             }))*/
-        )
+       // )*/
+
     }
 
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setUser(user)
+            console.log(user)
         })
         return () => {
             unsubscribe()
@@ -117,10 +173,12 @@ export const AuthProvider = ({ children }) => {
         userData,
         isLoggedIn,
         isVerified,
+        isDisabled,
         logout,
         signIn,
         forgotPassword,
-        newPassword
+        newPassword,
+        auth
     }
 
     return (

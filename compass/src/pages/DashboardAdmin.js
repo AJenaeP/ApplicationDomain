@@ -1,5 +1,4 @@
 
-
 import compassLogo from '../images/compassLogo.png';
 import { Typography, Container } from '@mui/material';
 import { bubble as Menu } from 'react-burger-menu';
@@ -7,9 +6,7 @@ import Sidebar from '../utilities/Sidebar';
 //Logo import:
 
 import React from 'react'
-
-
-
+import Header from './Header';
 //need to create if statement (if user is admin)
 /*const DashboardAdmin = () => {
   const navigate = useNavigate();
@@ -27,10 +24,12 @@ import React from 'react'
 
 
   //create code for image
-  export default function DashboardAdmin() {
-
+const DashboardAdmin = () => {
 return (
-      <>
+  <div className="DashboardAdmin" id="outer-container">
+    <Header/>
+  </div>
+      /*<>
 
 <div className="DashboardAdmin" id="outer-container">
       <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
@@ -60,9 +59,15 @@ return (
 //An alert box is often used if you want to make sure information comes through to the user.
 //window.alert("sometext")
 
+//create menu bar - buttons with onClick link to page
+// 1. Users
+// 2. Expired Password
+// 3. Accounts
+// 4. Email
 
 
-
-    );
+   */);
   }
   
+export default DashboardAdmin
+

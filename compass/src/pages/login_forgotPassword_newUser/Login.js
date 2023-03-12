@@ -4,7 +4,7 @@ import compasslogo from '../../images/compassLogo.png';
 import { UserAuth } from '../../utilities/AuthContext'; 
 import { FormControl, Container, TextField } from "@mui/material";
 import Button from '@mui/material/Button'
-import DoneIcon from '@mui/icons-material/Done';
+import LoginIcon from '@mui/icons-material/Login';
 import '../../css/Login.css'
 import ClearIcon from '@mui/icons-material/Clear';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
@@ -22,7 +22,7 @@ const Login = () => {
     const [username, setUserName] = React.useState("")
     const [password, setPassword] = React.useState("")
     //values pulled from authcontext
-    const { signIn, user, isLoggedIn, userData } = UserAuth();
+    const { signIn, user, isLoggedIn, userData, isDisabled } = UserAuth();
     const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
     const [goToHome, setgoToHome] = React.useState(false);
     const [goToDashboard, setGoToDashboard] = React.useState(false);
@@ -30,14 +30,13 @@ const Login = () => {
 useEffect (() => {
     //navigate to specific dashboard
     if(user) {
-        navigate('/admindashboard')
         if (goToDashboard) {
             if(userData.role == "Administrator"){
                 navigate('/admindashboard')
             } else if (userData.role == "Manager"){
-                navigate('/header')
+                navigate('/managerdashboard')
             } else if(userData.role == "Accountant"){
-                navigate('/header')
+                navigate('/accountantdashboard')
             } 
         };
     }
@@ -88,39 +87,95 @@ useEffect (() => {
                     <h1>Login</h1>
                     <p>Please fill in this form to login to your account.</p>
                 </div>
-                <FormControl id="formcontrol">
+                {!isDisabled &&  
+                    <FormControl id="formcontrol">                   
                         <TextField
-                            id="outlined-password-input Username"
-                            label="Username"
+                                id="outlined-password-input Username"
+                                label="Username"
+                                type="text"
+                                onChange={(e) => setUserName(e.target.value)}
+                                style={{marginBottom: 10, marginTop: 20}}
+                            />
+                            <TextField
+                                id="outlined-password-input password"
+                                label="Password"
+                                type="password"
+                                autoComplete="current-password"
+                                style={{ marginBottom: 60 }}
+                                onChange={e => setPassword(e.target.value)}
+
+                            />
+                            <Button
+                                variant='outlined'
+                                size='large'
+                                type='submit'
+                                style={{ width: 225, marginBottom:10 }}
+                                startIcon={<LoginIcon />}
+                                className='submit'
+                                onClick={handleSignIn}
+                                sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)'}}}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                variant='outlined'
+                                size='large'
+                                style={{ width: 225, marginBottom:10 }}
+                                startIcon={<QuestionMarkIcon fontSize='14px' sx={{marginLeft: -2}}/>}
+                                className='forgot'
+                                onClick={() => { setgoToForgotPassword(true) }}
+                                sx={{ ':hover': { bgcolor: 'rgb(252, 229, 83,0.2)' } }}
+                            >
+                                Forgot Password
+                            </Button>
+                            <Button
+                                variant='outlined'
+                                size='large'
+                                style={{ width: 225, }}
+                                startIcon={<ClearIcon />}
+                                className='cancel'
+                                onClick={() => { setgoToHome(true) }}
+                                sx={{ ':hover': { bgcolor: 'rgb(252, 83, 83,0.2)' } }}
+                            >
+                                Cancel
+                            </Button>
+                    </FormControl>
+                }
+                {isDisabled &&
+                    <FormControl id="formcontrol">
+                        <TextField
+                            id="outlined-disabled Username"
+                            label="Disabled"
                             type="text"
                             onChange={(e) => setUserName(e.target.value)}
-                            style={{marginBottom: 10, marginTop: 20}}
+                            style={{ marginBottom: 10, marginTop: 20 }}
                         />
                         <TextField
-                            id="outlined-password-input password"
-                            label="Password"
+                            id="outlined-disabled password"
+                            label="Disabled"
                             type="password"
                             autoComplete="current-password"
                             style={{ marginBottom: 60 }}
                             onChange={e => setPassword(e.target.value)}
+
                         />
                         <Button
                             variant='outlined'
                             size='large'
                             type='submit'
-                            style={{ width: 225, marginBottom:10 }}
-                            startIcon={<DoneIcon />}
+                            style={{ width: 225, marginBottom: 10 }}
+                            startIcon={<LoginIcon />}
                             className='submit'
-                            onClick={handleSignIn}
-                            sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)'}}}
+                            sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)' } }}
+                            Disabled
                         >
                             Login
                         </Button>
                         <Button
                             variant='outlined'
                             size='large'
-                            style={{ width: 225, marginBottom:10 }}
-                            startIcon={<QuestionMarkIcon fontSize='14px' sx={{marginLeft: -2}}/>}
+                            style={{ width: 225, marginBottom: 10 }}
+                            startIcon={<QuestionMarkIcon fontSize='14px' sx={{ marginLeft: -2 }} />}
                             className='forgot'
                             onClick={() => { setgoToForgotPassword(true) }}
                             sx={{ ':hover': { bgcolor: 'rgb(252, 229, 83,0.2)' } }}
@@ -138,8 +193,8 @@ useEffect (() => {
                         >
                             Cancel
                         </Button>
-                        
-                </FormControl>
+                    </FormControl>
+                }
             </Container>
         </div>
         

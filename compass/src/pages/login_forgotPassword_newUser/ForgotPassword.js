@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     const [email, setEmail] = React.useState("")
     const [secretQ1A, setSecretQ1A] = React.useState("")
     const [secretQ2A, setSecretQ2A] = React.useState("")
-    const { forgotPassword,isVerified, newPassword} = UserAuth();
+    const { forgotPassword, isVerified, newPassword} = UserAuth();
     const [password, setPassword] = React.useState("")
     const [passwordAgain, setPasswordAgain] = React.useState("")
 

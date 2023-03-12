@@ -10,6 +10,7 @@
 **mui-material:** (npm install @mui/material @emotion/react @emotion/styled @mui/icons-material) <br>
 **iconify:** (npm i iconify) <br>
 **react-scrollbar** (npm install react-scrollbar --save) <br>
+**react-burger-menu** (npm install react-burger-menu) <br>
 
 ## Email [NOT WORKING, NOT A SOLUTION]
 **mailDev for emails:** (npm install -g maildev)

@@ -7,16 +7,38 @@ import { auth } from "./Firebase";
 type ProtectedRouteType = {
     roleRequired: 'Administrator' | 'Manager' | 'Accountant'
 }
+
 const ProtectedRoute = (props: ProtectedRouteType) => {
     const { user, userData } = UserAuth();
-    const [role, setRole] = React.useState("");
     const [goToDenied, setGoToDenied] = React.useState(false)
     const [goToLogin, setGoToLogin] = React.useState(false)
+    const [currentUserData, setCurrentUserData] = React.useState({})
     let userRole = "";
     
+    
+  /*useEffect(() => {
+        console.log(user)
+        console.log(userData)
+
+        /*const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            localStorage.setItem('we are', 'here')
+            console.log(foundUser)
+            setCurrentUserData(foundUser)
+            console.log(currentUserData)
+        }
+    },[]);*/
+
     //if a user is logged in and authorized set role value
     if (user) {
-        userRole = userData.role
+        if(userData == null){
+            userRole = currentUserData.role;
+        } else {
+            userRole = userData.role
+        }
+        console.log(userData);
+        console.log(userRole);
     } else {
         userRole = ""
     } 
