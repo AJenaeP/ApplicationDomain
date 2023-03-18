@@ -1,6 +1,7 @@
 {
   "name": "compass",
   "version": "0.1.0",
+  "proxy": "http://localhost:1433",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -12,11 +13,15 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "body-parser": "^1.20.2",
     "dayjs": "^1.11.7",
+    "express": "^4.18.2",
     "firebase": "^9.17.1",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.9",
+    "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.43.1",
     "react-password-checklist": "^1.4.3",
     "react-router-dom": "^6.8.1",

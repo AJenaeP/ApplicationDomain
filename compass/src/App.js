@@ -12,10 +12,10 @@ import PermissionDenied from './pages/PermissionDenied';
 import Sidebar from './utilities/Sidebar';
 import DashboardAdmin from './pages/DashboardAdmin';
 /*import CreateNewUser from './pages/AdminPages/CreateNewUser';
-import Accounts from './pages/AdminPages/Accounts';
 import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
 import Manager from './pages/Manager';
 import Accountant from './pages/Accountant';
+import Accounts from './pages/AdminPages/Accounts';
 
 /* add to admin protected route after creation
     <Route path='/CreateNewUsers' element={<CreateNewUser />}></Route>
@@ -44,6 +44,7 @@ function App() {
               <Route path='/accountantdashboard' element={<Accountant/>}></Route>
             </Route>
             <Route path='/denied' element={<PermissionDenied/>}></Route>
+            <Route path='/accounts' element={<Accounts/>}></Route>
           </Routes>
         </Router>
       </AuthProvider>

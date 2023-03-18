@@ -1,0 +1,11 @@
+.DashboardAdmin {
+    width: 100%;
+}
+.calender {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+button {
+    color: black;
+}

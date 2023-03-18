@@ -3,6 +3,7 @@ import Header from '../pages/Header';
 import { auth, db } from './Firebase';
 import { useNavigate, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {useAuthState}from 'react-firebase-hooks/auth'
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -12,7 +13,9 @@ import {
     getAuth,
     reauthenticateWithCredential,
     signInWithCredential,
-    EmailAuthProvider
+    EmailAuthProvider,
+    setPersistence,
+    browserLocalPersistence,
 }
     from 'firebase/auth'
 import {
@@ -40,21 +43,48 @@ export const AuthProvider = ({ children }) => {
     const [loginAttempts, setLoginAttempts] = useState(3)
     const decrementCounter = () => setLoginAttempts(loginAttempts - 1)
     //checks if a user is logged after refresh
-    useEffect(() => {
-        const loggedInUser = window.localStorage.getItem('user');
-        const loggedInData = window.localStorage.getItem('userData')
+    /*useEffect(() => {
+        const loggedInUser = JSON.parse(window.localStorage.getItem('user'));
+        const loggedInData = JSON.parse(window.localStorage.getItem('userData'));
+        //setUser(JSON.parse(loggedInUser))
+        //setUserData(JSON.parse(loggedInData))
         if (loggedInUser) {
-            const foundUser = JSON.parse(loggedInUser);
-            const foundUserData = JSON.parse(loggedInData);
+            console.log(user)
+            console.log(userData)
+            console.log(loggedInUser)
+            //console.log(loggedInData)
+            setUser(loggedInUser)
+            setUserData(loggedInData)
+            //const foundUser = JSON.parse(loggedInUser);
+            //const foundUserData = JSON.parse(loggedInData);
             localStorage.setItem('we are', 'here')
-            setUser(foundUser);
-            setUserData(foundUserData);
-            console.log(foundUser);
-            console.log(foundUserData);
+            //setUser(foundUser);
+            //setUserData(foundUserData);
+            //console.log(foundUser);
+            //console.log(foundUserData);
             console.log(user);
-            console.log(userData);
+            //console.log(userData);
         }
-    }, []);
+    }, []);*/
+    //auth().setPersistence(auth.Auth.Persistance.LOCAL)
+    //console.log(user)
+    /*onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser)
+    })*/
+    useEffect(() => {
+        const CurrentUser = onAuthStateChanged(auth, (currentUser) => {
+            console.log(currentUser)
+            setUser(currentUser)
+            console.log(user)
+        })
+        /*const currentUser = auth.onAuthStateChanged(user => {
+            setUser(user)
+            console.log(user)
+        })*/
+        return () => {
+            CurrentUser()
+        }
+    })
 
     const createUser = async (email, password, userInfo) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -87,10 +117,11 @@ export const AuthProvider = ({ children }) => {
                     setUser(user);
                     setUserData(doc.data());
                     setIsLoggedIn(true)
-                    console.log(user)
-                    console.log(auth)
-                    window.localStorage.setItem('user', JSON.stringify(user))
-                    window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
+                    //console.log(user)
+                    //console.log(auth)
+                    //window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
+                    //window.localStorage.setItem('user', JSON.stringify(user))
+                    //console.log(user)
                 }).catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
@@ -156,16 +187,24 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+    const CurrentUser = (() => {
+        const [user, loading, error] = useAuthState(auth);
+        if (loading) {
+            return (
+                <div><p>Loading...</p></div>
+            )
+        }
+        if (error) {
+            return (
+                <div><p>Error: {error}</p></div>
+            )
+        }
+        if (user) {
+            console.log(user)
             setUser(user)
             console.log(user)
-        })
-        return () => {
-            unsubscribe()
         }
-    }, [])
+    })
 
     const value = {
         createUser,

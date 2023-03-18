@@ -1,0 +1,7 @@
+.accountRows :hover{
+    background-color:deepskyblue;
+}
+
+.isSelected{
+    background-color: deepskyblue;
+}

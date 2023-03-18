@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Home.css'
-import compasslogo from './../images/compassLogo.png';
+import compasslogo from '../images/compassLogo.png';
 import Button from '@mui/material/Button'
 import LoginIcon from '@mui/icons-material/Login';
 import CreateIcon from '@mui/icons-material/Create';

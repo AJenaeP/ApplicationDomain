@@ -3,10 +3,13 @@ import compassLogo from '../images/compassLogo.png';
 import { Typography, Container } from '@mui/material';
 import { bubble as Menu } from 'react-burger-menu';
 import Sidebar from '../utilities/Sidebar';
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
 //Logo import:
-
+import '../css/DashboardAdmin.css'
 import React from 'react'
 import Header from './Header';
+import Accounts from './AdminPages/Accounts';
 //need to create if statement (if user is admin)
 /*const DashboardAdmin = () => {
   const navigate = useNavigate();
@@ -26,9 +29,18 @@ import Header from './Header';
   //create code for image
 const DashboardAdmin = () => {
 return (
+  <>
   <div className="DashboardAdmin" id="outer-container">
-    <Header/>
+    <div>
+        <Header/>
+    </div>
+    <div className='calender'>
+        <Calendar/>
+    </div>
   </div>
+
+  
+  </>
       /*<>
 
 <div className="DashboardAdmin" id="outer-container">

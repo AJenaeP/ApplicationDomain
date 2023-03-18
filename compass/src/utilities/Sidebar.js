@@ -11,7 +11,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 import EmailIcon from '@mui/icons-material/Email';
-import { UserAuth } from '../utilities/AuthContext';
+import { UserAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -63,7 +63,7 @@ const Sidebar = () => {
       </List>
       <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/Accounts'>
+          <ListItemButton className="menu-item" href='/accounts'>
             <ListItemIcon>
               <StackedLineChartIcon />
             </ListItemIcon>
