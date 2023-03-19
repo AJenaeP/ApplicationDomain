@@ -1,12 +1,3 @@
-/*var express = require("express");
-var router = express.Router();
-
-router.get('/', function(req,res,next){
-    res.send("API is working properly")
-});
-
-module.exports = router;*/
-
 var Db = require('./dboperations')
 var chartOfAccounts = require('./CoA')
 const dboperations = require('./dboperations')
@@ -45,24 +36,32 @@ router.route('/accounts/:account_number').get((request, response) => {
         response.json(result[0])
     })
 })
-router.route('/accounts').post((request, response) => {
+router.route('/accounts/add').post((request, response) => {
     console.log("post is working")
 
-    let account = {...request.body}
+    let account = request.body
     dboperations.addAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
 
-router.route('/accounts/delete').post((request, response) => {
-    console.log("post is working")
+router.route('/accounts/delete').delete((request, response) => {
+    console.log("delete is working")
 
-    let account = { ...request.body }
+    let account = request.body 
     dboperations.deleteAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
+router.route('/accounts/update').put((request, response) => {
+    console.log("update is working")
 
+    let account = request.body
+    console.log(account)
+    dboperations.updateAccount(account).then(result => {
+        response.status(201).json(result);
+    })
+})
 
 router.route('/*').get((req, res) => {
     res.sendFile(path.resolve(__dirname, '../compass/build', 'index.html'));

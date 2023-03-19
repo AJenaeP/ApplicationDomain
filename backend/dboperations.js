@@ -4,7 +4,24 @@ const sql = require('mssql')
 async function getAccounts(){
     try{
         let pool = await sql.connect(config);
-        let accounts = await pool.request().query("SELECT * from ChartOfAccounts")
+        let accounts = await pool.request()
+            .input('account_number','')
+            .input('account_name', '')
+            .input('account_description', '')
+            .input('account_category', '')
+            .input('account_subcategory', '')
+            .input('normal_side', '')
+            .input('initial_balance','')
+            .input('debit', '')
+            .input('credit',  '')
+            .input('balance', '')
+            .input('userId',  '')
+            .input('date_time_account_added',  '')
+            .input('order_num',  '')
+            .input('statement',  '')
+            .input('comment',  '')
+            .input('Type', 'SELECT')
+            .execute('COA_Management');
         return accounts.recordsets;
     }catch (error) {
         console.log(error);
@@ -14,8 +31,10 @@ async function getAccount(account_number) {
     try{
         let pool = await sql.connect(config);
         let account = await pool.request()
-        .input('input_parameter', sql.Int, account_number)
-        .query("SELECT * from ChartOfAccounts where account_number = @input_parameter")
+            .input('account_number', account_number)
+            .input('Type', 'SELECT_FROM')
+            .execute('COA_Management')
+        //.query("SELECT * from ChartOfAccounts where account_number = @input_parameter")
         return account.recordsets;
     } catch (error) {
         console.log(error)
@@ -26,23 +45,24 @@ async function addAccount(account) {
     try {
         let pool = await sql.connect(config);
         console.log('connecting...')
+        console.log(account)
         let insertAccount = await pool.request()
-            .input('account_number', sql.Int, account.account_number)
-            /*.input('account_name', sql.Int, account.account_name)
-            .input('account_description', sql.Int, account.account_description)
-            .input('account_category', sql.Int, account.account_category)
-            .input('account_subcategory', sql.Int, account.account_subcategory)
-            .input('normal_side', sql.Int, account.normal_side)
-            .input('initial_balance', sql.Int, account.initial_balance)
-            .input('debit', sql.Int, account.debit)
-            .input('credit', sql.Int, account.credit)
-            .input('balance', sql.Int, account.balance)  
-            .input('userId', sql.Int, account.userId)
-            .input('date_time_account_added', sql.Int, account.date_time_account_added)
-            .input('order_num', sql.Int, account.order_num)
-            .input('statement', sql.Int, account.statement)
-            .input('comment', sql.Int, account.comment)*/
-            .input('Type', sql.VarChar,'INSERT')
+            .input('account_number', account.accountNumber)
+            .input('account_name',  account.accountName)
+            .input('account_description',  account.accountDescription)
+            .input('account_category',  account.accountCategory)
+            .input('account_subcategory',  account.accountSubcategory)
+            .input('normal_side',  account.normalSide)
+            .input('initial_balance',  account.initialBalance)
+            .input('debit',  account.debit)
+            .input('credit',  account.credit)
+            .input('balance', account.balance)  
+            .input('userId',  account.userId)
+            .input('date_time_account_added',  account.dateTime)
+            .input('order_num',  account.orderNumber)
+            .input('statement',  account.statement)
+            .input('comment',  account.comment)
+            .input('Type', 'INSERT')
             .execute('COA_Management');
         return insertAccount.recordsets;
         console.log('fin')
@@ -53,10 +73,52 @@ async function addAccount(account) {
 async function deleteAccount(account) {
     try {
         let pool = await sql.connect(config);
-        let account = await pool.request()
-            .input('input_parameter', sql.Int, account.account_number)
-            .query("DELETE from ChartOfAccounts where account_number = @input_parameter")
-        return account.recordsets;
+        let accountDel = await pool.request()
+            .input('account_number', account.account_number)
+            .input('account_name', '')
+            .input('account_description', '')
+            .input('account_category', '')
+            .input('account_subcategory', '')
+            .input('normal_side', '')
+            .input('initial_balance', '')
+            .input('debit', '')
+            .input('credit', '')
+            .input('balance', '')
+            .input('userId', '')
+            .input('date_time_account_added', '')
+            .input('order_num', '')
+            .input('statement', '')
+            .input('comment', '')
+            .input('Type', 'DELETE')
+            .execute('COA_Management');
+        return accountDel.recordsets;
+    } catch (error) {
+        console.log(error)
+    }
+}
+async function updateAccount(account) {
+    console.log(account)
+    try {
+        let pool = await sql.connect(config);
+        let accountUpdate = await pool.request()
+            .input('account_number', account.accountNumber)
+            .input('account_name', account.accountName)
+            .input('account_description', account.accountDescription)
+            .input('account_category', account.accountCategory)
+            .input('account_subcategory', account.accountSubcategory)
+            .input('normal_side', account.normalSide)
+            .input('initial_balance', account.initialBalance)
+            .input('debit', account.debit)
+            .input('credit', account.credit)
+            .input('balance', account.balance)
+            .input('userId', account.userId)
+            .input('date_time_account_added', account.dateTime)
+            .input('order_num', account.orderNumber)
+            .input('statement', account.statement)
+            .input('comment', account.comment)
+            .input('Type', 'UPDATE')
+            .execute('COA_Management');
+        return accountUpdate.recordsets;
     } catch (error) {
         console.log(error)
     }
@@ -65,5 +127,6 @@ module.exports = {
     getAccounts : getAccounts,
     getAccount : getAccount,
     addAccount : addAccount,
-    deleteAccount : deleteAccount
+    deleteAccount : deleteAccount,
+    updateAccount : updateAccount
 }

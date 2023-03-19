@@ -1,4 +1,4 @@
-'use strict'
+/*'use strict'
 
 const accountData = require('../data/events');
 
@@ -15,4 +15,4 @@ const getAccounts = async(req, res, next) => {
 
 module.exports = {
     getAccounts
-}
+}*/

@@ -42,6 +42,20 @@ export const AuthProvider = ({ children }) => {
     const [isDisabled, setIsDisabled] = useState(false)
     const [loginAttempts, setLoginAttempts] = useState(3)
     const decrementCounter = () => setLoginAttempts(loginAttempts - 1)
+
+    auth.onAuthStateChanged(user => {
+        if(user) {
+            //console.log('user logged in')
+            const data = JSON.parse(window.localStorage.getItem('userData'));
+            //console.log(data)
+            setUserData(data)
+            //console.log(userData)
+
+            window.localStorage.setItem('userRole', data.role)
+        } else {
+            console.log('user logged out')
+        }  
+    })
     //checks if a user is logged after refresh
     /*useEffect(() => {
         const loggedInUser = JSON.parse(window.localStorage.getItem('user'));
@@ -71,20 +85,25 @@ export const AuthProvider = ({ children }) => {
     /*onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser)
     })*/
-    useEffect(() => {
+
+    /*useEffect(() => {
+        window.localStorage.setItem('userAuth', JSON.stringify(auth.currentUser));
         const CurrentUser = onAuthStateChanged(auth, (currentUser) => {
-            console.log(currentUser)
-            setUser(currentUser)
-            console.log(user)
+            if(currentUser != null){
+                setUser(currentUser)
+                console.log('user set in not null')
+                console.log(user)
+            } else {
+                const uA = window.localStorage.getItem('userAuth');
+                setUser(JSON.parse(uA))
+                console.log('user set in else')
+                console.log(user)
+            }
         })
-        /*const currentUser = auth.onAuthStateChanged(user => {
-            setUser(user)
-            console.log(user)
-        })*/
         return () => {
             CurrentUser()
         }
-    })
+    }, [user])*/
 
     const createUser = async (email, password, userInfo) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -119,7 +138,7 @@ export const AuthProvider = ({ children }) => {
                     setIsLoggedIn(true)
                     //console.log(user)
                     //console.log(auth)
-                    //window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
+                    window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
                     //window.localStorage.setItem('user', JSON.stringify(user))
                     //console.log(user)
                 }).catch((error) => {
