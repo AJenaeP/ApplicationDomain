@@ -11,7 +11,23 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { TableCell, TableContainer, TableHead, TableRow, TableBody, Table, Paper, Button } from "@mui/material";
+import { 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  TableBody, 
+  Table, 
+  Paper, 
+  Button, 
+  Dialog ,
+  DialogActions,
+  DialogContent
+} from "@mui/material";
+import AddAccount from "./AddAccount";
+import ViewAccount from "../ViewAccount";
+import EditAccount from "./EditAccount";
+import DeleteAccount from "./DeleteAccount";
 
 //Display logo
 //<img id={compass logo} src="images/compassLogo.png"></img>
@@ -51,9 +67,15 @@ function Accounts() {
   };
 */
     const [backendData, setBackendData] = useState([{}]);
-    const [selectedRow, setSelectedRow] = useState({});
+    const [selectedRow, setSelectedRow] = useState();
+    const [selectedAccount, setSelectedAccount] = useState({});
     const [isRowSelected, setIsRowSelected] = useState(false)
-
+    const [openAdd, setOpenAdd] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
+    const [openView, setOpenView] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
+    const [newAccount, setNewAccount] = useState(AddAccount.account)
+    
     //console.log(selectedRow)
     useEffect(() => {
       fetch('/api/accounts').then(
@@ -65,15 +87,39 @@ function Accounts() {
       )
     },[])
 
-   function handleAccountSelection(account) {
-      if(isRowSelected){
-        const currentRow = document.getElementsByClassName('isSelected')
-        console.log(currentRow)
-        //currentRow.classList.remove('isSelected')
-        //setIsRowSelected(false)
-      }
+    const addAccount = () => {
 
-        setSelectedRow(account)
+    }
+    const openAddAccount = () => {
+        setOpenAdd(true)
+    }
+    const openViewAccount = () => {
+        setOpenView(true)
+    }
+    const openEditAccount = () => {
+        setOpenEdit(true)
+    }
+    const openDeleteAccount = () => {
+        setOpenDelete(true)
+    }
+    const closeAddAccount = () => {
+        setOpenAdd(false)
+    }
+    const closeViewAccount = () => {
+        setOpenView(false)
+      }
+    const closeEditAccount = () => {
+        setOpenEdit(false)
+      }
+    const closeDeleteAccount = () => {
+        setOpenDelete(false)
+      }
+   function handleAccountSelection(account, i) {
+        if(i === selectedRow){
+          //if selected row is already selected remove is selected class name
+        }
+        setSelectedRow(i)
+        setSelectedAccount(account)
         setIsRowSelected(true)
         const row = document.getElementById(account.account_number)
         row.classList.add('isSelected')  
@@ -107,13 +153,14 @@ function Accounts() {
           </TableRow>
         </TableHead>
         <TableBody className="accountRows">
-            {backendData.map(account => {
+            {backendData.map((account, i) => {
               return (
                 <>
                   <TableRow
                     id={account.account_number} 
-                    key={account.account_number} 
-                    onClick={() => handleAccountSelection(account)}
+                    key={i} 
+                    onClick={() => handleAccountSelection(account, i)}
+                    className={selectedRow === i ? "isSelected" : ""}
                   >
                     <TableCell>{account.account_number}</TableCell>
                     <TableCell>{account.account_name}</TableCell>
@@ -130,13 +177,48 @@ function Accounts() {
                     <TableCell>{account.order_num}</TableCell>
                     <TableCell>{account.statement}</TableCell>
                     <TableCell>{account.comment}</TableCell>
-                </TableRow>
+                  </TableRow>
                 </>
               )})}     
         </TableBody>
         </Table>
       </TableContainer>
       </Paper>
+      <Dialog open={openAdd} onClose={closeAddAccount}>
+        <DialogContent>
+          <AddAccount/>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={addAccount}>Add</Button>
+          <Button onClick={closeAddAccount}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openView} onClose={closeViewAccount}>
+        <DialogContent>
+          <ViewAccount/>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeViewAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openEdit} onClose={closeEditAccount}>
+        <DialogContent>
+          <EditAccount />
+        </DialogContent>
+        <DialogActions>
+          <Button>Update Account</Button>
+          <Button onClick={closeEditAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openDelete} onClose={closeDeleteAccount}>
+        <DialogContent>
+          <DeleteAccount/>
+        </DialogContent>
+        <DialogActions>
+          <Button>Delete Account</Button>
+          <Button onClick={closeDeleteAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <div style={{ display: 'flex', marginTop: 150, marginLeft: 450, justifyContent: 'center'}}>
         <Button
           variant='outlined'
@@ -145,6 +227,7 @@ function Accounts() {
           style={{ width: 100, marginRight: 20 }}
           className='submit'
           sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)' } }}
+          onClick={openAddAccount}
         >
           Add Account
         </Button>
@@ -154,7 +237,19 @@ function Accounts() {
           type='submit'
           style={{ width: 100, marginRight: 20 }}
           className='submit'
+          onClick={openViewAccount}
           sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)' } }}
+        >
+          View Account
+        </Button>
+        <Button
+          variant='outlined'
+          size='large'
+          type='submit'
+          style={{ width: 100, marginRight: 20 }}
+          className='submit'
+          sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)' } }}
+          onClick={openEditAccount}
         >
           Edit Account
         </Button>
@@ -165,6 +260,7 @@ function Accounts() {
           style={{ width: 100, marginRight: 20 }}
           className='submit'
           sx={{ ':hover': { bgcolor: 'rgb(161, 252, 134,0.2)' } }}
+          onClick={openDeleteAccount}
         >
           Delete Account
         </Button>

@@ -3,7 +3,7 @@
 //of the services the administrator can perform
 
 
-import { useState, useEffect } from "react";
+/*import { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { db } from "./firebase-config";
 
@@ -129,7 +129,7 @@ return (
 );
 };
 
-export default Manager;
+export default Manager;*/
 
 
 

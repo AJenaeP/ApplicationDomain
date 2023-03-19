@@ -50,8 +50,20 @@ async function addAccount(account) {
         console.log(error)
     }
 }
+async function deleteAccount(account) {
+    try {
+        let pool = await sql.connect(config);
+        let account = await pool.request()
+            .input('input_parameter', sql.Int, account.account_number)
+            .query("DELETE from ChartOfAccounts where account_number = @input_parameter")
+        return account.recordsets;
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     getAccounts : getAccounts,
     getAccount : getAccount,
-    addAccount : addAccount
+    addAccount : addAccount,
+    deleteAccount : deleteAccount
 }

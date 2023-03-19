@@ -1,4 +1,4 @@
-SELECT [account_number]
+/* SELECT [account_number]
         ,[account_name]
         ,[account_description]
         ,[normal_side]
@@ -13,4 +13,4 @@ SELECT [account_number]
         ,[order]
         ,[statement]
         ,[comment]
-FROM [dbo].[ChartOfAccounts]
+FROM [dbo].[ChartOfAccounts] */

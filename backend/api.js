@@ -47,9 +47,18 @@ router.route('/accounts/:account_number').get((request, response) => {
 })
 router.route('/accounts').post((request, response) => {
     console.log("post is working")
-    
+
     let account = {...request.body}
     dboperations.addAccount(account).then(result => {
+        response.status(201).json(result);
+    })
+})
+
+router.route('/accounts/delete').post((request, response) => {
+    console.log("post is working")
+
+    let account = { ...request.body }
+    dboperations.deleteAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
