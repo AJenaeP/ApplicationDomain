@@ -38,10 +38,10 @@ function App() {
               <Route path='/admindashboard' element={<DashboardAdmin/>}></Route>              
             </Route>
             <Route path='/' element={<ProtectedRoute roleRequired='Manager'/>}>
-              <Route path='/managerdashboard' element={<Manager/>}></Route>
+              
             </Route>
             <Route path='/' element={<ProtectedRoute roleRequired='Accountant'/>}>
-              <Route path='/accountantdashboard' element={<Accountant/>}></Route>
+              
             </Route>
             <Route path='/denied' element={<PermissionDenied/>}></Route>
             <Route path='/accounts' element={<Accounts/>}></Route>
@@ -53,3 +53,6 @@ function App() {
 }
 
 export default App;
+
+//<Route path='/managerdashboard' element={<Manager/>}></Route>
+//<Route path='/accountantdashboard' element={<Accountant/>}></Route>

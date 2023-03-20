@@ -31,26 +31,30 @@ import EditAccount from "./EditAccount";
 import DeleteAccount from "./DeleteAccount";
 
 function Accounts() {
-  const [backendData, setBackendData] = useState([{}]);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [selectedAccount, setSelectedAccount] = useState({});
-  const [isRowSelected, setIsRowSelected] = useState(false);
-  const [openAdd, setOpenAdd] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const [openView, setOpenView] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [newAccount, setNewAccount] = useState(AddAccount.account);
-
-  //console.log(selectedRow)
-  useEffect(() => {
-    fetch("/api/accounts")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, [backendData]);
-  //we can use this when searching
-  /*useEffect(() => {
+    const [role, setRole] = useState(window.localStorage.getItem('userRole'))
+    const [backendData, setBackendData] = useState([{}]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedAccount, setSelectedAccount] = useState({});
+    const [isRowSelected, setIsRowSelected] = useState(false)
+    const [openAdd, setOpenAdd] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
+    const [openView, setOpenView] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
+    const [newAccount, setNewAccount] = useState(AddAccount.account)
+    
+    //console.log(selectedRow)
+    useEffect(() => {
+      fetch('/api/accounts')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          setBackendData(data)
+        }
+      )
+    },[backendData])
+    //we can use this when searching
+    /*useEffect(() => {
       fetch('/api/accounts/:accountNumber').then(
         response => response.json()
       ).then(
@@ -103,7 +107,6 @@ function Accounts() {
     }
   }
 
-  //NEED return method that promised information
   return (
     <div className="App">
       <Header />
@@ -216,60 +219,83 @@ function Accounts() {
           justifyContent: "center",
         }}
       >
-        <Tooltip title="Add Chart of Account Entry">
-          <Button
-            variant="outlined"
-            size="large"
-            type="submit"
-            style={{ width: 100, marginRight: 20 }}
-            className="submit"
-            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-            onClick={openAddAccount}
-          >
-            Add Account
-          </Button>
-        </Tooltip>
-        <Tooltip title="View Chart of Account">
-          <Button
-            variant="outlined"
-            size="large"
-            type="submit"
-            style={{ width: 100, marginRight: 20 }}
-            className="submit"
-            onClick={openViewAccount}
-            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-          >
-            View Account
-          </Button>
-        </Tooltip>
-        <Tooltip title="Edit Chart of Account">
-          <Button
-            variant="outlined"
-            size="large"
-            type="submit"
-            style={{ width: 100, marginRight: 20 }}
-            className="submit"
-            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-            onClick={openEditAccount}
-          >
-            Edit Account
-          </Button>
-        </Tooltip>
-        <Tooltip title="Delete Account">
-          <Button
-            variant="outlined"
-            size="large"
-            type="submit"
-            style={{ width: 100, marginRight: 20 }}
-            className="submit"
-            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-            onClick={openDeleteAccount}
-          >
-            Delete Account
-          </Button>
-        </Tooltip>
+      {
+        (role === "Administrator") &&
+          <>
+            <Tooltip title="Add Chart of Account Entry">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  type="submit"
+                  style={{ width: 100, marginRight: 20 }}
+                  className="submit"
+                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                  onClick={openAddAccount}
+                >
+                  Add Account
+                </Button>
+            </Tooltip>
+            <Tooltip title="View Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                onClick={openViewAccount}
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+              >
+                  View Account
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openEditAccount}
+              >
+              Edit Account
+              </Button>
+            </Tooltip>
+            <Tooltip title="Delete Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openDeleteAccount}
+              >
+                Delete Account
+              </Button>
+              </Tooltip>
+          </>
+      }
+      {
+        (role !== "Administrator") &&
+          <>
+            <Tooltip title="View Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                onClick={openViewAccount}
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+              >
+                View Account
+              </Button>
+            </Tooltip>
+          </>
+        }
       </div>
-    </div>
+    </div> 
   );
 }
 

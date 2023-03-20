@@ -45,65 +45,13 @@ export const AuthProvider = ({ children }) => {
 
     auth.onAuthStateChanged(user => {
         if(user) {
-            //console.log('user logged in')
             const data = JSON.parse(window.localStorage.getItem('userData'));
-            //console.log(data)
             setUserData(data)
-            //console.log(userData)
-
-            window.localStorage.setItem('userRole', data.role)
         } else {
             console.log('user logged out')
         }  
     })
-    //checks if a user is logged after refresh
-    /*useEffect(() => {
-        const loggedInUser = JSON.parse(window.localStorage.getItem('user'));
-        const loggedInData = JSON.parse(window.localStorage.getItem('userData'));
-        //setUser(JSON.parse(loggedInUser))
-        //setUserData(JSON.parse(loggedInData))
-        if (loggedInUser) {
-            console.log(user)
-            console.log(userData)
-            console.log(loggedInUser)
-            //console.log(loggedInData)
-            setUser(loggedInUser)
-            setUserData(loggedInData)
-            //const foundUser = JSON.parse(loggedInUser);
-            //const foundUserData = JSON.parse(loggedInData);
-            localStorage.setItem('we are', 'here')
-            //setUser(foundUser);
-            //setUserData(foundUserData);
-            //console.log(foundUser);
-            //console.log(foundUserData);
-            console.log(user);
-            //console.log(userData);
-        }
-    }, []);*/
-    //auth().setPersistence(auth.Auth.Persistance.LOCAL)
-    //console.log(user)
-    /*onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser)
-    })*/
-
-    /*useEffect(() => {
-        window.localStorage.setItem('userAuth', JSON.stringify(auth.currentUser));
-        const CurrentUser = onAuthStateChanged(auth, (currentUser) => {
-            if(currentUser != null){
-                setUser(currentUser)
-                console.log('user set in not null')
-                console.log(user)
-            } else {
-                const uA = window.localStorage.getItem('userAuth');
-                setUser(JSON.parse(uA))
-                console.log('user set in else')
-                console.log(user)
-            }
-        })
-        return () => {
-            CurrentUser()
-        }
-    }, [user])*/
+    
 
     const createUser = async (email, password, userInfo) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -138,7 +86,9 @@ export const AuthProvider = ({ children }) => {
                     setIsLoggedIn(true)
                     //console.log(user)
                     //console.log(auth)
+                    console.log(doc.data())
                     window.localStorage.setItem('userData', JSON.stringify(doc.data())) 
+                    window.localStorage.setItem('userRole', doc.data().role)
                     //window.localStorage.setItem('user', JSON.stringify(user))
                     //console.log(user)
                 }).catch((error) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {  useNavigate, Link, useLocation } from 'react-router-dom'
 import compasslogo from '../../images/compassLogo.png';
 import { UserAuth } from '../../utilities/AuthContext'; 
@@ -18,42 +18,19 @@ export class user {
 
 const Login = () => {
     const navigate = useNavigate();
-    const [error, setError] = React.useState('')
-    const [username, setUserName] = React.useState("")
-    const [password, setPassword] = React.useState("")
+    //const [error, setError] = useState('')
+    const [username, setUserName] = useState("")
+    const [password, setPassword] = useState("")
     //values pulled from authcontext
-    const { signIn, user, isLoggedIn, userData, isDisabled } = UserAuth();
-    const [goToForgotPassword, setgoToForgotPassword] = React.useState(false);
-    const [goToHome, setgoToHome] = React.useState(false);
-    const [goToDashboard, setGoToDashboard] = React.useState(false);
+    const { signIn, user, isLoggedIn,userData, isDisabled } = UserAuth();
+    const [goToForgotPassword, setgoToForgotPassword] = useState(false);
+    const [goToHome, setgoToHome] = useState(false);
+    const [goToDashboard, setGoToDashboard] = useState(true);
 
-useEffect (() => {
-    //navigate to specific dashboard
-    if(user) {
-        if (goToDashboard) {
-            if(userData.role == "Administrator"){
-                navigate('/admindashboard')
-            } else if (userData.role == "Manager"){
-                navigate('/managerdashboard')
-            } else if(userData.role == "Accountant"){
-                navigate('/accountantdashboard')
-            } 
-        };
-    }
-    //navigate to forgot password page
-    if (goToForgotPassword) {
-        navigate('/forgotpassword')
-    };
-    //navigate to home screen
-    if (goToHome) {
-        navigate('/home')
-    };
-})
 
     //this calls signin function from authcontext
     const handleSignIn = (e) => {
         e.preventDefault();
-        setError("")
         if (username === "") {
             alert("Username can't be empty");
         } else if (password === "") {
@@ -61,11 +38,34 @@ useEffect (() => {
         }
         try{
             signIn(username,password)
-            setGoToDashboard(true)
-        }catch(e){
-            setError(e.message)
+        }catch(error){
             console.log(error)
+        } finally {
+            handleNavigation()
         }
+    }
+
+    function handleNavigation() {
+        if (user) {
+            if (goToDashboard) {
+                let role = window.localStorage.getItem('userRole')
+                if (role === "Administrator") {
+                    navigate('/admindashboard')
+                } else if (role === "Manager") {
+                    navigate('/managerdashboard')
+                } else if (role === "Accountant") {
+                    navigate('/accountantdashboard')
+                }
+            };
+        }
+        //navigate to forgot password page
+        if (goToForgotPassword) {
+            navigate('/forgotpassword')
+        };
+        //navigate to home screen
+        if (goToHome) {
+            navigate('/home')
+        };
     }
 
     return(
