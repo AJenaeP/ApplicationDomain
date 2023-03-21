@@ -1,40 +1,42 @@
-import React, { useEffect } from "react";
-import { elastic as Menu } from "react-burger-menu";
-import "../css/Sidebar.css";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import LockResetIcon from "@mui/icons-material/LockReset";
-import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
-import EmailIcon from "@mui/icons-material/Email";
-import { UserAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
+import React, { useEffect } from 'react';
+import { elastic as Menu } from 'react-burger-menu';
+import '../css/Sidebar.css';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import CreateIcon from '@mui/icons-material/Create';
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import LockResetIcon from '@mui/icons-material/LockReset';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
+import EmailIcon from '@mui/icons-material/Email';
+import { UserAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from "@mui/icons-material/Help";
+
 
 const Sidebar = () => {
   const { userData, logout, auth } = UserAuth();
-  const [goToHome, setGoToHome] = React.useState(false);
+  const [goToHome, setGoToHome] = React.useState(false)
   const navigate = useNavigate();
 
   const handleLogout = () => {
     try {
-      logout();
-      navigate("/home");
+      logout()
+      navigate('/home')
     } catch (e) {
-      console.log(e.message);
+      console.log(e.message)
     }
-  };
+  }
 
   return (
-    <div className="sidebar">
-      <List>
+    <div className='sidebar'>
+      <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href="/">
+          <ListItemButton className="menu-item"href='/'>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -42,9 +44,9 @@ const Sidebar = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <List>
+      <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href="/CreateNewUsers">
+          <ListItemButton className="menu-item" href='/CreateNewUsers'>
             <ListItemIcon>
               <PeopleAltIcon />
             </ListItemIcon>
@@ -52,9 +54,9 @@ const Sidebar = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <List>
+      <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href="/ExpiredPasswords">
+          <ListItemButton className="menu-item" href='/ExpiredPasswords'>
             <ListItemIcon>
               <LockResetIcon />
             </ListItemIcon>
@@ -62,9 +64,9 @@ const Sidebar = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <List>
+      <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href="/accounts">
+          <ListItemButton className="menu-item" href='/accounts'>
             <ListItemIcon>
               <StackedLineChartIcon />
             </ListItemIcon>
@@ -72,9 +74,9 @@ const Sidebar = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <List>
+      <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href="/Email">
+          <ListItemButton className="menu-item" href='/Email'>
             <ListItemIcon>
               <EmailIcon />
             </ListItemIcon>
@@ -84,6 +86,15 @@ const Sidebar = () => {
       </List>
       <List>
         <ListItem disablePadding>
+          <ListItemButton className="menu-item" href='/AddJournal'>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add Journal" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <ListItem disablePadding>
           <ListItemButton className="menu-item" href="/helppage">
             <ListItemIcon>
               <HelpIcon />
@@ -91,7 +102,6 @@ const Sidebar = () => {
             <ListItemText primary="Help Page" />
           </ListItemButton>
         </ListItem>
-      </List>
       <List>
         <ListItem disablePadding>
           <ListItemButton className="menu-item" onClick={handleLogout}>
@@ -103,26 +113,8 @@ const Sidebar = () => {
         </ListItem>
       </List>
     </div>
-    /*<div className='sidebar'>
-      <Menu>
-        <a className="menu-item" href="/">
-          Home
-        </a>
-        <a className="menu-item" href="/CreateNewUsers">
-          Users
-        </a>
-        <a className="menu-item" href="/ExpiredPasswords">
-          Expired Passwords
-        </a>
-        <a className="menu-item" href="/Accounts">
-          Accounts
-        </a>
-        <a className="menu-item" href="/Email">
-          Email
-        </a>
-      </Menu>
-    </div>*/
+   
   );
-};
+}
 
-export default Sidebar;
+export default Sidebar
