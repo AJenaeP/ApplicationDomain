@@ -35,7 +35,7 @@ function Accounts() {
     const [openView, setOpenView] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
     const [openDeactivate, setOpenDeactivate] = useState(false)
-    const [newAccount, setNewAccount] = useState(AddAccount.account)
+    //const [newAccount, setNewAccount] = useState(AddAccount.account)
 
     //console.log(selectedRow)
     useEffect(() => {
@@ -60,7 +60,10 @@ function Accounts() {
     }, [])*/
 
   const openAddAccount = () => {
+    console.log('add account button clicked ')
+    console.log(selectedAccount)
     setOpenAdd(true);
+    console.log(openAdd)
   };
   const openViewAccount = () => {
     if (isRowSelected) {
@@ -127,7 +130,7 @@ function Accounts() {
           display: "flex",
           position: "relative",
           top: 100,
-          left: "20%",
+          left: "15%",
         }}
       >
         <TableContainer>
@@ -165,7 +168,8 @@ function Accounts() {
                       id={i}
                       key={i}
                       onClick={() => handleAccountSelection(account, i)}
-                      className={selectedRow === i ? "isSelected" : "", account.account_status === 'Deactivated' ? 'bgred' : ''}
+                      className={(selectedRow === i ? "isSelected" : "") ||
+                      (account.account_status === 'Deactivated' ? 'bgred' : '')}
                     >
                       <TableCell>{account.account_number}</TableCell>
                       <TableCell>{account.account_name}</TableCell>
@@ -193,7 +197,7 @@ function Accounts() {
       </Paper>
       <Dialog open={openAdd} onClose={closeAddAccount}>
         <DialogContent>
-          <AddAccount />
+          <AddAccount account={{ selectedAccount }} />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeAddAccount}>Cancel</Button>
@@ -201,7 +205,7 @@ function Accounts() {
       </Dialog>
       <Dialog open={openView} onClose={closeViewAccount}>
         <DialogContent>
-          <ViewAccount />
+          <ViewAccount account={{ selectedAccount }} />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeViewAccount}>Close</Button>
@@ -235,7 +239,7 @@ function Accounts() {
         style={{
           display: "flex",
           marginTop: 150,
-          marginLeft: 450,
+          marginLeft: 360,
           justifyContent: "center",
         }}
       >

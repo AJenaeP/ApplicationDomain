@@ -21,9 +21,7 @@ import DashboardManager from "./pages/ManagerPages/DashboardManager";
 import DashboardAccountant from "./pages/AccountantPages/DashboardAccountant";
 import Users from "./pages/AdminPages/Users";
 /* add to admin protected route after creation
-    <Route path='/CreateNewUsers' element={<CreateNewUser />}></Route>
-    <Route path='/Accounts' element={<Accounts />}></Route>
-    <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
+  <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
 */
 function App() {
   return (

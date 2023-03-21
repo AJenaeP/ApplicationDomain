@@ -2,139 +2,107 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    TextField,
     DialogActions,
     Button,
+    TextField,
     InputLabel,
+    OutlinedInput,
+    InputAdornment,
+    Select,
     MenuItem,
-    Select
+    SelectChangeEvent
 } from '@mui/material'
-import React, { useState, useEffect} from 'react'
-import Accounts from '../Accounts'
-import '../../css/AddAccount.css'
-//import {Alert} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import '../../css/AddAccount.css';
 
-const AddAccount = ({ account }) => {
-    const [updatedCategory, setUpdatedCategory] = useState('')
-    const [updatedSubcategory, setUpdatedSubcategory] = useState('')
-    const [updatedStatement, setUpdatedStatement] = useState('')
-    const [updatedStatus, setUpdatedStatus] = useState('Active')
-    const [message, setMessage] = useState({ error: false, msg: "" });
-    const [updatedAccount, setUpdatedAccount] = useState({
-        accountNumber: account.selectedAccount.account_number,
-        accountName: account.selectedAccount.account_name,
-        accountDescription: account.selectedAccount.account_description,
-        accountCategory: account.selectedAccount.account_category,
-        accountSubcategory: account.selectedAccount.account_subcategory,
-        normalSide: account.selectedAccount.normal_side,
-        initialBalance: account.selectedAccount.initialBalance,
-        debit: account.selectedAccount.debit,
-        credit: account.selectedAccount.credit,
-        balance: account.selectedAccount.balance,
-        userId: account.selectedAccount.userId,
-        dateTime: account.selectedAccount.dateTime,
-        orderNumber: account.selectedAccount.order_num,
-        statement: account.selectedAccount.statement,
-        comment: account.selectedAccount.comment,
-        accountStatus: account.selectedAccount.account_status,
+const AddAccount = () => {
+    const [isOpen, setIsOpen] = useState(true)
+    const [handleClose, setHandleClose] = useState(false)
+    const [addAccount, setAddAccount] = useState(false)
+    const [category, setCategory] = useState('')
+    const [subcategory, setSubcategory] = useState('')
+    const [statement, setStatement] = useState('')
+    const [status, setStatus] = useState('Active')
+    const [account, setAccount] = useState({
+        accountNumber: 0,
+        accountName: '',
+        accountDescription: '',
+        accountCategory: '',
+        accountSubcategory: '',
+        normalSide: '',
+        initialBalance: 0.00,
+        debit: 0.00,
+        credit: 0.00,
+        userId: '',
+        dateTime: '',
+        orderNumber: '',
+        statement: '',
+        comment: '',
+        accountStatus: '',
     })
+    function handleAccountNumberChange(e) { account.accountNumber = Number(e.target.value); }
+    function handleAccountNameChange(e) { account.accountName = e.target.value; }
+    function handleAccountDescChange(e) { account.accountDescription = e.target.value; }
+    function handleAccountCatChange(e) { setCategory(e.target.value); account.accountCategory = e.target.value; }
+    function handleAccountSubCatChange(e) { setSubcategory(e.target.value); account.accountSubcategory = e.target.value; }
+    function handleAccountNormChange(e) { account.normalSide = Number(e.target.value); }
+    function handleAccountInitialChange(e) { account.initialBalance = Number(e.target.value); }
+    function handleAccountDebitChange(e) { account.debit = Number(e.target.value); }
+    function handleAccountCreditChange(e) { account.credit = Number(e.target.value); }
+    //function handleAccountUserChange(e) { account.accountName = e.target.value; console.log(account) }
+    //function handleAccountDateChange(e) { account.accountName = e.target.value; console.log(account) }
+    function handleAccountOrderChange(e) { account.orderNumber = Number(e.target.value); }
+    function handleAccountStatementChange(e) { setStatement(e.target.value); account.statement = e.target.value; }
+    function handleAccountCommentChange(e) { account.comment = e.target.value; }
+    function handleAccountStatusChange(e) { setStatus(e.target.value); account.accountStatus = e.target.value; }
 
-    function handleAccountNameChange(e) { updatedAccount.accountName = e.target.value; }
-    function handleAccountDescChange(e) { updatedAccount.accountDescription = e.target.value; }
-    function handleAccountCatChange(e) { setUpdatedCategory(e.target.value); updatedAccount.accountCategory = e.target.value; }
-    function handleAccountSubCatChange(e) { setUpdatedSubcategory(e.target.value); updatedAccount.accountSubcategory = e.target.value; }
-    function handleAccountNormChange(e) { updatedAccount.normalSide = Number(e.target.value); }
-    function handleAccountInitialChange(e) { updatedAccount.initialBalance = Number(e.target.value); }
-    function handleAccountDebitChange(e) { updatedAccount.debit = Number(e.target.value); }
-    function handleAccountCreditChange(e) { updatedAccount.credit = Number(e.target.value); }
-    function handleAccountBalanceChange(e) { updatedAccount.balance = Number(e.target.value); }
-    //function handleAccountUserChange(e) { updatedAccount.accountName = e.target.value; console.log(account) }
-    //function handleAccountDateChange(e) { updatedAccountt.accountName = e.target.value; console.log(account) }
-    function handleAccountOrderChange(e) { updatedAccount.orderNumber = Number(e.target.value); }
-    function handleAccountStatementChange(e) { setUpdatedStatement(e.target.value); updatedAccount.statement = e.target.value; }
-    function handleAccountCommentChange(e) { updatedAccount.comment = e.target.value; }
-    function handleAccountStatusChange(e){setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value;}
-
-    function handleEdit(e) {
+    function handleAdd(e) {
         e.preventDefault();
-        console.log(account.selectedAccount)
-        console.log(updatedAccount)
-        console.log('trying to update...')
-        fetch('/api/accounts/update', {
-            method: "PUT",
+        console.log(account)
+        console.log('trying to add...')
+        fetch('/api/accounts/add', {
+            method: "POST",
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(updatedAccount)
+            body: JSON.stringify(account)
         })
-        .then(
-            response => {
-           
-                if (response.statusText === "Created") {
-                    alert('Account Updated')
-                }
-                   
-                else {
-                    alert(response.statusText)
-                }
-            },
-        )
+            .then(
+                response => { alert(response.statusText) }
+            )
     }
-    /*const handleSubmit = async (e) => {
-        e.preventDefault();
-        setMessage("");
-        if (account.selectedAccount.balance < 0) {
-          setMessage({ error: true, msg: "Account cannot be deactivated" });
-          return;
-        }*/
-    
-    //CREATE TRY CATCh statement to add Accounts and Update accounts 
- //CAN add error messages here 
-    
-  /*
-        {message?.msg && (
-          <Alert
-          //CREATE close option for error message
-            variant={message?.error ? "danger" : "success"}
-            dismissible
-            onClose={() => setMessage("")}
-          >
-            {message?.msg}
-          </Alert>
-        )}*/
-  
 
     return (
         <>
             <DialogTitle> Add An Account</DialogTitle>
             <TextField
-                disabled
-                id="outlined-disabled"
+                required
+                id="outlined-required"
                 label="Account Number -- Required"
-                defaultValue={account.selectedAccount.account_number}
+                defaultValue=""
+                onChange={handleAccountNumberChange}
             />
             <TextField
                 required
                 id="outlined-required"
                 label="Account Name -- Required"
-                defaultValue={account.selectedAccount.account_name}
+                defaultValue=""
                 onChange={handleAccountNameChange}
             />
             <TextField
                 required
                 id="outlined-required"
                 label="Account Description -- Required"
-                defaultValue={account.selectedAccount.account_description}
+                defaultValue=""
                 onChange={handleAccountDescChange}
             />
             <InputLabel id="demo-simple-select-label category">Category</InputLabel>
             <Select
                 labelId="demo-simple-select-label category"
                 id="demo-simple-select"
-                value={updatedCategory}
+                value={category}
                 label="Category"
-                sx={{ width: 'fit-content' }}
-                defaultValue={account.selectedAccount.account_category}
+                sx={{ width: 'auto' }}
                 onChange={handleAccountCatChange}
             >
                 <MenuItem value='assets'>Assets</MenuItem>
@@ -145,10 +113,9 @@ const AddAccount = ({ account }) => {
             <Select
                 labelId="demo-simple-select-label subcategory"
                 id="demo-simple-select"
-                value={updatedSubcategory}
+                value={subcategory}
                 label="Subcategory"
-                sx={{ width: 'fit-content' }}
-                defaultValue={account.selectedAccount.account_subcategory}
+                sx={{ width: 'auto' }}
                 onChange={handleAccountSubCatChange}
             >
                 <MenuItem value='current assets'>Assets</MenuItem>
@@ -158,83 +125,84 @@ const AddAccount = ({ account }) => {
                 <MenuItem value="shareholder\'s equity">Shareholder's Equity'</MenuItem>
                 <MenuItem value='expenses'>Expenses</MenuItem>
             </Select>
-            <TextField
-                id="outlined-required"
-                label="Normal Side"
-                defaultValue={account.selectedAccount.normal_side}
-            />
-            <TextField
-                id="outlined-required"
-                label="Initial Balance"
-                defaultValue={account.selectedAccount.initial_balance}
-            />
-            <TextField
-                id="outlined-required"
-                label="Debit"
-                defaultValue={account.selectedAccount.debit}
-            />
-            <TextField
-                id="outlined-required"
-                label="Credit"
-                defaultValue={account.selectedAccount.credit}
-            />
-            <TextField
-                id="outlined-required"
-                label="Balance"
-                defaultValue={account.selectedAccount.balance}
-            />
+            <div style={{ 'width': 250 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Initial Balance</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    label="Initial Balance"
+                    onChange={handleAccountInitialChange}
+                />
+            </div>
+            <div style={{ 'width': 250 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Debit</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    label="Debit"
+                    onChange={handleAccountDebitChange}
+                />
+            </div>
+            <div style={{ 'width': 250 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Credit</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    label="Credit"
+                    onChange={handleAccountCreditChange}
+                />
+            </div>
             <TextField
                 disabled
                 id="outlined-disabled"
                 label="User Id"
-                defaultValue={account.selectedAccount.userId}
+                defaultValue="userId"
             />
             <TextField
                 disabled
                 id="outlined-disabled"
-                label="Date/Time Account Added"
-                defaultValue={account.selectedAccount.date_time_account_added}
-            />
-            <TextField
-                id="outlined-required"
-                label="Order Number"
-                defaultValue={account.selectedAccount.order_num}
+                label="Disabled"
+                defaultValue="DateTime"
             />
             <InputLabel id="demo-simple-select-label statement">Statement</InputLabel>
             <Select
                 labelId="demo-simple-select-label statement"
                 id="demo-simple-select"
-                value={updatedStatement}
+                value={statement}
                 label="Statement"
-                sx={{ width: 'fit-content' }}
-                defaultValue={account.selectedAccount.account_statement}
+                sx={{ width: 'auto' }}
                 onChange={handleAccountStatementChange}
             >
                 <MenuItem value='balance sheet'>Balance Sheet</MenuItem>
+            //TODO: add another statement type here
             </Select>
+
             <TextField
                 id="outlined-multiline-static"
                 label="Comments"
                 multiline
                 rows={4}
-                defaultValue={account.selectedAccount.comment}
+                defaultValue="Type Here"
                 onChange={handleAccountCommentChange}
             />
             <InputLabel id="demo-simple-select-label status">Status</InputLabel>
             <Select
                 labelId="demo-simple-select-label status"
                 id="demo-simple-select"
-                value={updatedStatus}
+                value={status}
                 label="Status"
-                sx={{ width: 'fit-content' }}
-                defaultValue={account.selectedAccount.account_status}
+                sx={{ width: 'auto' }}
                 onChange={handleAccountStatusChange}
             >
-              <MenuItem value='Active'>Activate</MenuItem>
-              <MenuItem value='Deactivated'>Deactivate</MenuItem>
-              </Select>
+                <MenuItem value='active'>Active</MenuItem>
+                <MenuItem value='deactive'>Deactivate</MenuItem>
+
+            </Select>
+
             <DialogActions>
-                <Button onClick={handleEdit}>Update Account</Button>
+                <Button
+                    onClick={handleAdd}
+                >Add</Button>
             </DialogActions>
         </>
     )
