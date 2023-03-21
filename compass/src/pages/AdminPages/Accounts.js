@@ -3,14 +3,7 @@ import { db } from "../../utilities/Firebase";
 import Sidebar from "../../utilities/Sidebar";
 import Header from "../Header";
 import "../../css/Accounts.css";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+
 import {
   TableCell,
   TableContainer,
@@ -41,7 +34,7 @@ function Accounts() {
     const [openView, setOpenView] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
     const [newAccount, setNewAccount] = useState(AddAccount.account)
-    
+  
     //console.log(selectedRow)
     useEffect(() => {
       fetch('/api/accounts')
@@ -106,7 +99,9 @@ function Accounts() {
       row.classList.add("isSelected");
     }
   }
+  
 
+  
   return (
     <div className="App">
       <Header />
@@ -144,6 +139,7 @@ function Accounts() {
                 <TableCell> Order Number </TableCell>
                 <TableCell> Statement </TableCell>
                 <TableCell> Comment </TableCell>
+                <TableCell> Status </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="accountRows">
@@ -171,6 +167,7 @@ function Accounts() {
                       <TableCell>{account.order_num}</TableCell>
                       <TableCell>{account.statement}</TableCell>
                       <TableCell>{account.comment}</TableCell>
+                      <TableCell>{account.status}</TableCell>
                     </TableRow>
                   </>
                 );
@@ -296,7 +293,11 @@ function Accounts() {
         }
       </div>
     </div> 
-  );
-}
 
+
+
+  );
+
+}
 export default Accounts;
+
