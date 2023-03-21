@@ -33,7 +33,7 @@ async function getAccount(account_number) {
         let pool = await sql.connect(config);
         let account = await pool.request()
             .input('account_number', account_number)
-            .input('account_status', account_status)
+            .input('account_name', account_name)
             .input('Type', 'SELECT_FROM')
             .execute('COA_Management')
         //.query("SELECT * from ChartOfAccounts where account_number = @input_parameter")
