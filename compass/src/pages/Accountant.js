@@ -1,130 +1,187 @@
-//Can view accounts but can’t add, edit, or
-//deactivate accounts, but can perform the rest
-//of the services the administrator can perform
-/*import { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
-import { db } from "./firebase-config";
 
+import { useState, useEffect } from "react";
 
+import Header from "./Header";
 import {
-  collection,
-  getDocs,
-  addDoc,
-} from "firebase/firestore";
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  Table,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Tooltip,
+} from "@mui/material";
 
-
-
-//Display logo
-//<img id={compass logo} src="images/compassLogo.png"></img>
-
-//LAYOUT:
-
-//Title:
-//<h2>Compass Credit Union</h2>
+import ViewAccount from "./ViewAccount";
+import Accounts from "./AdminPages/Accounts";
 
 
 //CREATE varaibles for each section in Database
 function Accountant() {
- 
-    const [newName] = useState("");
-    const [newAccountNumber] = useState("");
-    const [newDescription] = useState("");
-    const [newnormalSide] = useState("");
-    const [newCategory] = useState("");
-    const [newSubCategory] = useState("");
-    const [newInitialBalance] = useState("");
-    const [newDebit] = useState("");
-    const [newCredit] = useState("");
-    const [newBalance] = useState("");
-    const [newAccountAdded] = useState("");
-    const [newUserID] = useState("");
-    const [newOrder] = useState("");
-    const [newStatement] = useState("");
-    const [newComment] = useState("");
-    const [newstatus] = useState("Active");
 
-  
-//CREATE collection assigned to Accounts in Firestore
-  const [Accounts, setAccounts] = useState([]);
-  const AccountsCollectionRef = collection(db, "Accounts");
+  const [backendData, setBackendData] = useState([{}]);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState({});
+  const [isRowSelected, setIsRowSelected] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openView, setOpenView] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
-  //ASSIGN to each section
-  const createAccounts = async () => {
-    await addDoc(AccountsCollectionRef, { Name: newName, AccountNumber: Number(newAccountNumber), Description: newDescription, normalSide: newnormalSide,  Category: newCategory, SubCategory: newSubCategory, InitialBalance: newInitialBalance, Debit: newDebit, Credit: newCredit, Balance: newBalance, AccountAdded: newAccountAdded, UserID: newUserID, Order: newOrder, Statement: newStatement, Comment: newComment, status: newstatus});
-  };
 
   //CREATE use effect
   useEffect(() => {
-    const getAccounts = async () => {
-      const data = await getDocs(AccountsCollectionRef);
-      setAccounts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+    fetch("/api/accounts")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, [backendData]);
 
-    getAccounts();
-  }, []);
 
-
-  //NEED return method that promised information 
-  
-//CREATE a dynamic table to display information
-return (
-  <>
-    <div className="mb-2">
-    </div>
-
-    {}
-    <Table className ='container w-75'>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Account Name</th>
-          <th>Account Number</th>
-          <th>Account Description</th>
-          <th>Normal side</th>
-          <th>Account Category</th>
-          <th>Account Subcategory</th>
-          <th>Initial Balance</th>
-          <th>Debit</th>
-          <th>Credit</th>
-          <th>Balance</th>
-          <th>Account Added</th>
-          <th>User Id</th>
-          <th>Order</th>
-          <th>Statement</th>
-          <th>Comment</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Accounts.map((doc, index) => {
-          return (
-            <tr key={doc.id}>
-              <td>{index + 1}</td>
-              <td>{doc.Name}</td>
-              <td>{doc.AccountNumber}</td>
-              <td>{doc.Description}</td>
-              <td>{doc.normalSide}</td>
-              <td>{doc.Category}</td>
-              <td>{doc.SubCategory}</td>
-              <td>{doc.InitialBalance}</td>
-              <td>{doc.Debit}</td>
-              <td>{doc.Credit}</td>
-              <td>{doc.Balance}</td>
-              <td>{doc.AccountAdded}</td>
-              <td>{doc.UserID}</td>
-              <td>{doc.Order}</td>
-              <td>{doc.Statement}</td>
-              <td>{doc.Comment}</td>
-              <td>{doc.status}</td>
-
-              
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
-  </>
-);
+ 
+const openAddAccount = () => {
+  setOpenAdd(true);
 };
+const openViewAccount = () => {
+  if (isRowSelected) {
+    setOpenView(true);
+  }
+};
+const openEditAccount = () => {
+  if (isRowSelected) {
+    setOpenEdit(true);
+  }
+};
+const openDeleteAccount = () => {
+  if (isRowSelected) {
+    setOpenDelete(true);
+  }
+};
+const closeAddAccount = () => {
+  setOpenAdd(false);
+};
+const closeViewAccount = () => {
+  setOpenView(false);
+};
+const closeEditAccount = () => {
+  setOpenEdit(false);
+};
+const closeDeleteAccount = () => {
+  setOpenDelete(false);
+};
+function handleAccountSelection(account, i) {
+  if (selectedRow === i) {
+    setIsRowSelected(false);
+    setSelectedRow(null);
+  } else {
+    setSelectedRow(i);
+    setSelectedAccount(account);
+    setIsRowSelected(true);
+    const row = document.getElementById(i);
+    row.classList.add("isSelected");
+  }
+}
 
-export default Accountant;*/
+const numberFormat = (value) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(value);
+
+//NEED return method that promised information
+return (
+  <div className="App">
+    <Header />
+    <Paper
+      sx={{
+        width: 1000,
+        overflow: "hidden",
+        display: "flex",
+        position: "relative",
+        top: 100,
+        left: "20%",
+      }}
+    >
+      <TableContainer>
+        <Table
+          sx={{ minWidth: 650 }}
+          size="small"
+          stickyHeader
+          aria-label="sticky table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell> Account Number </TableCell>
+              <TableCell> Account Name </TableCell>
+              <TableCell> Account Description </TableCell>
+              <TableCell> Account Category </TableCell>
+              <TableCell> Account Subcategory </TableCell>
+              <TableCell> Normal Side </TableCell>
+              <TableCell> Initial Balance </TableCell>
+              <TableCell> Debit </TableCell>
+              <TableCell> Credit </TableCell>
+              <TableCell> Balance </TableCell>
+              <TableCell> UserId </TableCell>
+              <TableCell> Date/Time Added </TableCell>
+              <TableCell> Order Number </TableCell>
+              <TableCell> Statement </TableCell>
+              <TableCell> Comment </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="accountRows">
+            {backendData.map((account, i) => {
+              return (
+                <>
+                  <TableRow
+                    id={i}
+                    key={i}
+                    onClick={() => handleAccountSelection(account, i)}
+                    className={selectedRow === i ? "isSelected" : ""}
+                  >
+                    <TableCell>{account.account_number}</TableCell>
+                    <TableCell>{account.account_name}</TableCell>
+                    <TableCell>{account.account_description}</TableCell>
+                    <TableCell>{account.account_category}</TableCell>
+                    <TableCell>{account.account_subcategory}</TableCell>
+                    <TableCell>{account.normal_side}</TableCell>
+                    <TableCell>{numberFormat(account.initial_balance)}</TableCell>
+                    <TableCell>{numberFormat(account.debit)}</TableCell>
+                    <TableCell>{numberFormat(account.credit)}</TableCell>
+                    <TableCell>{numberFormat(account.balance)}</TableCell>
+                    <TableCell>{account.userId}</TableCell>
+                    <TableCell>{account.date_time_account_added}</TableCell>
+                    <TableCell>{account.order_num}</TableCell>
+                    <TableCell>{account.statement}</TableCell>
+                    <TableCell>{account.comment}</TableCell>
+                  </TableRow>
+                </>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+   
+    <div
+      style={{
+        display: "flex",
+        marginTop: 150,
+        marginLeft: 450,
+        justifyContent: "center",
+      }}
+    >
+     
+   
+     </div>
+     </div>
+  
+);
+}
+
+export default Accountant;
