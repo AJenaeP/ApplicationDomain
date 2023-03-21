@@ -16,6 +16,8 @@ const EditAccount = ({ account }) => {
     const [updatedCategory, setUpdatedCategory] = useState('')
     const [updatedSubcategory, setUpdatedSubcategory] = useState('')
     const [updatedStatement, setUpdatedStatement] = useState('')
+    const [UpdatedStatus, SetUpdatedStatus] = useState('Activate')
+    const [message, setMessage] = useState({ error: false, msg: "" });
     const [updatedAccount, setUpdatedAccount] = useState({
         accountNumber: account.selectedAccount.account_number,
         accountName: account.selectedAccount.account_name,
@@ -26,11 +28,13 @@ const EditAccount = ({ account }) => {
         initialBalance: account.selectedAccount.initialBalance,
         debit: account.selectedAccount.debit,
         credit: account.selectedAccount.credit,
+        balance: account.selectedAccount.balance,
         userId: account.selectedAccount.userId,
         dateTime: account.selectedAccount.dateTime,
         orderNumber: account.selectedAccount.order_num,
         statement: account.selectedAccount.statement,
         comment: account.selectedAccount.comment,
+        status: account.selectedAccount.status,
     })
 
     function handleAccountNameChange(e) { updatedAccount.accountName = e.target.value; }
@@ -41,11 +45,13 @@ const EditAccount = ({ account }) => {
     function handleAccountInitialChange(e) { updatedAccount.initialBalance = Number(e.target.value); }
     function handleAccountDebitChange(e) { updatedAccount.debit = Number(e.target.value); }
     function handleAccountCreditChange(e) { updatedAccount.credit = Number(e.target.value); }
+    function handleAccountBalanceChange(e) { updatedAccount.balance = Number(e.target.value); }
     //function handleAccountUserChange(e) { updatedAccount.accountName = e.target.value; console.log(account) }
     //function handleAccountDateChange(e) { updatedAccountt.accountName = e.target.value; console.log(account) }
     function handleAccountOrderChange(e) { updatedAccount.orderNumber = Number(e.target.value); }
     function handleAccountStatementChange(e) { setUpdatedStatement(e.target.value); updatedAccount.statement = e.target.value; }
     function handleAccountCommentChange(e) { updatedAccount.comment = e.target.value; }
+    function handleAccountStatusChange(e){SetUpdatedStatus(e.target.value); updatedAccount.status = e.target.value;}
 
     function handleEdit(e) {
         e.preventDefault();
@@ -63,12 +69,17 @@ const EditAccount = ({ account }) => {
             response => {
                 if (response.statusText === "Created") {
                     alert('Account Updated')
+                    if (account.selectedAccount.balance < 0) {
+                        setMessage({ error: true, msg: "Account cannot be deactivated" });
+                    }
                 } else {
                     alert(response.statusText)
                 }
             },
         )
     }
+
+  
 
     return (
         <>
@@ -187,6 +198,20 @@ const EditAccount = ({ account }) => {
                 defaultValue={account.selectedAccount.comment}
                 onChange={handleAccountCommentChange}
             />
+
+<InputLabel id="demo-simple-select-label statement">Status</InputLabel>
+            <Select
+                labelId="demo-simple-select-label status"
+                id="demo-simple-select"
+                value={UpdatedStatus}
+                label="Status"
+                sx={{ width: 'auto' }}
+                defaultValue={account.selectedAccount.status}
+                onChange={handleAccountStatusChange}
+            >
+              <MenuItem value='Active'>Active</MenuItem>
+              <MenuItem value='Deactivated'>Deactivate</MenuItem>
+              </Select>
             <DialogActions>
                 <Button onClick={handleEdit}>Update Account</Button>
             </DialogActions>
