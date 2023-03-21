@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 import React, { useState, useEffect } from "react";
 //import '../../css/AddAccount.css';
+import Ledger from '../images/Ledger.jpg';
 
 const ViewAccount = () => {
     const [isOpen, setIsOpen] = useState(true)
@@ -28,7 +29,8 @@ const ViewAccount = () => {
 
     return (
         <>
-            <DialogTitle> Account Ledger will go here</DialogTitle>
+            <DialogTitle> Account Ledger </DialogTitle>
+            <img src={Ledger} alt="Ledger" width="550px"  />
             
         </>
     )
