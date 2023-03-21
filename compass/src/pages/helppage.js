@@ -11,9 +11,6 @@ const HelpPage = () => {
         <div>
           <Header />
         </div>
-        <head>
-          <link rel="stylesheet" href="css/HelpPage.css" />
-        </head>
         <body>
           <h1>Compass Credit Union Help</h1>
           <br />
