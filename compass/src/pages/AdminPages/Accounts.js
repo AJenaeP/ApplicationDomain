@@ -1,228 +1,298 @@
-import { 
-  Dialog, 
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  Select,
-  MenuItem,
-  SelectChangeEvent
- } from '@mui/material'
 import React, { useState, useEffect } from "react";
-import '../../css/AddAccount.css';
+import { db } from "../../utilities/Firebase";
+import Sidebar from "../../utilities/Sidebar";
+import Header from "../Header";
+import "../../css/Accounts.css";
 
-const AddAccount = () => {
-  const [isOpen, setIsOpen] = useState(true)
-  const [handleClose, setHandleClose] = useState(false)
-  const [addAccount, setAddAccount] = useState(false)
-  const [category, setCategory] = useState('')
-  const [subcategory, setSubcategory] = useState('')
-  const [statement, setStatement] = useState('')
-  const [status, setStatus] = useState("Active");
-  const [flag, setFlag] = useState(true);
-  const [message, setMessage] = useState({ error: false, msg: "" });
-  
-  const [account, setAccount] = useState({
-    accountNumber: 0,
-    accountName: '',
-    accountDescription: '',
-    accountCategory: '',
-    accountSubcategory: '',
-    normalSide: '',
-    initialBalance: 0.00,
-    debit: 0.00,
-    credit: 0.00,
-    userId: '',
-    dateTime: '',
-    orderNumber: '',
-    statement: '',
-    comment: '',
-    status: 'active',
-    
-  })
-  function handleAccountNumberChange(e) { account.accountNumber = Number(e.target.value);}
-  function handleAccountNameChange(e) { account.accountName = e.target.value; }
-  function handleAccountDescChange(e) { account.accountDescription = e.target.value;}
-  function handleAccountCatChange(e) { setCategory(e.target.value); account.accountCategory = e.target.value;}
-  function handleAccountSubCatChange(e) { setSubcategory(e.target.value); account.accountSubcategory = e.target.value;}
-  function handleAccountNormChange(e) { account.normalSide = Number(e.target.value);}
-  function handleAccountInitialChange(e) { account.initialBalance = Number(e.target.value);}
-  function handleAccountDebitChange(e) { account.debit = Number(e.target.value);}
-  function handleAccountCreditChange(e) { account.credit = Number(e.target.value);}
-  //function handleAccountUserChange(e) { account.accountName = e.target.value; console.log(account) }
-  //function handleAccountDateChange(e) { account.accountName = e.target.value; console.log(account) }
- 
-  function handleAccountOrderChange(e) { account.orderNumber = Number(e.target.value);}
-  function handleAccountStatementChange(e) { setStatement(e.target.value); account.statement = e.target.value;}
-  function handleAccountCommentChange(e) { account.comment = e.target.value;}
-  function handleAccountStatusChange(e){setStatus(e.target.value);account.status = e.target.value;}
+import {
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  Table,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Tooltip,
+} from "@mui/material";
+import AddAccount from "./AddAccount";
+import ViewAccount from "../ViewAccount";
+import EditAccount from "./EditAccount";
+import DeleteAccount from "./DeleteAccount";
 
-  function handleAdd(e){
-    e.preventDefault();
-    console.log(account)
-    console.log('trying to add...')
-    fetch('/api/accounts/add', {
-      method: "POST",
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(account)
-    })
-    .then( 
-      response => {alert(response.statusText)}
-    )
-  }
-  
+function Accounts() {
+    const [role, setRole] = useState(window.localStorage.getItem('userRole'))
+    const [backendData, setBackendData] = useState([{}]);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedAccount, setSelectedAccount] = useState({});
+    const [isRowSelected, setIsRowSelected] = useState(false)
+    const [openAdd, setOpenAdd] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
+    const [openView, setOpenView] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
+    const [newAccount, setNewAccount] = useState(AddAccount.account)
 
-  const closeAddAccount = () => {
-    setIsOpen(false);
+    //console.log(selectedRow)
+    useEffect(() => {
+      fetch('/api/accounts')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          setBackendData(data)
+        }
+      )
+    },[backendData])
+    //we can use this when searching
+    /*useEffect(() => {
+      fetch('/api/accounts/:accountNumber').then(
+        response => response.json()
+      ).then(
+        data => {
+          setBackendData(data)
+        }
+      )
+    }, [])*/
+
+  const openAddAccount = () => {
+    setOpenAdd(true);
   };
-  
-  
-
-    return (
-      <>
-          <DialogTitle> Add An Account</DialogTitle>
-            <TextField
-              required
-              id="outlined-required"
-              label= "Account Number -- Required"
-              defaultValue=""
-              onChange = {handleAccountNumberChange}
-            />
-            <TextField
-              required
-              id="outlined-required"
-              label="Account Name -- Required"
-              defaultValue=""
-              onChange={handleAccountNameChange}
-            />
-            <TextField
-              required
-              id="outlined-required"
-              label="Account Description -- Required"
-              defaultValue=""
-              onChange={handleAccountDescChange}
-            />
-            <InputLabel id="demo-simple-select-label category">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label category"
-              id="demo-simple-select"
-              value={category}
-              label="Category"
-              sx={{ width: 'auto' }}
-              onChange={handleAccountCatChange}
-            >
-              <MenuItem value='assets'>Assets</MenuItem>
-              <MenuItem value='liability'>Liability</MenuItem>
-              <MenuItem value='equity'>Equity</MenuItem>
-            </Select>
-            <InputLabel id="demo-simple-select-label subcategory">Subcategory</InputLabel>
-            <Select
-              labelId="demo-simple-select-label subcategory"
-              id="demo-simple-select"
-              value={subcategory}
-              label="Subcategory"
-              sx={{ width: 'auto' }}
-              onChange={handleAccountSubCatChange}
-            >
-              <MenuItem value='current assets'>Assets</MenuItem>
-              <MenuItem value='non-current assets'>Non-Current Assets</MenuItem>
-              <MenuItem value='current liabilities'>Current Liabilities</MenuItem>
-              <MenuItem value='non-current liabilities'>Non-Current Liabilities</MenuItem>
-              <MenuItem value="shareholder\'s equity">Shareholder's Equity'</MenuItem>
-              <MenuItem value='expenses'>Expenses</MenuItem>
-            </Select>
-            <div style={{ 'width': 250 }}>
-       
-              <InputLabel htmlFor="outlined-adornment-amount">Initial Balance</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Initial Balance"
-    
-                onChange={handleAccountInitialChange}
-              />
-            </div>
-            <div style={{ 'width': 250 }}>
-              <InputLabel htmlFor="outlined-adornment-amount">Debit</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Debit"
-               
-                onChange={handleAccountDebitChange}
-              />
-            </div>
-            <div style={{ 'width': 250 }}>
-              <InputLabel htmlFor="outlined-adornment-amount">Credit</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            
-                label="Credit"
-                onChange={handleAccountCreditChange}
-              />
-            </div>
-      
-
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="User Id"
-                defaultValue="userId"
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Disabled"
-                defaultValue="DateTime"
-            />
-            <InputLabel id="demo-simple-select-label statement">Statement</InputLabel>
-            <Select
-              labelId="demo-simple-select-label statement"
-              id="demo-simple-select"
-              value={statement}
-              label="Statement"
-              sx={{ width: 'auto' }}
-              onChange={handleAccountStatementChange}
-            >
-              <MenuItem value='balance sheet'>Balance Sheet</MenuItem>
-            //TODO: add another statement type here
-            </Select>
-            <TextField
-              id="outlined-multiline-static"
-              label="Comments"
-              multiline
-              rows={4}
-              defaultValue="Type Here"
-              onChange={handleAccountCommentChange}
-            />
-            <InputLabel id="demo-simple-select-label status">Status</InputLabel>
-            <Select
-              labelId="demo-simple-select-label status"
-              id="demo-simple-select"
-              value={status}
-              label="Status"
-              sx={{ width: 'auto' }}
-              onChange={handleAccountStatusChange}
-            >
-              <MenuItem value='Activate'>Activate</MenuItem>
-              <MenuItem value='Deactivate'>Deactivate</MenuItem>
-              
-            </Select>
-        <DialogActions>
-          <Button 
-            onClick={handleAdd}
-          >Add</Button>
-        </DialogActions>
-      </>
-    )
+  const openViewAccount = () => {
+    if (isRowSelected) {
+      setOpenView(true);
+    }
+  };
+  const openEditAccount = () => {
+    if (isRowSelected) {
+      setOpenEdit(true);
+    }
+  };
+  const openDeleteAccount = () => {
+    if (isRowSelected) {
+      setOpenDelete(true);
+    }
+  };
+  const closeAddAccount = () => {
+    setOpenAdd(false);
+  };
+  const closeViewAccount = () => {
+    setOpenView(false);
+  };
+  const closeEditAccount = () => {
+    setOpenEdit(false);
+  };
+  const closeDeleteAccount = () => {
+    setOpenDelete(false);
+  };
+  function handleAccountSelection(account, i) {
+    if (selectedRow === i) {
+      setIsRowSelected(false);
+      setSelectedRow(null);
+    } else {
+      setSelectedRow(i);
+      setSelectedAccount(account);
+      setIsRowSelected(true);
+      const row = document.getElementById(i);
+      row.classList.add("isSelected");
+    }
   }
 
 
-export default AddAccount
+
+  return (
+    <div className="App">
+      <Header />
+      <Paper
+        sx={{
+          width: 1000,
+          overflow: "hidden",
+          display: "flex",
+          position: "relative",
+          top: 100,
+          left: "20%",
+        }}
+      >
+        <TableContainer>
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell> Account Number </TableCell>
+                <TableCell> Account Name </TableCell>
+                <TableCell> Account Description </TableCell>
+                <TableCell> Account Category </TableCell>
+                <TableCell> Account Subcategory </TableCell>
+                <TableCell> Normal Side </TableCell>
+                <TableCell> Initial Balance </TableCell>
+                <TableCell> Debit </TableCell>
+                <TableCell> Credit </TableCell>
+                <TableCell> Balance </TableCell>
+                <TableCell> UserId </TableCell>
+                <TableCell> Date/Time Added </TableCell>
+                <TableCell> Order Number </TableCell>
+                <TableCell> Statement </TableCell>
+                <TableCell> Comment </TableCell>
+                <TableCell> Status </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="accountRows">
+              {backendData.map((account, i) => {
+                return (
+                  <>
+                    <TableRow
+                      id={i}
+                      key={i}
+                      onClick={() => handleAccountSelection(account, i)}
+                      className={selectedRow === i ? "isSelected" : ""}
+                    >
+                      <TableCell>{account.account_number}</TableCell>
+                      <TableCell>{account.account_name}</TableCell>
+                      <TableCell>{account.account_description}</TableCell>
+                      <TableCell>{account.account_category}</TableCell>
+                      <TableCell>{account.account_subcategory}</TableCell>
+                      <TableCell>{account.normal_side}</TableCell>
+                      <TableCell>{account.initial_balance}</TableCell>
+                      <TableCell>{account.debit}</TableCell>
+                      <TableCell>{account.credit}</TableCell>
+                      <TableCell>{account.balance}</TableCell>
+                      <TableCell>{account.userId}</TableCell>
+                      <TableCell>{account.date_time_account_added}</TableCell>
+                      <TableCell>{account.order_num}</TableCell>
+                      <TableCell>{account.statement}</TableCell>
+                      <TableCell>{account.comment}</TableCell>
+                      <TableCell>{account.status}</TableCell>
+                    </TableRow>
+                  </>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      <Dialog open={openAdd} onClose={closeAddAccount}>
+        <DialogContent>
+          <AddAccount />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAddAccount}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openView} onClose={closeViewAccount}>
+        <DialogContent>
+          <ViewAccount />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeViewAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openEdit} onClose={closeEditAccount}>
+        <DialogContent>
+          <EditAccount account={{ selectedAccount }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeEditAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openDelete} onClose={closeDeleteAccount}>
+        <DialogContent>
+          <DeleteAccount account={{ selectedAccount }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <div
+        style={{
+          display: "flex",
+          marginTop: 150,
+          marginLeft: 450,
+          justifyContent: "center",
+        }}
+      >
+      {
+        (role === "Administrator") &&
+          <>
+            <Tooltip title="Add Chart of Account Entry">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  type="submit"
+                  style={{ width: 100, marginRight: 20 }}
+                  className="submit"
+                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                  onClick={openAddAccount}
+                >
+                  Add Account
+                </Button>
+            </Tooltip>
+            <Tooltip title="View Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                onClick={openViewAccount}
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+              >
+                  View Account
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openEditAccount}
+              >
+              Edit Account
+              </Button>
+            </Tooltip>
+            <Tooltip title="Delete Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openDeleteAccount}
+              >
+                Delete Account
+              </Button>
+              </Tooltip>
+          </>
+      }
+      {
+        (role !== "Administrator") &&
+          <>
+            <Tooltip title="View Chart of Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                onClick={openViewAccount}
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+              >
+                View Account
+              </Button>
+            </Tooltip>
+          </>
+        }
+      </div>
+    </div> 
+);
+}
+export default Accounts;
