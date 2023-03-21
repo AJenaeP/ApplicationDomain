@@ -100,6 +100,11 @@ function Accounts() {
     }
   }
 
+  const numberFormat = (value) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(value);
 
 
   return (
@@ -158,10 +163,10 @@ function Accounts() {
                       <TableCell>{account.account_category}</TableCell>
                       <TableCell>{account.account_subcategory}</TableCell>
                       <TableCell>{account.normal_side}</TableCell>
-                      <TableCell>{account.initial_balance}</TableCell>
-                      <TableCell>{account.debit}</TableCell>
-                      <TableCell>{account.credit}</TableCell>
-                      <TableCell>{account.balance}</TableCell>
+                      <TableCell>{numberFormat(account.initial_balance)}</TableCell>
+                      <TableCell>{numberFormat(account.debit)}</TableCell>
+                      <TableCell>{numberFormat(account.credit)}</TableCell>
+                      <TableCell>{numberFormat(account.balance)}</TableCell>
                       <TableCell>{account.userId}</TableCell>
                       <TableCell>{account.date_time_account_added}</TableCell>
                       <TableCell>{account.order_num}</TableCell>
