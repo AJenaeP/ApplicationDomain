@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { elastic as Menu } from 'react-burger-menu';
 import '../css/Sidebar.css';
 import List from '@mui/material/List';
@@ -12,7 +12,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 import EmailIcon from '@mui/icons-material/Email';
-import { UserAuth } from './AuthContext';
+import { UserAuth } from '../utilities/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from "@mui/icons-material/Help";
@@ -20,6 +20,7 @@ import HelpIcon from "@mui/icons-material/Help";
 
 const Sidebar = () => {
   const { userData, logout, auth } = UserAuth();
+  const [role, setRole] = useState(window.localStorage.getItem('userRole'))
   const [goToHome, setGoToHome] = React.useState(false)
   const navigate = useNavigate();
 
@@ -44,26 +45,31 @@ const Sidebar = () => {
           </ListItemButton>
         </ListItem>
       </List>
-      <List> 
-        <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/CreateNewUsers'>
-            <ListItemIcon>
-              <PeopleAltIcon />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <List> 
-        <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/ExpiredPasswords'>
-            <ListItemIcon>
-              <LockResetIcon />
-            </ListItemIcon>
-            <ListItemText primary="Expired Passwords" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      {
+        (role === 'Administrator') && 
+          <>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton className="menu-item" href='/Users'>
+                  <ListItemIcon>
+                    <PeopleAltIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Users" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton className="menu-item" href='/ExpiredPasswords'>
+                  <ListItemIcon>
+                    <LockResetIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Expired Passwords" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+        </>
+      }
       <List> 
         <ListItem disablePadding>
           <ListItemButton className="menu-item" href='/accounts'>

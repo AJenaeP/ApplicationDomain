@@ -4,19 +4,44 @@ import {
     DialogContent,
     TextField,
     DialogActions,
-    Button
+    Button,
+    Select,
+    MenuItem,
+    InputLabel
 } from '@mui/material'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Accounts from '../Accounts'
 
-const DeleteAccount = ({account}) => {
+const DeactivateAccount = ({account}) => {
+    const [message, setMessage] = useState({ error: false, msg: "" });
+    const [updatedStatus, setUpdatedStatus] = useState('')
+    function handleAccountStatusChange(e) { setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value; }
+    const [updatedAccount, setUpdatedAccount] = useState({
+        accountNumber: account.selectedAccount.account_number,
+        accountName: account.selectedAccount.account_name,
+        accountDescription: account.selectedAccount.account_description,
+        accountCategory: account.selectedAccount.account_category,
+        accountSubcategory: account.selectedAccount.account_subcategory,
+        normalSide: account.selectedAccount.normal_side,
+        initialBalance: account.selectedAccount.initialBalance,
+        debit: account.selectedAccount.debit,
+        credit: account.selectedAccount.credit,
+        balance: account.selectedAccount.balance,
+        userId: account.selectedAccount.userId,
+        dateTime: account.selectedAccount.dateTime,
+        orderNumber: account.selectedAccount.order_num,
+        statement: account.selectedAccount.statement,
+        comment: account.selectedAccount.comment,
+        accountStatus: account.selectedAccount.account_status,
+    })
+    function handleAccountStatusChange(e) { setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value; }
 
     function handleDelete(e) {
         //e.preventDefault();
         console.log(account.selectedAccount.account_number)
         console.log(account.selectedAccount)
         console.log('trying to delete...')
-        fetch('/api/accounts/delete', {
+       /*fetch('/api/accounts/delete', {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
@@ -31,12 +56,31 @@ const DeleteAccount = ({account}) => {
                         alert(response.statusText)
                     } 
                 },
+            )*/
+        fetch('/api/accounts/update', {
+            method: "PUT",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedAccount)
+        })
+            .then(
+                response => {
+                    if (response.statusText === "Created") {
+                        alert('Account Updated')
+                        if (account.selectedAccount.balance < 0) {
+                            setMessage({ error: true, msg: "Account cannot be deactivated" });
+                        }
+                    } else {
+                        alert(response.statusText)
+                    }
+                },
             )
     }
 
     return (
         <>
-            <DialogTitle> Delete An Account</DialogTitle>
+            <DialogTitle> Deactivate/Activate An Account</DialogTitle>
             <TextField
                 disabled
                 id="outlined-disabled"
@@ -127,18 +171,25 @@ const DeleteAccount = ({account}) => {
                 label="Comment"
                 defaultValue={account.selectedAccount.comment}
             />
-            <TextField
-                disabled
-                id="outlined-disabled"
+            <InputLabel id="demo-simple-select-label status">Status</InputLabel>
+            <Select
+                labelId="demo-simple-select-label status"
+                id="demo-simple-select"
+                value={updatedStatus}
                 label="Status"
+                sx={{ width: 'fit-content' }}
                 defaultValue={account.selectedAccount.account_status}
-            />
+                onChange={handleAccountStatusChange}
+            >
+                <MenuItem value='Active'>Activate</MenuItem>
+                <MenuItem value='Deactivated'>Deactivate</MenuItem>
+            </Select>
             <DialogActions>
-                <Button onClick={handleDelete}>Delete Account</Button>
+                <Button onClick={handleDelete}>Deactivate/Activate Account</Button>
             </DialogActions>
         </>
     )
 }
 
 
-export default DeleteAccount
+export default DeactivateAccount

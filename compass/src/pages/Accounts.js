@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../utilities/Firebase";
-import Sidebar from "../../utilities/Sidebar";
-import Header from "../Header";
-import "../../css/Accounts.css";
+import { db } from "../utilities/Firebase";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import "../css/Accounts.css";
 
 import {
   TableCell,
@@ -18,10 +18,11 @@ import {
   DialogContent,
   Tooltip,
 } from "@mui/material";
-import AddAccount from "./AddAccount";
-import ViewAccount from "../ViewAccount";
-import EditAccount from "./EditAccount";
-import DeleteAccount from "./DeleteAccount";
+import AddAccount from "./AdminPages/AddAccount";
+import ViewAccount from "./ViewAccount";
+import EditAccount from "./AdminPages/EditAccount";
+import DeactivateAccount from "./AdminPages/DeactivateAccount";
+import DeleteAccount from "./AdminPages/DeleteAccount";
 
 function Accounts() {
     const [role, setRole] = useState(window.localStorage.getItem('userRole'))
@@ -33,6 +34,7 @@ function Accounts() {
     const [openEdit, setOpenEdit] = useState(false)
     const [openView, setOpenView] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
+    const [openDeactivate, setOpenDeactivate] = useState(false)
     const [newAccount, setNewAccount] = useState(AddAccount.account)
 
     //console.log(selectedRow)
@@ -75,6 +77,11 @@ function Accounts() {
       setOpenDelete(true);
     }
   };
+  const openDeactivateAccount = () => {
+    if (isRowSelected) {
+      setOpenDeactivate(true);
+    }
+  };
   const closeAddAccount = () => {
     setOpenAdd(false);
   };
@@ -86,6 +93,9 @@ function Accounts() {
   };
   const closeDeleteAccount = () => {
     setOpenDelete(false);
+  };
+  const closeDeactivateAccount = () => {
+    setOpenDeactivate(false);
   };
   function handleAccountSelection(account, i) {
     if (selectedRow === i) {
@@ -155,7 +165,7 @@ function Accounts() {
                       id={i}
                       key={i}
                       onClick={() => handleAccountSelection(account, i)}
-                      className={selectedRow === i ? "isSelected" : ""}
+                      className={selectedRow === i ? "isSelected" : "", account.account_status === 'Deactivated' ? 'bgred' : ''}
                     >
                       <TableCell>{account.account_number}</TableCell>
                       <TableCell>{account.account_name}</TableCell>
@@ -172,7 +182,7 @@ function Accounts() {
                       <TableCell>{account.order_num}</TableCell>
                       <TableCell>{account.statement}</TableCell>
                       <TableCell>{account.comment}</TableCell>
-                      <TableCell>{account.status}</TableCell>
+                      <TableCell>{account.account_status}</TableCell>
                     </TableRow>
                   </>
                 );
@@ -203,6 +213,14 @@ function Accounts() {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeEditAccount}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openDeactivate} onClose={closeDeactivateAccount}>
+        <DialogContent>
+          <DeactivateAccount account={{ selectedAccount }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeactivateAccount}>Close</Button>
         </DialogActions>
       </Dialog>
       <Dialog open={openDelete} onClose={closeDeleteAccount}>
@@ -263,6 +281,19 @@ function Accounts() {
               Edit Account
               </Button>
             </Tooltip>
+            <Tooltip title="Activate/Deactivate Account">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 200, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openDeactivateAccount}
+              >
+                Activate/Deactivate Account
+              </Button>
+            </Tooltip>
             <Tooltip title="Delete Account">
               <Button
                 variant="outlined"
@@ -275,7 +306,7 @@ function Accounts() {
               >
                 Delete Account
               </Button>
-              </Tooltip>
+            </Tooltip>
           </>
       }
       {
@@ -299,5 +330,5 @@ function Accounts() {
       </div>
     </div> 
 );
-}
+      }
 export default Accounts;

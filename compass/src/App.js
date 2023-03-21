@@ -9,14 +9,17 @@ import { AuthProvider } from "./utilities/AuthContext";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import Home from "./pages/Home";
 import PermissionDenied from "./pages/PermissionDenied";
-import Sidebar from "./utilities/Sidebar";
-import DashboardAdmin from "./pages/DashboardAdmin";
+import Sidebar from "./pages/Sidebar";
+import DashboardAdmin from "./pages/AdminPages/DashboardAdmin";
 /*import CreateNewUser from './pages/AdminPages/CreateNewUser';
 import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
 import Manager from "./pages/Manager";
 import Accountant from "./pages/Accountant";
-import Accounts from "./pages/AdminPages/Accounts";
+import Accounts from "./pages/Accounts";
 import HelpPage from "./pages/helppage";
+import DashboardManager from "./pages/ManagerPages/DashboardManager";
+import DashboardAccountant from "./pages/AccountantPages/DashboardAccountant";
+import Users from "./pages/AdminPages/Users";
 /* add to admin protected route after creation
     <Route path='/CreateNewUsers' element={<CreateNewUser />}></Route>
     <Route path='/Accounts' element={<Accounts />}></Route>
@@ -42,9 +45,16 @@ function App() {
                 path="/admindashboard"
                 element={<DashboardAdmin />}
               ></Route>
+              <Route path="/users" element={<Users/>}></Route>
             </Route>
-            <Route path="/" element={<ProtectedRoute roleRequired="Manager" />}>
-              <Route path="/managerdashboard" element={<Manager />}></Route>
+            <Route 
+                path="/" 
+                element={<ProtectedRoute roleRequired="Manager" />}>
+                <Route 
+                path="/managerdashboard" 
+                element={<DashboardManager />}>
+
+                </Route>
             </Route>
             <Route
               path="/"
@@ -52,7 +62,7 @@ function App() {
             >
               <Route
                 path="/accountantdashboard"
-                element={<Accountant />}
+                element={<DashboardAccountant />}
               ></Route>
             </Route>
             <Route path="/denied" element={<PermissionDenied />}></Route>

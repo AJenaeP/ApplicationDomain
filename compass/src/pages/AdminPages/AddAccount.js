@@ -10,15 +10,15 @@ import {
     Select
 } from '@mui/material'
 import React, { useState, useEffect} from 'react'
-import Accounts from './Accounts'
+import Accounts from '../Accounts'
+import '../../css/AddAccount.css'
 //import {Alert} from "react-bootstrap";
 
-
-const EditAccount = ({ account }) => {
+const AddAccount = ({ account }) => {
     const [updatedCategory, setUpdatedCategory] = useState('')
     const [updatedSubcategory, setUpdatedSubcategory] = useState('')
     const [updatedStatement, setUpdatedStatement] = useState('')
-    const [UpdatedStatus, SetUpdatedStatus] = useState('Active')
+    const [updatedStatus, setUpdatedStatus] = useState('Active')
     const [message, setMessage] = useState({ error: false, msg: "" });
     const [updatedAccount, setUpdatedAccount] = useState({
         accountNumber: account.selectedAccount.account_number,
@@ -36,7 +36,7 @@ const EditAccount = ({ account }) => {
         orderNumber: account.selectedAccount.order_num,
         statement: account.selectedAccount.statement,
         comment: account.selectedAccount.comment,
-        status: account.selectedAccount.status,
+        accountStatus: account.selectedAccount.account_status,
     })
 
     function handleAccountNameChange(e) { updatedAccount.accountName = e.target.value; }
@@ -53,7 +53,7 @@ const EditAccount = ({ account }) => {
     function handleAccountOrderChange(e) { updatedAccount.orderNumber = Number(e.target.value); }
     function handleAccountStatementChange(e) { setUpdatedStatement(e.target.value); updatedAccount.statement = e.target.value; }
     function handleAccountCommentChange(e) { updatedAccount.comment = e.target.value; }
-    function handleAccountStatusChange(e){SetUpdatedStatus(e.target.value); updatedAccount.status = e.target.value;}
+    function handleAccountStatusChange(e){setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value;}
 
     function handleEdit(e) {
         e.preventDefault();
@@ -106,8 +106,7 @@ const EditAccount = ({ account }) => {
 
     return (
         <>
-      
-            <DialogTitle> Edit An Account</DialogTitle>
+            <DialogTitle> Add An Account</DialogTitle>
             <TextField
                 disabled
                 id="outlined-disabled"
@@ -134,7 +133,7 @@ const EditAccount = ({ account }) => {
                 id="demo-simple-select"
                 value={updatedCategory}
                 label="Category"
-                sx={{ width: 'auto' }}
+                sx={{ width: 'fit-content' }}
                 defaultValue={account.selectedAccount.account_category}
                 onChange={handleAccountCatChange}
             >
@@ -148,7 +147,7 @@ const EditAccount = ({ account }) => {
                 id="demo-simple-select"
                 value={updatedSubcategory}
                 label="Subcategory"
-                sx={{ width: 'auto' }}
+                sx={{ width: 'fit-content' }}
                 defaultValue={account.selectedAccount.account_subcategory}
                 onChange={handleAccountSubCatChange}
             >
@@ -207,12 +206,11 @@ const EditAccount = ({ account }) => {
                 id="demo-simple-select"
                 value={updatedStatement}
                 label="Statement"
-                sx={{ width: 'auto' }}
+                sx={{ width: 'fit-content' }}
                 defaultValue={account.selectedAccount.account_statement}
                 onChange={handleAccountStatementChange}
             >
                 <MenuItem value='balance sheet'>Balance Sheet</MenuItem>
-            //TODO: add another statement type here
             </Select>
             <TextField
                 id="outlined-multiline-static"
@@ -222,18 +220,17 @@ const EditAccount = ({ account }) => {
                 defaultValue={account.selectedAccount.comment}
                 onChange={handleAccountCommentChange}
             />
-
-<InputLabel id="demo-simple-select-label statement">Status</InputLabel>
+            <InputLabel id="demo-simple-select-label status">Status</InputLabel>
             <Select
                 labelId="demo-simple-select-label status"
                 id="demo-simple-select"
-                value={UpdatedStatus}
+                value={updatedStatus}
                 label="Status"
-                sx={{ width: 'auto' }}
-                defaultValue={account.selectedAccount.status}
+                sx={{ width: 'fit-content' }}
+                defaultValue={account.selectedAccount.account_status}
                 onChange={handleAccountStatusChange}
             >
-              <MenuItem value='Active'>Active</MenuItem>
+              <MenuItem value='Active'>Activate</MenuItem>
               <MenuItem value='Deactivated'>Deactivate</MenuItem>
               </Select>
             <DialogActions>
@@ -244,5 +241,5 @@ const EditAccount = ({ account }) => {
 }
 
 
-export default EditAccount
+export default AddAccount
 

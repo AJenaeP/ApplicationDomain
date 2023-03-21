@@ -14,7 +14,8 @@ class ChartOfAccounts{
         date_time_account_added,
         order_num,
         statement,
-        comment
+        comment,
+        account_status
     ){
         this.account_number = account_number;
         this.account_name = account_name;
@@ -31,6 +32,7 @@ class ChartOfAccounts{
         this.order_num = order_num;
         this.statement = statement;
         this.comment = comment;
+        this.account_status = account_status;
     }
 }
 

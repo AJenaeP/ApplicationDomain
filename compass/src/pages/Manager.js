@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+/*import { useState, useEffect } from "react";
 
 import Header from "./Header";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 import ViewAccount from "./ViewAccount";
-import Accounts from "./AdminPages/Accounts";
+import Accounts from "./Accounts";
 
 
 //CREATE varaibles for each section in Database
@@ -184,4 +184,4 @@ return (
 );
 }
 
-export default Manager;
+export default Manager;*/

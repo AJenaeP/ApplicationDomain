@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+/*import { useState, useEffect } from "react";
 
 import Header from "./Header";
 import {
@@ -184,4 +184,4 @@ return (
 );
 }
 
-export default Accountant;
+export default Accountant;*/

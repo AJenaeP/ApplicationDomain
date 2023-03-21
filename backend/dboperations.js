@@ -20,6 +20,7 @@ async function getAccounts(){
             .input('order_num',  '')
             .input('statement',  '')
             .input('comment',  '')
+            .input('account_status', '')
             .input('Type', 'SELECT')
             .execute('COA_Management');
         return accounts.recordsets;
@@ -32,6 +33,7 @@ async function getAccount(account_number) {
         let pool = await sql.connect(config);
         let account = await pool.request()
             .input('account_number', account_number)
+            .input('account_status', account_status)
             .input('Type', 'SELECT_FROM')
             .execute('COA_Management')
         //.query("SELECT * from ChartOfAccounts where account_number = @input_parameter")
@@ -61,7 +63,8 @@ async function addAccount(account) {
             .input('date_time_account_added',  account.dateTime)
             .input('order_num',  account.orderNumber)
             .input('statement',  account.statement)
-            .input('comment',  account.comment)
+            .input('comment', account.comment)
+            .input('account_status', account.accountStatus)
             .input('Type', 'INSERT')
             .execute('COA_Management');
         return insertAccount.recordsets;
@@ -89,6 +92,7 @@ async function deleteAccount(account) {
             .input('order_num', '')
             .input('statement', '')
             .input('comment', '')
+            .input('account_status', '')
             .input('Type', 'DELETE')
             .execute('COA_Management');
         return accountDel.recordsets;
@@ -116,6 +120,7 @@ async function updateAccount(account) {
             .input('order_num', account.orderNumber)
             .input('statement', account.statement)
             .input('comment', account.comment)
+            .input('account_status', account.accountStatus)
             .input('Type', 'UPDATE')
             .execute('COA_Management');
         return accountUpdate.recordsets;

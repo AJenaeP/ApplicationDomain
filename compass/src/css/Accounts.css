@@ -5,3 +5,7 @@
 .isSelected{
     background-color: #71d7ff;
 }
+
+.bgred {
+    background-color: rgb(255, 140, 140);
+}

@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import React, { useState, useEffect } from "react";
 //import '../../css/AddAccount.css';
-import Ledger from '../images/Ledger.jpg';
+import Ledger from '../images/Ledger.png';
 
 const ViewAccount = () => {
     const [isOpen, setIsOpen] = useState(true)
