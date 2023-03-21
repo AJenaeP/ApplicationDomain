@@ -22,6 +22,7 @@ const AddAccount = () => {
   const [category, setCategory] = useState('')
   const [subcategory, setSubcategory] = useState('')
   const [statement, setStatement] = useState('')
+  const[status, setStatus] = useState('Active')
   const [account, setAccount] = useState({
     accountNumber: 0,
     accountName: '',
@@ -37,6 +38,7 @@ const AddAccount = () => {
     orderNumber: '',
     statement: '',
     comment: '',
+    status:'',
     
   })
   function handleAccountNumberChange(e) { account.accountNumber = Number(e.target.value);}
@@ -53,6 +55,7 @@ const AddAccount = () => {
   function handleAccountOrderChange(e) { account.orderNumber = Number(e.target.value);}
   function handleAccountStatementChange(e) { setStatement(e.target.value); account.statement = e.target.value;}
   function handleAccountCommentChange(e) { account.comment = e.target.value;}
+  function handleAccountStatusChange(e) { setStatus(e.target.value); account.accountStatus = e.target.value;}
 
   function handleAdd(e){
     e.preventDefault();
@@ -178,6 +181,7 @@ const AddAccount = () => {
               <MenuItem value='balance sheet'>Balance Sheet</MenuItem>
             //TODO: add another statement type here
             </Select>
+
             <TextField
               id="outlined-multiline-static"
               label="Comments"
@@ -186,6 +190,20 @@ const AddAccount = () => {
               defaultValue="Type Here"
               onChange={handleAccountCommentChange}
             />
+            <InputLabel id="demo-simple-select-label status">Status</InputLabel>
+            <Select
+              labelId="demo-simple-select-label status"
+              id="demo-simple-select"
+              value={status}
+              label="Status"
+              sx={{ width: 'auto' }}
+              onChange={handleAccountStatusChange}
+            >
+              <MenuItem value='active'>Active</MenuItem>
+              <MenuItem value='deactive'>Deactivate</MenuItem>
+              
+            </Select>
+        
         <DialogActions>
           <Button 
             onClick={handleAdd}
@@ -195,5 +213,7 @@ const AddAccount = () => {
     )
   }
 
+
+export default AddAccount
 
 export default AddAccount
