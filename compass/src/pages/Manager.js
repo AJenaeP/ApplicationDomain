@@ -1,5 +1,6 @@
 
-/*import { useState, useEffect } from "react";
+
+import { useState, useEffect } from "react";
 
 import Header from "./Header";
 import {
@@ -108,32 +109,34 @@ return (
         left: "20%",
       }}
     >
-      <TableContainer>
-        <Table
-          sx={{ minWidth: 650 }}
-          size="small"
-          stickyHeader
-          aria-label="sticky table"
-        >
-          <TableHead>
-            <TableRow>
-            <TableCell>{account.account_number}</TableCell>
-                    <TableCell>{account.account_name}</TableCell>
-                    <TableCell>{account.account_description}</TableCell>
-                    <TableCell>{account.account_category}</TableCell>
-                    <TableCell>{account.account_subcategory}</TableCell>
-                    <TableCell>{account.normal_side}</TableCell>
-                    <TableCell>{numberFormat(account.initial_balance)}</TableCell>
-                    <TableCell>{numberFormat(account.debit)}</TableCell>
-                    <TableCell>{numberFormat(account.credit)}</TableCell>
-                    <TableCell>{numberFormat(account.balance)}</TableCell>
-                    <TableCell>{account.userId}</TableCell>
-                    <TableCell>{account.date_time_account_added}</TableCell>
-                    <TableCell>{account.order_num}</TableCell>
-                    <TableCell>{account.statement}</TableCell>
-                    <TableCell>{account.comment}</TableCell>
-            </TableRow>
-          </TableHead>
+    
+         <TableContainer>
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell> Account Number </TableCell>
+                <TableCell> Account Name </TableCell>
+                <TableCell> Account Description </TableCell>
+                <TableCell> Account Category </TableCell>
+                <TableCell> Account Subcategory </TableCell>
+                <TableCell> Normal Side </TableCell>
+                <TableCell> Initial Balance </TableCell>
+                <TableCell> Debit </TableCell>
+                <TableCell> Credit </TableCell>
+                <TableCell> Balance </TableCell>
+                <TableCell> UserId </TableCell>
+                <TableCell> Date/Time Added </TableCell>
+                <TableCell> Order Number </TableCell>
+                <TableCell> Statement </TableCell>
+                <TableCell> Comment </TableCell>
+                <TableCell> Status </TableCell>
+              </TableRow>
+            </TableHead>
           <TableBody className="accountRows">
             {backendData.map((account, i) => {
               return (
@@ -150,10 +153,10 @@ return (
                     <TableCell>{account.account_category}</TableCell>
                     <TableCell>{account.account_subcategory}</TableCell>
                     <TableCell>{account.normal_side}</TableCell>
-                    <TableCell>{account.initial_balance}</TableCell>
+                    <TableCell>{numberFormat(account.initial_balance)}</TableCell>
                     <TableCell>{numberFormat(account.debit)}</TableCell>
-                    <TableCell>{account.credit}</TableCell>
-                    <TableCell>{account.balance}</TableCell>
+                    <TableCell>{numberFormat(account.credit)}</TableCell>
+                    <TableCell>{numberFormat(account.balance)}</TableCell>
                     <TableCell>{account.userId}</TableCell>
                     <TableCell>{account.date_time_account_added}</TableCell>
                     <TableCell>{account.order_num}</TableCell>
@@ -184,4 +187,4 @@ return (
 );
 }
 
-export default Manager;*/
+export default Manager;
