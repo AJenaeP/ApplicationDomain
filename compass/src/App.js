@@ -20,6 +20,7 @@ import HelpPage from "./pages/helppage";
 import DashboardManager from "./pages/ManagerPages/DashboardManager";
 import DashboardAccountant from "./pages/AccountantPages/DashboardAccountant";
 import Users from "./pages/AdminPages/Users";
+import AddJournal from "./pages/AddJournal";
 /* add to admin protected route after creation
   <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
 */
@@ -66,6 +67,7 @@ function App() {
             <Route path="/denied" element={<PermissionDenied />}></Route>
             <Route path="/accounts" element={<Accounts />}></Route>
             <Route path="/helppage" element={<HelpPage />}></Route>
+<Route path="/AddJournal" element={<AddJournal />}></Route>
           </Routes>
         </Router>
       </AuthProvider>
