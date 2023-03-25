@@ -1,5 +1,6 @@
 
-/*import { useState, useEffect } from "react";
+
+import { useState, useEffect } from "react";
 
 import Header from "./Header";
 import {
@@ -18,7 +19,7 @@ import {
 } from "@mui/material";
 
 import ViewAccount from "./ViewAccount";
-import Accounts from "./AdminPages/Accounts";
+import Accounts from "./Accounts";
 
 
 //CREATE varaibles for each section in Database
@@ -108,32 +109,34 @@ return (
         left: "20%",
       }}
     >
-      <TableContainer>
-        <Table
-          sx={{ minWidth: 650 }}
-          size="small"
-          stickyHeader
-          aria-label="sticky table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell> Account Number </TableCell>
-              <TableCell> Account Name </TableCell>
-              <TableCell> Account Description </TableCell>
-              <TableCell> Account Category </TableCell>
-              <TableCell> Account Subcategory </TableCell>
-              <TableCell> Normal Side </TableCell>
-              <TableCell> Initial Balance </TableCell>
-              <TableCell> Debit </TableCell>
-              <TableCell> Credit </TableCell>
-              <TableCell> Balance </TableCell>
-              <TableCell> UserId </TableCell>
-              <TableCell> Date/Time Added </TableCell>
-              <TableCell> Order Number </TableCell>
-              <TableCell> Statement </TableCell>
-              <TableCell> Comment </TableCell>
-            </TableRow>
-          </TableHead>
+    
+         <TableContainer>
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell> Account Number </TableCell>
+                <TableCell> Account Name </TableCell>
+                <TableCell> Account Description </TableCell>
+                <TableCell> Account Category </TableCell>
+                <TableCell> Account Subcategory </TableCell>
+                <TableCell> Normal Side </TableCell>
+                <TableCell> Initial Balance </TableCell>
+                <TableCell> Debit </TableCell>
+                <TableCell> Credit </TableCell>
+                <TableCell> Balance </TableCell>
+                <TableCell> UserId </TableCell>
+                <TableCell> Date/Time Added </TableCell>
+                <TableCell> Order Number </TableCell>
+                <TableCell> Statement </TableCell>
+                <TableCell> Comment </TableCell>
+                <TableCell> Status </TableCell>
+              </TableRow>
+            </TableHead>
           <TableBody className="accountRows">
             {backendData.map((account, i) => {
               return (
@@ -184,4 +187,4 @@ return (
 );
 }
 
-export default Accountant;*/
+export default Accountant;
