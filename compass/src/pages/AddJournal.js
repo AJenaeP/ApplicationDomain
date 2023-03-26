@@ -1,10 +1,3 @@
-
-//CREATE table like Accounts or Users that displays the accounts number, account names, and debit and credit
-//FROM table select account to add Journal 
-//START with Credit and debit information 
-//DO ACCOUNTANT PAGE FIRST AND THEN MANAGER - accountant will be easier and has the requirements 
-//COULD potentially copy and paste code from accountant to manager and change specific features and requirements
-
 import { useState, useEffect } from "react";
 
 import Header from "./Header";
@@ -36,7 +29,41 @@ import Accounts from "./Accounts";
 
 //CREATE varaibles for each section in Database
 function Journal() {
+//When account is selected: 
+const Addjournal = ({ journalt }) => {
+  const [updatedjournal, setUpdatedjournal] = useState({
+   date:'',
+    name: '', 
+    debit:'', 
+    credit: '',  
+  })
 
+  //function handleJournalNameChange(e) { updatedJournal.jouranlName = e.target.value; }
+  //CREATE for date, debit, and credit 
+
+  return (
+    <div className="Journal">
+      <table>
+        <tr>
+        <th>Date</th>
+          <th>Name</th>
+          <th>Debit</th>
+          <th>Credit</th>
+        </tr>
+        {journal.map((val, key) => {
+          return (
+            <tr key={key}>
+               <td>{val.date}</td>
+              <td>{val.name}</td>
+              <td>{val.debit}</td>
+              <td>{val.credit}</td>
+            </tr>
+          )
+        })}
+      </table>
+    </div>
+  );
+}
   const [backendData, setBackendData] = useState([{}]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState({});
@@ -129,7 +156,6 @@ return (
       }}
       >
       
-    
          <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
@@ -171,6 +197,7 @@ return (
       </TableContainer>
     </Paper>
    
+  
     <div
       style={{
         display: "flex",
@@ -185,7 +212,10 @@ return (
      </div>
   
 );
-}
+    }
+
+
+
 
 export default Journal;
 
