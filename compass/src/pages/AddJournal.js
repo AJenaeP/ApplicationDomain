@@ -1,8 +1,11 @@
 
-//CREATE table like Accounts or Users that stores Journals
+//CREATE table like Accounts or Users that displays the accounts number, account names, and debit and credit
+//FROM table select account to add Journal 
 //START with Credit and debit information 
 //DO ACCOUNTANT PAGE FIRST AND THEN MANAGER - accountant will be easier and has the requirements 
-mport { useState, useEffect } from "react";
+//COULD potentially copy and paste code from accountant to manager and change specific features and requirements
+
+import { useState, useEffect } from "react";
 
 import Header from "./Header";
 import {
