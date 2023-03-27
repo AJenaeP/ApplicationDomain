@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 import Header from "./Header";
@@ -26,8 +25,9 @@ import {
 
 import ViewAccount from "./ViewAccount";
 import Accounts from "./Accounts";
-
-
+import DeleteJournal from "./DeleteJournal";
+import AddJournal from "./AddJournal";
+import EditJournal from "./EditJournal";
 
 function Journal() {
     const [role, setRole] = useState(window.localStorage.getItem('userRole'))
@@ -37,7 +37,6 @@ function Journal() {
     const [isRowSelected, setIsRowSelected] = useState(false)
     const [openAdd, setOpenAdd] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
-   
     const [openDelete, setOpenDelete] = useState(false)
  
     //const [newAccount, setNewAccount] = useState(AddAccount.account)
@@ -64,36 +63,36 @@ function Journal() {
       )
     }, [])*/
 
-  const openAddAccount = () => {
-    console.log('add account button clicked ')
+  const openAddJournal = () => {
+    console.log('add journal button clicked ')
     console.log(selectedAccount)
     setOpenAdd(true);
     console.log(openAdd)
   };
   
-  const openEditAccount = () => {
+  const openEditJournal = () => {
     if (isRowSelected) {
       setOpenEdit(true);
     }
   };
-  const openDeleteAccount = () => {
+  const openDeleteJournal = () => {
     if (isRowSelected) {
       setOpenDelete(true);
     }
   };
 
-  const closeAddAccount = () => {
+  const closeAddJournal = () => {
     setOpenAdd(false);
   };
   
-  const closeEditAccount = () => {
+  const closeEditJournal = () => {
     setOpenEdit(false);
   };
-  const closeDeleteAccount = () => {
+  const closeDeleteJournal = () => {
     setOpenDelete(false);
   };
 
-  function handleAccountSelection(account, i) {
+  function handleJournalSelection(account, i) {
     if (selectedRow === i) {
       setIsRowSelected(false);
       setSelectedRow(null);
@@ -139,8 +138,7 @@ function Journal() {
                 <TableCell> Account Name </TableCell>
                 <TableCell> Debit </TableCell>
                 <TableCell> Credit </TableCell>
-                <TableCell> Balance </TableCell>
-                <TableCell> Date/Time Added </TableCell>
+                
               </TableRow>
             </TableHead>
             <TableBody className="accountRows">
@@ -150,17 +148,15 @@ function Journal() {
                     <TableRow
                       id={i}
                       key={i}
-                      onClick={() => handleAccountSelection(account, i)}
-                      className={(selectedRow === i ? "isSelected" : "") ||
-                      (account.account_status === 'Deactivated' ? 'bgred' : '')}
+                      onClick={() => handleJournalSelection(account, i)}
+                      className={(selectedRow === i ? "isSelected" : "") 
+                    }
                     >
                       <TableCell>{account.account_number}</TableCell>
                       <TableCell>{account.account_name}</TableCell>
                       <TableCell>{numberFormat(account.debit)}</TableCell>
                       <TableCell>{numberFormat(account.credit)}</TableCell>
-                      <TableCell>{numberFormat(account.balance)}</TableCell>
-
-                      <TableCell>{account.date_time_account_added}</TableCell>
+                   
                     </TableRow>
                   </>
                 );
@@ -169,7 +165,30 @@ function Journal() {
           </Table>
         </TableContainer>
       </Paper>
-      
+      <Dialog open={openAdd} onClose={closeAddJournal}>
+        <DialogContent>
+          <AddJournal account={{ selectedAccount }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAddJournal}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openEdit} onClose={closeEditJournal}>
+        <DialogContent>
+          <EditJournal account={{ selectedAccount}} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeEditJournal}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openDelete} onClose={closeDeleteJournal}>
+        <DialogContent>
+          <DeleteJournal account={{ selectedAccount}} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteJournal}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <div
         style={{
           display: "flex",
@@ -178,7 +197,52 @@ function Journal() {
           justifyContent: "center",
         }}
       >
-     
+      {
+        (role === "Accountant") &&
+          <>
+            <Tooltip title="Add Journal Entry">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  type="submit"
+                  style={{ width: 100, marginRight: 20 }}
+                  className="submit"
+                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                  onClick={openAddJournal}
+                >
+                  Add Journal
+                </Button>
+            </Tooltip>
+          
+            <Tooltip title="Edit Journal">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openEditJournal}
+              >
+              Edit Journal
+              </Button>
+            </Tooltip>
+            
+            <Tooltip title="Delete Journal">
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openDeleteJournal}
+              >
+                Delete Journal
+              </Button>
+            </Tooltip>
+          </>
+      }
       </div>
     </div> 
 );
