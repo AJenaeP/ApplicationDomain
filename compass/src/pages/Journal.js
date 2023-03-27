@@ -25,9 +25,9 @@ import {
 
 import ViewAccount from "./ViewAccount";
 import Accounts from "./Accounts";
-import DeleteJournal from "./DeleteJournal";
-import AddJournal from "./AddJournal";
-import EditJournal from "./EditJournal";
+import DeleteJournal from "./Journal/DeleteJournal";
+import AddJournal from "./Journal/AddJournal";
+import EditJournal from "./Journal/EditJournal";
 
 function Journal() {
     const [role, setRole] = useState(window.localStorage.getItem('userRole'))
