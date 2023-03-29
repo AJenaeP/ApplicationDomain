@@ -1,89 +1,119 @@
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    TextField,
-    DialogActions,
-    Button,
-    InputLabel,
-    MenuItem,
-    Select
-} from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import Journal from "./Journal";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
+const EditJouranl = () => {
+    const { journal } = useParams();
 
-const EditJournal = ({ journal }) => {
+    //const [journal, journalchange] = useState({});
 
-
-    const [updatedJournal, setUpdatedJournal] = useState({
-       
-       journalName: journal.selectedJournal.account_name,
-        debit: journal.selectedJournal.debit,
-        credit: journal.selectedJournal.credit,
-       
-    })
-
-    function handleJournalNameChange(e) { updatedJournal.accountName = e.target.value; }
-    function handleJournaltDebitChange(e) { updatedJournal.debit = Number(e.target.value); }
-    function handleJournalCreditChange(e) { updatedJournal.credit = Number(e.target.value); }
-    
-    function handleEdit(e) {
-        e.preventDefault();
-        console.log(journal.selectedJournal)
-        console.log(updatedJournal)
-        console.log('trying to update...')
-        fetch('/api/accounts/update', {
-            method: "PUT",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(updatedJournal)
+    useEffect(() => {
+        fetch('/api/accounts' + journal).then((res) => {
+            return res.json();
+        }).then((resp) => {
+            accountNumberchange(resp.accountNumber);
+            namechange(resp.name);
+            descriptionchange(resp.description);
+            debitchange(resp.debit);
+            creditchange(resp.credit);
+        }).catch((err) => {
+            console.log(err.message);
         })
-        .then(
-            response => {
-                if (response.statusText === "Created") {
-                    alert('Journal Updated')
-                    
-                } else {
-                    alert(response.statusText)
-                }
-            },
-        )
+    }, []);
+
+    const[accountNumber,accountNumberchange]=useState("");
+    const[name,namechange]=useState("");
+    const[description,descriptionchange]=useState("");
+    const[debit, debitchange]=useState("");
+    const[credit, creditchange]=useState("");
+   
+
+
+    const navigate=useNavigate();
+
+    const handlesubmit=(e)=>{
+      e.preventDefault();
+      const journal={accountNumber,name,description,debit,credit};
+      
+
+      fetch('/api/accounts'+journal,{
+        method:"PUT",
+        headers:{"content-type":"application/json"},
+        body:JSON.stringify(journal)
+      }).then((res)=>{
+        alert('Saved successfully.')
+        navigate('/');
+      }).catch((err)=>{
+        console.log(err.message)
+      })
+
     }
+    return ( 
+        <div>
 
-  
+        <div className="row">
+            <div className="offset-lg-3 col-lg-6">
+                <form className="container" onSubmit={handlesubmit}>
 
-    return (
-        <>
-            <DialogTitle> Edit An Entry</DialogTitle>
-            
-            <TextField
-                required
-                id="outlined-required"
-                label="Journal Name -- Required"
-                defaultValue={journal.selectedJournal.journal_name}
-                onChange={handleJournalNameChange}
-            />
-          
-           
-            <TextField
-                id="outlined-required"
-                label="Debit"
-                defaultValue={journal.selectedjournal.debit}
-            />
-            <TextField
-                id="outlined-required"
-                label="Credit"
-                defaultValue={journal.selectedJournal.credit}
-            />
-           
-            <DialogActions>
-                <Button onClick={handleEdit}>Update Entry</Button>
-            </DialogActions>
-        </>
-    )
+                    <div className="card" style={{"textAlign":"left"}}>
+                        <div className="card-title">
+                            <h2>Journal Edit</h2>
+                        </div>
+                        <div className="card-body">
+
+                            <div className="row">
+
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Account Number</label>
+                                        <input value={accountNumber} disabled="disabled" className="form-control"></input>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Name</label>
+                                        <input required value={name} onMouseDown={e=>valchange(true)} onChange={e=>namechange(e.target.value)} className="form-control"></input>
+                                    {name.length==0 && validation && <span className="text-danger">Enter the name</span>}
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Description</label>
+                                        <input value={description} onChange={e=>descriptionchange(e.target.value)} className="form-control"></input>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Debit</label>
+                                        <input value={debit} onChange={e=>debitchange(e.target.value)} className="form-control"></input>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                        <label>Credit</label>
+                                        <input value={credit} onChange={e=>creditchange(e.target.value)} className="form-control"></input>
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                       <button className="btn btn-success" type="submit">Save</button>
+                                       <Link to="/" className="btn btn-danger">Back</Link>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+     );
 }
-
-
-export default EditJournal
+ 
+export default EditJournal;
