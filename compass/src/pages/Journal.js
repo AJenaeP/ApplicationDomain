@@ -1,250 +1,86 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import Header from "./Header";
-import {
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableBody,
-  Table,
-  Paper,
-  Button,
-  TextField,
-  DialogActions,
-  DialogContent,
-  Tooltip,
-} from "@mui/material";
-import {
-    Dialog,
-    DialogTitle,
-    InputLabel,
-    MenuItem,
-    Select
-} from '@mui/material'
+const JournalListing = () => {
+    const [journaldata, journaldatachange] = useState(null);
+    const navigate = useNavigate();
 
-import ViewAccount from "./ViewAccount";
-import Accounts from "./Accounts";
-import DeleteJournal from "./Journal/DeleteJournal";
-import AddJournal from "./Journal/AddJournal";
-import EditJournal from "./Journal/EditJournal";
+    const LoadDetail = (accountNumber) => {
+        navigate("/journal/detail/" + accountNumber);
+    }
+    const LoadEdit = (accountNumber) => {
+        navigate("/journal/edit/" + accountNumber);
+    }
+    const Removefunction = (accountNumber) => {
+        if (window.confirm('Do you want to remove?')) {
+            fetch('/api/accounts'+ accountNumber, {
+                method: "DELETE"
+            }).then((res) => {
+                alert('Removed successfully.')
+                window.location.reload();
+            }).catch((err) => {
+                console.log(err.message)
+            })
+        }
+    }
 
-function Journal() {
-    const [role, setRole] = useState(window.localStorage.getItem('userRole'))
-    const [backendData, setBackendData] = useState([{}]);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [selectedAccount, setSelectedAccount] = useState({});
-    const [isRowSelected, setIsRowSelected] = useState(false)
-    const [openAdd, setOpenAdd] = useState(false)
-    const [openEdit, setOpenEdit] = useState(false)
-    const [openDelete, setOpenDelete] = useState(false)
- 
-    //const [newAccount, setNewAccount] = useState(AddAccount.account)
 
-    //console.log(selectedRow)
+
+
     useEffect(() => {
-      fetch('/api/accounts')
-      .then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data)
-        }
-      )
-    },[backendData])
-    //we can use this when searching
-    /*useEffect(() => {
-      fetch('/api/accounts/:accountNumber').then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data)
-        }
-      )
-    }, [])*/
+        fetch('/api/accounts').then((res) => {
+            return res.json();
+        }).then((resp) => {
+            journaldatachange(resp);
+        }).catch((err) => {
+            console.log(err.message);
+        })
+    }, [])
+    return (
+        <div className="container">
+            <div className="card">
+                <div className="card-title">
+                    <h2>Journal Listing</h2>
+                </div>
+                <div className="card-body">
+                    <div className="divbtn">
+                        <Link to="journal/create" className="btn btn-success">Add New (+)</Link>
+                    </div>
+                    <table className="table table-bordered">
+                        <thead className="bg-dark text-white">
+                            <tr>
+                                <td>Account Number</td>
+                                <td>Name</td>
+                                <td>Description</td>
+                                <td>Debit</td>
+                                <td>Credit</td>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-  const openAddJournal = () => {
-    console.log('add journal button clicked ')
-    console.log(selectedAccount)
-    setOpenAdd(true);
-    console.log(openAdd)
-  };
-  
-  const openEditJournal = () => {
-    if (isRowSelected) {
-      setOpenEdit(true);
-    }
-  };
-  const openDeleteJournal = () => {
-    if (isRowSelected) {
-      setOpenDelete(true);
-    }
-  };
+                            {journaldata &&
+                                journaldata.map(item => (
+                                    <tr key={item.accountNumber}>
+                                        <td>{item.accountNumber}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.debit}</td>
+                                        <td>{item.credit}</td>
+                                        <td><a onClick={() => { LoadEdit(item.accountNumber) }} className="btn btn-success">Edit</a>
+                                            <a onClick={() => { Removefunction(item.accountNumber) }} className="btn btn-danger">Remove</a>
+                                            <a onClick={() => { LoadDetail(item.accountNumber) }} className="btn btn-primary">Details</a>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
 
-  const closeAddJournal = () => {
-    setOpenAdd(false);
-  };
-  
-  const closeEditJournal = () => {
-    setOpenEdit(false);
-  };
-  const closeDeleteJournal = () => {
-    setOpenDelete(false);
-  };
+                        </tbody>
 
-  function handleJournalSelection(account, i) {
-    if (selectedRow === i) {
-      setIsRowSelected(false);
-      setSelectedRow(null);
-    } else {
-      setSelectedRow(i);
-      setSelectedAccount(account);
-      setIsRowSelected(true);
-      const row = document.getElementById(i);
-      row.classList.add("isSelected");
-    }
-  }
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}
 
-  const numberFormat = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(value);
-
-
-  return (
-    <div className="App">
-      <Header />
-      <Paper
-        sx={{
-          width: 1000,
-          overflow: "hidden",
-          display: "flex",
-          position: "relative",
-          top: 100,
-          left: "15%",
-        }}
-      >
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 650 }}
-            size="small"
-            stickyHeader
-            aria-label="sticky table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell> Account Number </TableCell>
-                <TableCell> Account Name </TableCell>
-                <TableCell> Debit </TableCell>
-                <TableCell> Credit </TableCell>
-                
-              </TableRow>
-            </TableHead>
-            <TableBody className="accountRows">
-              {backendData.map((account, i) => {
-                return (
-                  <>
-                    <TableRow
-                      id={i}
-                      key={i}
-                      onClick={() => handleJournalSelection(account, i)}
-                      className={(selectedRow === i ? "isSelected" : "") 
-                    }
-                    >
-                      <TableCell>{account.account_number}</TableCell>
-                      <TableCell>{account.account_name}</TableCell>
-                      <TableCell>{numberFormat(account.debit)}</TableCell>
-                      <TableCell>{numberFormat(account.credit)}</TableCell>
-                   
-                    </TableRow>
-                  </>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-      <Dialog open={openAdd} onClose={closeAddJournal}>
-        <DialogContent>
-          <AddJournal account={{ selectedAccount }} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeAddJournal}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openEdit} onClose={closeEditJournal}>
-        <DialogContent>
-          <EditJournal account={{ selectedAccount}} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeEditJournal}>Close</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openDelete} onClose={closeDeleteJournal}>
-        <DialogContent>
-          <DeleteJournal account={{ selectedAccount}} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDeleteJournal}>Close</Button>
-        </DialogActions>
-      </Dialog>
-      <div
-        style={{
-          display: "flex",
-          marginTop: 150,
-          marginLeft: 360,
-          justifyContent: "center",
-        }}
-      >
-      {
-        (role === "Accountant") &&
-          <>
-            <Tooltip title="Add Journal Entry">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openAddJournal}
-                >
-                  Add Journal
-                </Button>
-            </Tooltip>
-          
-            <Tooltip title="Edit Journal">
-              <Button
-                variant="outlined"
-                size="large"
-                type="submit"
-                style={{ width: 100, marginRight: 20 }}
-                className="submit"
-                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                onClick={openEditJournal}
-              >
-              Edit Journal
-              </Button>
-            </Tooltip>
-            
-            <Tooltip title="Delete Journal">
-              <Button
-                variant="outlined"
-                size="large"
-                type="submit"
-                style={{ width: 100, marginRight: 20 }}
-                className="submit"
-                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                onClick={openDeleteJournal}
-              >
-                Delete Journal
-              </Button>
-            </Tooltip>
-          </>
-      }
-      </div>
-    </div> 
-);
-      }
-export default Journal;
+export default JournalListing;
