@@ -23,13 +23,15 @@ import {
 import React, { useState, useEffect } from "react";
 import '../css/ViewAccount.css';
 import Ledger from '../images/Ledger.png';
+import Journal from "./Journal";
 
 const ViewAccount = ({ account }) => {
     const [isOpen, setIsOpen] = useState(true)
     const [handleClose, setHandleClose] = useState(false)
     const [ledgerData, setLedgerData] = useState([{}])
+    const [openJournal, setOpenJournal] = useState(false)
+    const [journalRef, setJournalRef] = useState()
 
-    let selectedJournal = ''
     const data = {
         account_number: account.selectedAccount.account_number,
         ref: ''
@@ -51,9 +53,7 @@ const ViewAccount = ({ account }) => {
         )
     }, [])
 
-    function handleRefClick(e){
-        selectedJournal = e.target.value;
-    }
+    const closeJournalAccount = () => { setOpenJournal(false); };
 
     return (
         <>
@@ -101,7 +101,7 @@ const ViewAccount = ({ account }) => {
                                                 variant="text"
                                                 sx={{width:'fit-content', padding: 0, margin: 0, justifyContent: 'left'}}
                                                 value={ledger.ref}
-                                                onClick={(e) => handleRefClick(e)}
+                                                onClick={(e) => { setJournalRef(e.target.value); setOpenJournal(true) }}
                                             >
                                                 {ledger.ref}
                                             </Button>    
@@ -123,6 +123,14 @@ const ViewAccount = ({ account }) => {
                 </Table>
             </TableContainer>
             </Paper>
+            <Dialog open={openJournal} onClose={closeJournalAccount}>
+                <DialogContent>
+                    <Journal props={journalRef} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeJournalAccount}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

@@ -25,7 +25,7 @@ async function getJournal(data) {
     try {
         let pool = await sql.connect(config);
         let journal = await pool.request()
-            .input('ref', sql.VarChar, data.ref)
+            .input('ref', data.ref)
             .input('account_name', data.account_name)
             .input('date', '')
             .input('debit', '')

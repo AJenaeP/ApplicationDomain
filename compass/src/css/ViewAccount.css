@@ -1,13 +1,11 @@
-/* .MuiPaper-root.MuiPaper-elevation.ledgerPaper {
-} */
 .ledgerTableHead {
     width: 100%;
     flex-direction: column;
 } 
 .ledgerHeader1{
-        display: flex;
-        justify-content: space-between;
-        margin: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 16px;
 }
 .ledgerHeader1 span{
     font-weight: 700;

@@ -116,11 +116,11 @@ router.route('/journals').get((request, response) => {
         response.json(result[0])
     })
 })
-router.route('/journals:data').get((request, response) => {
+router.route('/journal/:data').get((request, response) => {
     console.log(JSON.parse(request.params.data))
     const data = JSON.parse(request.params.data);
 
-    journalOperations.getJournal().then(result => {
+    journalOperations.getJournal(data).then(result => {
         response.json(result[0])
     })
 })

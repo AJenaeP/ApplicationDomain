@@ -1,85 +1,81 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-const JournalListing = () => {
-    const [journaldata, journaldatachange] = useState(null);
-    const navigate = useNavigate();
-
-    const LoadDetail = (accountNumber) => {
-        navigate("/journal/detail/" + accountNumber);
+import { useNavigate } from "react-router-dom";
+import {
+    DialogTitle,
+    Button,
+    TableContainer,
+    Table,
+    TableHead,
+    TableBody,
+    TableCell,
+    TableRow,
+    Paper,
+} from '@mui/material'
+import '../css/journal.css'
+const JournalListing = (journalRef) => {
+    const [journalData, setJournalData] = useState({})
+    
+    const data = {
+        ref: journalRef.props,
+        account_number: '',
+        journal_status: ''
     }
-    const LoadEdit = (accountNumber) => {
-        navigate("/journal/edit/" + accountNumber);
-    }
-    const Removefunction = (accountNumber) => {
-        if (window.confirm('Do you want to remove?')) {
-            fetch('/api/accounts'+ accountNumber, {
-                method: "DELETE"
-            }).then((res) => {
-                alert('Removed successfully.')
-                window.location.reload();
-            }).catch((err) => {
-                console.log(err.message)
-            })
-        }
-    }
-
-
-
 
     useEffect(() => {
-        fetch('/api/accounts').then((res) => {
-            return res.json();
-        }).then((resp) => {
-            journaldatachange(resp);
-        }).catch((err) => {
-            console.log(err.message);
-        })
+        fetch('/api/journal/' + JSON.stringify(data), {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }
+        ).then(
+            response => response.json()
+        ).then(
+            data => {
+                setJournalData(data[0])
+            }
+        )
     }, [])
+
     return (
-        <div className="container">
-            <div className="card">
-                <div className="card-title">
-                    <h2>Journal Listing</h2>
-                </div>
-                <div className="card-body">
-                    <div className="divbtn">
-                        <Link to="journal/create" className="btn btn-success">Add New (+)</Link>
-                    </div>
-                    <table className="table table-bordered">
-                        <thead className="bg-dark text-white">
-                            <tr>
-                                <td>Account Number</td>
-                                <td>Name</td>
-                                <td>Description</td>
-                                <td>Debit</td>
-                                <td>Credit</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {journaldata &&
-                                journaldata.map(item => (
-                                    <tr key={item.accountNumber}>
-                                        <td>{item.accountNumber}</td>
-                                        <td>{item.name}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.debit}</td>
-                                        <td>{item.credit}</td>
-                                        <td><a onClick={() => { LoadEdit(item.accountNumber) }} className="btn btn-success">Edit</a>
-                                            <a onClick={() => { Removefunction(item.accountNumber) }} className="btn btn-danger">Remove</a>
-                                            <a onClick={() => { LoadDetail(item.accountNumber) }} className="btn btn-primary">Details</a>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-
-                        </tbody>
-
-                    </table>
-                </div>
+        <>
+        <Paper className='JournalPaper'>
+            <DialogTitle>Account Journal</DialogTitle>
+            <div className="journalHeader1">
+                <span>
+                    {journalData.ref}
+                </span>
+                    <span id={journalData.journal_status} 
+                            className={
+                                (journalData.journal_status === 'Approved' ? 'approved' : "") || 
+                                (journalData.journal_status === 'Pending' ? 'pending' : "") ||
+                                (journalData.journal_status === 'Rejected' ? 'rejected' : "")
+                            }>
+                    {journalData.journal_status}
+                </span>
             </div>
-        </div>
+            <TableContainer>
+                <Table>
+                    <TableHead className='journalTableHead'>
+                        <TableRow className='journalHeader2'>
+                            <TableCell> Date </TableCell>
+                            <TableCell> Account Titles</TableCell>
+                            <TableCell> Ref </TableCell>
+                            <TableCell> Debit </TableCell>
+                            <TableCell> Credit </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody className='journalTableBody'>
+                        <TableCell>{journalData.date}</TableCell>
+                        <TableCell>{journalData.account_name}</TableCell>
+                        <TableCell>{journalData.ref}</TableCell>
+                        <TableCell>{journalData.debit}</TableCell>
+                        <TableCell>{journalData.credit}</TableCell>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
+        </>
     );
 }
 

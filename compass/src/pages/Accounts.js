@@ -91,10 +91,7 @@ const Accounts = () => {
   },[])
 
   const openAddAccount = () => {
-    console.log('add account button clicked ')
-    console.log(selectedAccount)
     setOpenAdd(true);
-    console.log(openAdd)
   };
   const openViewAccount = () => {
     if (isRowSelected) {
