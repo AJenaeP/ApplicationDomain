@@ -27,45 +27,51 @@ const Login = () => {
   const [goToHome, setgoToHome] = useState(false);
   const [goToDashboard, setGoToDashboard] = useState(true);
 
-  //this calls signin function from authcontext
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    if (username === "") {
-      alert("Username can't be empty");
-    } else if (password === "") {
-      alert("Password can't be empty");
-    }
-    try {
-      signIn(username, password);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      handleNavigation();
-    }
-  };
 
-  function handleNavigation() {
-    if (user) {
-      if (goToDashboard) {
-        let role = window.localStorage.getItem("userRole");
-        if (role === "Administrator") {
-          navigate("/admindashboard");
-        } else if (role === "Manager") {
-          navigate("/managerdashboard");
-        } else if (role === "Accountant") {
-          navigate("/accountantdashboard");
+    useEffect(()=>{
+        //go to forgot password
+        if(goToForgotPassword){
+            setgoToHome(false)
+            navigate('/forgotpassword')
         }
-      }
+        //go to home
+        if(goToHome){
+            setgoToForgotPassword(false)
+            navigate('/home')
+        }
+    }, [goToForgotPassword, goToHome])
+
+    //this calls signin function from authcontext
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        if (username === "") {
+            alert("Username can't be empty");
+        } else if (password === "") {
+            alert("Password can't be empty");
+        }
+        try{
+            if (signIn(username, password)){
+                handleNavigation()
+            }
+        }catch(error){
+            console.log(error)
+        }
     }
-    //navigate to forgot password page
-    if (goToForgotPassword) {
-      navigate("/forgotpassword");
+
+    function handleNavigation() {
+        if (user) {
+            if (goToDashboard) {
+                let role = window.localStorage.getItem('userRole')
+                if (role === "Administrator") {
+                    navigate('/admindashboard')
+                } else if (role === "Manager") {
+                    navigate('/managerdashboard')
+                } else if (role === "Accountant") {
+                    navigate('/accountantdashboard')
+                }
+            };
+        }
     }
-    //navigate to home screen
-    if (goToHome) {
-      navigate("/home");
-    }
-  }
 
   return (
     <div className="login">

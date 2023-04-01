@@ -1,6 +1,8 @@
-var Db = require('./dboperations')
 var chartOfAccounts = require('./CoA')
-const dboperations = require('./dboperations')
+const CoAoperations = require('./CoAoperations')
+const fboperations = require('./fboperations')
+const ledgerOperations = require('./LedgerOperations')
+const journalOperations = require('./JournalOperations')
 
 //all required libraries for API
 const express = require('express')
@@ -9,6 +11,7 @@ const bodyParser = require('body-parser');
 const app = express() //express object
 const router = express.Router(); //express router object
 const path = require('path');
+const { Int } = require('mssql')
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json())
@@ -26,21 +29,44 @@ router.use((request,response, next) => {
 
 //operation
 router.route('/accounts').get((request,response) => {
-    dboperations.getAccounts().then(result => {
+    CoAoperations.getAccounts().then(result => {
         response.json(result[0])
     })
 })
-router.route('/accounts/:account_number').get((request, response) => {
-
-    dboperations.getAccount(request.params.account_number).then(result => {
-        response.json(result[0])
+router.route('/account/:data').get((request, response) => {
+    console.log(JSON.parse(request.params.data))
+    const data = JSON.parse(request.params.data);
+    //console.log(data)
+    //console.log(data)
+    CoAoperations.getAccount(data).then(result => {
+        response.json(result)
     })
 })
+/*router.route('/accounts/:id').get((request, response) => {
+    console.log('is this account number ')
+    const id = request.params.id
+    CoAoperations.getAccount(id).then(result => {
+        response.json(result[0])
+        response.send(result)
+    })
+})*/
+/*router.route('/accounts/:account_number').get((request, response) => {
+   console.log('is this account number ')
+    /*CoAoperations.getAccountbyNum(Number(request.params.account_number)).then(result => {
+        response.json(result[0])
+    })*//*
+})*//*
+router.route('/accounts/:account_name').get((request, response) => {
+    console.log('is this account name ')
+    /*CoAoperations.getAccountbyName((request.params.account_name)).then(result => {
+        response.json(result[0])
+    })*//*
+})*/
 router.route('/accounts/add').post((request, response) => {
     console.log("post is working")
 
     let account = request.body
-    dboperations.addAccount(account).then(result => {
+    CoAoperations.addAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
@@ -49,7 +75,7 @@ router.route('/accounts/delete').delete((request, response) => {
     console.log("delete is working")
 
     let account = request.body 
-    dboperations.deleteAccount(account).then(result => {
+    CoAoperations.deleteAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
@@ -58,7 +84,68 @@ router.route('/accounts/update').put((request, response) => {
 
     let account = request.body
     console.log(account)
-    dboperations.updateAccount(account).then(result => {
+    CoAoperations.updateAccount(account).then(result => {
+        response.status(201).json(result);
+    })
+})
+
+router.route('/users').get((request, response) => {
+    fboperations.getUsers().then(result => {
+        response.status(201).json(result);
+    })
+})
+
+//operation
+router.route('/ledgers').get((request, response) => {
+    ledgerOperations.getLedgers().then(result => {
+        response.json(result[0])
+    })
+})
+
+router.route('/ledger/:data').get((request, response) => {
+    console.log(JSON.parse(request.params.data))
+    const data = JSON.parse(request.params.data);
+    //console.log(data)
+    //console.log(data)
+    ledgerOperations.getLedger(data).then(result => {
+        response.json(result)
+    })
+})
+router.route('/journals').get((request, response) => {
+    journalOperations.getJournals().then(result => {
+        response.json(result[0])
+    })
+})
+router.route('/journals:data').get((request, response) => {
+    console.log(JSON.parse(request.params.data))
+    const data = JSON.parse(request.params.data);
+
+    journalOperations.getJournal().then(result => {
+        response.json(result[0])
+    })
+})
+router.route('/journals/add').post((request, response) => {
+    console.log("post is working")
+
+    let journal = request.body
+    journalOperations.addJournal(journal).then(result => {
+        response.status(201).json(result);
+    })
+})
+router.route('/journals/delete').delete((request, response) => {
+    console.log("delete is working")
+
+    let journal = request.body
+    jounalOperations.deleteJournal(journal).then(result => {
+        response.status(201).json(result);
+    })
+})
+router.route('/journals/update').put((request, response) => {
+    console.log("update is working")
+
+    let account = request.body
+    console.log(account)
+    journalOperations.updateJournal(journal).then(result => {
         response.status(201).json(result);
     })
 })

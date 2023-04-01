@@ -11,7 +11,7 @@ const HelpPage = () => {
         <div>
           <Header />
         </div>
-        <body>
+        <div className="article">
           <h1>Compass Credit Union Help</h1>
           <br />
           <h2>Accounts Page</h2>
@@ -40,7 +40,7 @@ const HelpPage = () => {
             After the delete account button is pressed the selected account will
             be deleted.
           </p>
-        </body>
+        </div>
       </div>
     </>
   );

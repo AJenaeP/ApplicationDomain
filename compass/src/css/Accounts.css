@@ -9,3 +9,21 @@
 .bgred {
     background-color: rgb(255, 140, 140);
 }
+.MuiPaper-root.MuiPaper-elevation {
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.searchField {
+    margin-top: 100px;
+    margin-left: 205px;
+    margin-bottom: -60px;
+    display: flex;
+}
+.searchField .MuiInputBase-root.MuiOutlinedInput-root {
+    width: 350px;
+}
+.searchField .MuiInputBase-input.MuiOutlinedInput-input {
+    width: 100%;
+}

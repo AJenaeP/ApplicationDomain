@@ -3,43 +3,42 @@ import { db } from "../utilities/Firebase";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import "../css/Accounts.css";
-
 import {
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableBody,
-  Table,
-  Paper,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Tooltip,
+  TableCell, TableContainer, TableHead,
+  TableRow, TableBody, Table,
+  Paper, Button, Dialog,
+  DialogActions, DialogContent, Tooltip,
+  TextField, InputAdornment, IconButton
 } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import AddAccount from "./AdminPages/AddAccount";
 import ViewAccount from "./ViewAccount";
 import EditAccount from "./AdminPages/EditAccount";
 import DeactivateAccount from "./AdminPages/DeactivateAccount";
 import DeleteAccount from "./AdminPages/DeleteAccount";
 
-function Accounts() {
-    const [role, setRole] = useState(window.localStorage.getItem('userRole'))
-    const [backendData, setBackendData] = useState([{}]);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [selectedAccount, setSelectedAccount] = useState({});
-    const [isRowSelected, setIsRowSelected] = useState(false)
-    const [openAdd, setOpenAdd] = useState(false)
-    const [openEdit, setOpenEdit] = useState(false)
-    const [openView, setOpenView] = useState(false)
-    const [openDelete, setOpenDelete] = useState(false)
-    const [openDeactivate, setOpenDeactivate] = useState(false)
-    //const [newAccount, setNewAccount] = useState(AddAccount.account)
+const Accounts = () => {
+  const [role, setRole] = useState(window.localStorage.getItem('userRole'))
+  const [backendData, setBackendData] = useState([{}]);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState({});
+  const [isRowSelected, setIsRowSelected] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const [openDeactivate, setOpenDeactivate] = useState(false)
 
-    //console.log(selectedRow)
-    useEffect(() => {
-      fetch('/api/accounts')
+  //this is for the search field 
+  const data = {
+    account_number: 0,
+    account_name: ''
+  }
+
+  function clearSearchField(){
+    document.getElementById("search").value = null;
+    fetch('/api/accounts')
       .then(
         response => response.json()
       ).then(
@@ -47,17 +46,49 @@ function Accounts() {
           setBackendData(data)
         }
       )
-    },[backendData])
-    //we can use this when searching
-    /*useEffect(() => {
-      fetch('/api/accounts/:accountNumber').then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data)
-        }
-      )
-    }, [])*/
+  }
+  function handleSearchField(){
+    let value = document.getElementById("search").value;
+
+    if(isNaN(value)){
+      console.log('is a string')
+      data.account_name = String(value);
+      data.account_number = 0;
+      console.log(data)
+    }else if(!isNaN(value)){
+      console.log('is a number')
+      data.account_number = Number(value);
+      data.account_name = '';
+      console.log(data)
+    } else {
+      console.log('field is empty')
+    }
+
+    fetch('/api/account/' + JSON.stringify(data), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+    ).then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data[0])
+      }
+    )
+  }
+
+  useEffect(() => {
+    fetch('/api/accounts')
+    .then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  },[])
 
   const openAddAccount = () => {
     console.log('add account button clicked ')
@@ -85,21 +116,11 @@ function Accounts() {
       setOpenDeactivate(true);
     }
   };
-  const closeAddAccount = () => {
-    setOpenAdd(false);
-  };
-  const closeViewAccount = () => {
-    setOpenView(false);
-  };
-  const closeEditAccount = () => {
-    setOpenEdit(false);
-  };
-  const closeDeleteAccount = () => {
-    setOpenDelete(false);
-  };
-  const closeDeactivateAccount = () => {
-    setOpenDeactivate(false);
-  };
+  const closeAddAccount = () => { setOpenAdd(false); };
+  const closeViewAccount = () => { setOpenView(false); };
+  const closeEditAccount = () => { setOpenEdit(false); };
+  const closeDeleteAccount = () => { setOpenDelete(false); };
+  const closeDeactivateAccount = () => { setOpenDeactivate(false); };
   function handleAccountSelection(account, i) {
     if (selectedRow === i) {
       setIsRowSelected(false);
@@ -119,10 +140,37 @@ function Accounts() {
     currency: 'USD',
   }).format(value);
 
-
   return (
     <div className="App">
       <Header />
+      <div className="searchField">
+        <TextField 
+          id="search" 
+          label="Search by Account Number or Name" 
+          //type="search" 
+          InputProps={
+            {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    onClick={handleSearchField}
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={clearSearchField}
+                    //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                    edge="end"
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </InputAdornment>           
+              )
+            }
+          }
+        />
+      </div>
       <Paper
         sx={{
           width: 1000,
@@ -147,16 +195,10 @@ function Accounts() {
                 <TableCell> Account Description </TableCell>
                 <TableCell> Account Category </TableCell>
                 <TableCell> Account Subcategory </TableCell>
-                <TableCell> Normal Side </TableCell>
                 <TableCell> Initial Balance </TableCell>
-                <TableCell> Debit </TableCell>
-                <TableCell> Credit </TableCell>
                 <TableCell> Balance </TableCell>
                 <TableCell> UserId </TableCell>
                 <TableCell> Date/Time Added </TableCell>
-                <TableCell> Order Number </TableCell>
-                <TableCell> Statement </TableCell>
-                <TableCell> Comment </TableCell>
                 <TableCell> Status </TableCell>
               </TableRow>
             </TableHead>
@@ -176,16 +218,10 @@ function Accounts() {
                       <TableCell>{account.account_description}</TableCell>
                       <TableCell>{account.account_category}</TableCell>
                       <TableCell>{account.account_subcategory}</TableCell>
-                      <TableCell>{account.normal_side}</TableCell>
                       <TableCell>{numberFormat(account.initial_balance)}</TableCell>
-                      <TableCell>{numberFormat(account.debit)}</TableCell>
-                      <TableCell>{numberFormat(account.credit)}</TableCell>
                       <TableCell>{numberFormat(account.balance)}</TableCell>
                       <TableCell>{account.userId}</TableCell>
                       <TableCell>{account.date_time_account_added}</TableCell>
-                      <TableCell>{account.order_num}</TableCell>
-                      <TableCell>{account.statement}</TableCell>
-                      <TableCell>{account.comment}</TableCell>
                       <TableCell>{account.account_status}</TableCell>
                     </TableRow>
                   </>
@@ -239,7 +275,6 @@ function Accounts() {
         style={{
           display: "flex",
           marginTop: 150,
-          marginLeft: 360,
           justifyContent: "center",
         }}
       >
@@ -331,6 +366,19 @@ function Accounts() {
             </Tooltip>
           </>
         }
+        <Tooltip title="Email">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            href='/email'
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+          >
+            Email
+          </Button>
+        </Tooltip>
       </div>
     </div> 
 );

@@ -77,6 +77,17 @@ const NewUser = () => {
         secretQ2A: SelectedQ2A,
     }
     
+    function handlePasswordSet(e) {
+        let temp = e.target.value;
+        if(isLetter(temp.charAt(0))){
+            setPassword(e.target.value)
+        } else {
+            alert('password must start with a letter')
+        }
+    }
+    function isLetter(c) {
+        return c.toLowerCase() != c.toUpperCase();
+    }
     //this calls the create user funtion from authcontext
     const handleSumbit = async (e) => {
         e.preventDefault()
@@ -192,7 +203,7 @@ const NewUser = () => {
                             type="password"
                             autoComplete="current-password"
                             style={{marginRight: 10}}
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={handlePasswordSet}
                         />
                         <TextField
                             id="outlined-password-input password"

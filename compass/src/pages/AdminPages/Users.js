@@ -8,27 +8,23 @@ import {
 } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { db }  from '../../utilities/Firebase';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import Header from '../Header';
 
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     
-    useEffect(() => { 
-         getUsers()      
-    }, [])
+    const ref = collection(db, 'users')
+    const q = query(ref)
 
-    const getUsers = async () => {
-        const q = query(collection(db, "users"));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            var data = doc.data()
-            console.log(data)
-            setUsers(arr => [...arr, data])
-            console.log(users)
-        });
-    }
+    onSnapshot(q, (snapshot) => {
+        let usersList = []
+        snapshot.docs.forEach((doc) => {
+            usersList.push({ ...doc.data() })
+        })
+        setUsers(usersList)
+    })
 
     return (
         <div className='Users'>

@@ -70,26 +70,8 @@ const DeleteAccount = ({account}) => {
             <TextField
                 disabled
                 id="outlined-disabled"
-                label="Normal Side"
-                defaultValue={account.selectedAccount.normal_side}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
                 label="Initial Balance"
                 defaultValue={account.selectedAccount.initial_balance}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Debit"
-                defaultValue={account.selectedAccount.debit}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Credit"
-                defaultValue={account.selectedAccount.credit}
             />
             <TextField
                 disabled
@@ -108,24 +90,6 @@ const DeleteAccount = ({account}) => {
                 id="outlined-disabled"
                 label="Date/Time Account Added"
                 defaultValue={account.selectedAccount.date_time_account_added}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Order Number"
-                defaultValue={account.selectedAccount.order_num}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Statement"
-                defaultValue={account.selectedAccount.statement}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Comment"
-                defaultValue={account.selectedAccount.comment}
             />
             <TextField
                 disabled

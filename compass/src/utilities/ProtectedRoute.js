@@ -30,7 +30,7 @@ const ProtectedRoute = (props: ProtectedRouteType) => {
     //checks if user role has changed
     useEffect(() => {
         console.log('user role changed')
-    }, userRole)
+    }, [userRole])
    
 
     if (props.roleRequired) {    //if role required is there or not

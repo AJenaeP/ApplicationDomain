@@ -22,16 +22,10 @@ const DeactivateAccount = ({account}) => {
         accountDescription: account.selectedAccount.account_description,
         accountCategory: account.selectedAccount.account_category,
         accountSubcategory: account.selectedAccount.account_subcategory,
-        normalSide: account.selectedAccount.normal_side,
         initialBalance: account.selectedAccount.initialBalance,
-        debit: account.selectedAccount.debit,
-        credit: account.selectedAccount.credit,
         balance: account.selectedAccount.balance,
         userId: account.selectedAccount.userId,
         dateTime: account.selectedAccount.dateTime,
-        orderNumber: account.selectedAccount.order_num,
-        statement: account.selectedAccount.statement,
-        comment: account.selectedAccount.comment,
         accountStatus: account.selectedAccount.account_status,
     })
     function handleAccountStatusChange(e) { setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value; }
@@ -114,26 +108,8 @@ const DeactivateAccount = ({account}) => {
             <TextField
                 disabled
                 id="outlined-disabled"
-                label="Normal Side"
-                defaultValue={account.selectedAccount.normal_side}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
                 label="Initial Balance"
                 defaultValue={account.selectedAccount.initial_balance}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Debit"
-                defaultValue={account.selectedAccount.debit}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Credit"
-                defaultValue={account.selectedAccount.credit}
             />
             <TextField
                 disabled
@@ -152,24 +128,6 @@ const DeactivateAccount = ({account}) => {
                 id="outlined-disabled"
                 label="Date/Time Account Added"
                 defaultValue={account.selectedAccount.date_time_account_added}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Order Number"
-                defaultValue={account.selectedAccount.order_num}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Statement"
-                defaultValue={account.selectedAccount.statement}
-            />
-            <TextField
-                disabled
-                id="outlined-disabled"
-                label="Comment"
-                defaultValue={account.selectedAccount.comment}
             />
             <InputLabel id="demo-simple-select-label status">Status</InputLabel>
             <Select

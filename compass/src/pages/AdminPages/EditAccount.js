@@ -25,16 +25,10 @@ const EditAccount = ({ account }) => {
         accountDescription: account.selectedAccount.account_description,
         accountCategory: account.selectedAccount.account_category,
         accountSubcategory: account.selectedAccount.account_subcategory,
-        normalSide: account.selectedAccount.normal_side,
         initialBalance: account.selectedAccount.initialBalance,
-        debit: account.selectedAccount.debit,
-        credit: account.selectedAccount.credit,
         balance: account.selectedAccount.balance,
         userId: account.selectedAccount.userId,
         dateTime: account.selectedAccount.dateTime,
-        orderNumber: account.selectedAccount.order_num,
-        statement: account.selectedAccount.statement,
-        comment: account.selectedAccount.comment,
         accountStatus: account.selectedAccount.account_status,
     })
 
@@ -42,16 +36,10 @@ const EditAccount = ({ account }) => {
     function handleAccountDescChange(e) { updatedAccount.accountDescription = e.target.value; }
     function handleAccountCatChange(e) { setUpdatedCategory(e.target.value); updatedAccount.accountCategory = e.target.value; }
     function handleAccountSubCatChange(e) { setUpdatedSubcategory(e.target.value); updatedAccount.accountSubcategory = e.target.value; }
-    function handleAccountNormChange(e) { updatedAccount.normalSide = Number(e.target.value); }
     function handleAccountInitialChange(e) { updatedAccount.initialBalance = Number(e.target.value); }
-    function handleAccountDebitChange(e) { updatedAccount.debit = Number(e.target.value); }
-    function handleAccountCreditChange(e) { updatedAccount.credit = Number(e.target.value); }
     function handleAccountBalanceChange(e) { updatedAccount.balance = Number(e.target.value); }
     //function handleAccountUserChange(e) { updatedAccount.accountName = e.target.value; console.log(account) }
     //function handleAccountDateChange(e) { updatedAccountt.accountName = e.target.value; console.log(account) }
-    function handleAccountOrderChange(e) { updatedAccount.orderNumber = Number(e.target.value); }
-    function handleAccountStatementChange(e) { setUpdatedStatement(e.target.value); updatedAccount.statement = e.target.value; }
-    function handleAccountCommentChange(e) { updatedAccount.comment = e.target.value; }
     function handleAccountStatusChange(e){setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value;}
 
     function handleEdit(e) {
@@ -138,23 +126,8 @@ const EditAccount = ({ account }) => {
             </Select>
             <TextField
                 id="outlined-required"
-                label="Normal Side"
-                defaultValue={account.selectedAccount.normal_side}
-            />
-            <TextField
-                id="outlined-required"
                 label="Initial Balance"
                 defaultValue={account.selectedAccount.initial_balance}
-            />
-            <TextField
-                id="outlined-required"
-                label="Debit"
-                defaultValue={account.selectedAccount.debit}
-            />
-            <TextField
-                id="outlined-required"
-                label="Credit"
-                defaultValue={account.selectedAccount.credit}
             />
             <TextField
                 id="outlined-required"
@@ -173,33 +146,6 @@ const EditAccount = ({ account }) => {
                 label="Date/Time Account Added"
                 defaultValue={account.selectedAccount.date_time_account_added}
             />
-            <TextField
-                id="outlined-required"
-                label="Order Number"
-                defaultValue={account.selectedAccount.order_num}
-            />
-            <InputLabel id="demo-simple-select-label statement">Statement</InputLabel>
-            <Select
-                labelId="demo-simple-select-label statement"
-                id="demo-simple-select"
-                value={updatedStatement}
-                label="Statement"
-                sx={{ width: 'fit-content' }}
-                defaultValue={account.selectedAccount.account_statement}
-                onChange={handleAccountStatementChange}
-            >
-                <MenuItem value='balance sheet'>Balance Sheet</MenuItem>
-            //TODO: add another statement type here
-            </Select>
-            <TextField
-                id="outlined-multiline-static"
-                label="Comments"
-                multiline
-                rows={4}
-                defaultValue={account.selectedAccount.comment}
-                onChange={handleAccountCommentChange}
-            />
-
             <InputLabel id="demo-simple-select-label statement">Status</InputLabel>
             <Select
                 labelId="demo-simple-select-label status"

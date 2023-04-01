@@ -82,7 +82,7 @@ const Sidebar = () => {
       </List>
       <List> 
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/Email'>
+          <ListItemButton className="menu-item" href='/email'>
             <ListItemIcon>
               <EmailIcon />
             </ListItemIcon>

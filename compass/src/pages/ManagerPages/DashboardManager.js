@@ -1,4 +1,3 @@
-
 import compassLogo from '../../images/compassLogo.png';
 import { Typography, Container } from '@mui/material';
 import { bubble as Menu } from 'react-burger-menu';
