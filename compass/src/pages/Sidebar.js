@@ -92,7 +92,17 @@ const Sidebar = () => {
       </List>
       <List>
         <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/Journal'>
+          <ListItemButton className="menu-item" href='/journals'>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary="All Journal" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton className="menu-item" href='/journal'>
             <ListItemIcon>
               <CreateIcon />
             </ListItemIcon>
