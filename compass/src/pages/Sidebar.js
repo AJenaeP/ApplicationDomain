@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from 'react';
 import { elastic as Menu } from 'react-burger-menu';
 import '../css/Sidebar.css';
@@ -96,17 +98,7 @@ const Sidebar = () => {
             <ListItemIcon>
               <CreateIcon />
             </ListItemIcon>
-            <ListItemText primary="All Journal" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/journal'>
-            <ListItemIcon>
-              <CreateIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add Journal" />
+            <ListItemText primary="Journals" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -134,3 +126,4 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
