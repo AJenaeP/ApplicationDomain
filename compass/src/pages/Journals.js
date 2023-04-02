@@ -1,3 +1,6 @@
+
+
+
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import {
@@ -141,7 +144,7 @@ const Journals = () => {
                   <TableCell> Credit </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className="journalRows">
+              <TableBody className="JournalRows">
                 {journalData.map((journal, i) => {
                   return (
                     <>
@@ -167,7 +170,7 @@ const Journals = () => {
       </Paper>
       <Dialog open={openAdd} onClose={closeAddJournal}>
         <DialogContent>
-        <AddJournal journal={{ selectedJournal }} />
+        <AddJournal journal={{ selectedJournal}} />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeAddJournal}>Cancel</Button>
@@ -253,3 +256,4 @@ const Journals = () => {
 }
 
 export default Journals;
+
