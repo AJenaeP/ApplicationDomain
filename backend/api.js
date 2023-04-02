@@ -143,8 +143,8 @@ router.route('/journals/delete').delete((request, response) => {
 router.route('/journals/update').put((request, response) => {
     console.log("update is working")
 
-    let account = request.body
-    console.log(account)
+    let journal = request.body
+    console.log(journal)
     journalOperations.updateJournal(journal).then(result => {
         response.status(201).json(result);
     })
