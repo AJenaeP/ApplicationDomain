@@ -198,7 +198,7 @@ const Journals = () => {
         }}
       >
       {
-        (role === "Accountant") && 
+       (role === "Accountant" || "Manager") && 
           <>
             <Tooltip title="Add Journal Entry">
                 <Button
