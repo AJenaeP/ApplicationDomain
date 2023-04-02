@@ -120,4 +120,3 @@ return (
 
 
 export default AddJournal
-
