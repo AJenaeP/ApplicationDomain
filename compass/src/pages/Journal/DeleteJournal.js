@@ -2,7 +2,6 @@
 
 
 
-
 import {
     Dialog,
     DialogTitle,
@@ -19,14 +18,14 @@ const DeleteJournal = ({journal}) => {
     function handleDelete(e) {
         //e.preventDefault();
         console.log(journal.selectedJournal.journal_name)
-        console.log(journal.selectedjournal)
+        console.log(journal.selectedJournal)
         console.log('trying to delete...')
         fetch('/api/accounts/delete', {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(journal.selectedjounal)
+            body: JSON.stringify(journal.selectedJournal)
         })
             .then(
                 response => { 
