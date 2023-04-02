@@ -20,16 +20,16 @@ async function getJournals() {
 }
 
 async function getJournal(data) {
+    console.log('trying to get...')
     console.log(data)
-    //let input_parameter = id;
     try {
         let pool = await sql.connect(config);
         let journal = await pool.request()
             .input('ref', data.ref)
             .input('account_name', data.account_name)
-            .input('date', '')
-            .input('debit', '')
-            .input('credit', '')
+            .input('date', data.date)
+            .input('debit', data.debit)
+            .input('credit', data.credit)
             .input('journal_status', data.journal_status)
             .input('Type', 'SELECT_FROM')
             .execute('Journal_Management');
@@ -38,7 +38,7 @@ async function getJournal(data) {
 
     } catch (error) {
         console.log(error)
-    }
+    } 
 }
 
 async function getJournalbyRefStatus(ref) {

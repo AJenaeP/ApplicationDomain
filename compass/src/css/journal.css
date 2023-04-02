@@ -18,3 +18,18 @@
 .rejected{
   color: red !important;
 }
+
+.searchField {
+  margin-top: 100px;
+  margin-left: 205px;
+  margin-bottom: -60px;
+  display: flex;
+}
+
+.searchField .MuiInputBase-root.MuiOutlinedInput-root {
+  width: 410px;
+}
+
+.searchField .MuiInputBase-input.MuiOutlinedInput-input {
+  width: 100%;
+}

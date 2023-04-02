@@ -42,26 +42,7 @@ router.route('/account/:data').get((request, response) => {
         response.json(result)
     })
 })
-/*router.route('/accounts/:id').get((request, response) => {
-    console.log('is this account number ')
-    const id = request.params.id
-    CoAoperations.getAccount(id).then(result => {
-        response.json(result[0])
-        response.send(result)
-    })
-})*/
-/*router.route('/accounts/:account_number').get((request, response) => {
-   console.log('is this account number ')
-    /*CoAoperations.getAccountbyNum(Number(request.params.account_number)).then(result => {
-        response.json(result[0])
-    })*//*
-})*//*
-router.route('/accounts/:account_name').get((request, response) => {
-    console.log('is this account name ')
-    /*CoAoperations.getAccountbyName((request.params.account_name)).then(result => {
-        response.json(result[0])
-    })*//*
-})*/
+
 router.route('/accounts/add').post((request, response) => {
     console.log("post is working")
 

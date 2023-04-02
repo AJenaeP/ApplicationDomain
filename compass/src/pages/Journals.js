@@ -16,14 +16,19 @@ import {
   DialogActions,
   DialogContent,
   Tooltip,
+  Dialog,
+  DialogTitle,
+  InputLabel,
+  MenuItem,
+  Select,
+  InputAdornment,
+  IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio
 } from "@mui/material";
-import {
-    Dialog,
-    DialogTitle,
-    InputLabel,
-    MenuItem,
-    Select
-} from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import '../css/journal.css'
 
 
@@ -42,6 +47,7 @@ const Journals = () => {
   const [openAdd, setOpenAdd] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
+  const [value, setValue] = React.useState('All');
 
   const data = {
     ref: '',
@@ -49,6 +55,129 @@ const Journals = () => {
     journal_status: 'Approved'
   }
 
+  const searchCriteria = {
+    ref: '',
+    account_name: '',
+    date: '',
+    debit: -1,
+    credit: -1,
+    journal_status: ''
+  }
+  function clearSearchField() {
+    document.getElementById("search").value = null;
+    if (role === 'Accountant') {
+      fetch('/api/journal/' + JSON.stringify(data), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      ).then(
+        response => response.json()
+      ).then(
+        data => {
+          console.log(data)
+          setJournalData(data)
+          console.log(journalData)
+        }
+      )
+    }
+    if (role === 'Manager') {
+      fetch('/api/journals')
+        .then(
+          response => response.json()
+        ).then(
+          data => {
+            setJournalData(data)
+          }
+        )
+    }
+  }
+
+  function handleSearchField() {
+    let value = document.getElementById("search").value;
+
+    if (isNaN(value)) {
+      console.log('is a string')
+      searchCriteria.account_name = String(value);
+      searchCriteria.date = String(value);
+      searchCriteria.debit = -1;
+      searchCriteria.credit = -1;
+      console.log(searchCriteria)
+    } else if (!isNaN(value)) {
+      console.log('is a number')
+      searchCriteria.debit = Number(value);
+      searchCriteria.credit = Number(value);
+      searchCriteria.account_name = '';
+      searchCriteria.date = '';
+      console.log(searchCriteria)
+    } else {
+      console.log('field is empty')
+    } 
+    if(role === 'Accountant'){
+      searchCriteria.journal_status = 'Approved'
+      fetch('/api/journal/' + JSON.stringify(searchCriteria), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      ).then(
+        response => response.json()
+      ).then(
+        data => {
+          console.log(data)
+          setJournalData(data)
+        }
+      )
+    } else {
+      fetch('/api/journal/' + JSON.stringify(searchCriteria), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      ).then(
+        response => response.json()
+      ).then(
+        data => {
+          console.log(data)
+          setJournalData(data)
+        }
+      )
+    }
+    
+  }
+
+  function handleRadioFilter(e){
+    console.log(e.target.value)
+    let filter = e.target.value;
+    setValue(e.target.value);
+    if(filter === 'Approved'){
+      searchCriteria.journal_status = 'Approved'
+      console.log(searchCriteria)
+    } else if (filter === 'Pending'){
+      searchCriteria.journal_status = 'Pending'
+      console.log(searchCriteria)
+    } else if (filter === 'Rejected'){ 
+      searchCriteria.journal_status = 'Rejected'
+      console.log(searchCriteria)
+    }
+    fetch('/api/journal/' + JSON.stringify(searchCriteria), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+    ).then(
+      response => response.json()
+    ).then(
+      data => {
+        console.log(data)
+        setJournalData(data)
+      }
+    )
+  }
   useEffect(() => {
     if(role === 'Accountant'){
       fetch('/api/journal/' + JSON.stringify(data), {
@@ -130,7 +259,44 @@ const Journals = () => {
     return (
       <div className="App">  
         <Header />
-        
+        <div className="searchField">
+          <TextField
+            id="search"
+            label="Search by Account Name, Amount or Date"
+            //type="search" 
+            InputProps={
+              {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      edge="end"
+                      onClick={handleSearchField}
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={clearSearchField}
+                      //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                      edge="end"
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }
+            }
+          />
+          { (role === 'Manager') &&
+            <>
+              <RadioGroup row value={value} onChange={handleRadioFilter}>
+                <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
+                <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
+                <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />
+                <FormControlLabel value='Rejected' control={<Radio size="small" />} label="Rejected" />
+              </RadioGroup>
+            </>
+          }
+        </div>
         <Paper 
         sx={{
           width: 1000,

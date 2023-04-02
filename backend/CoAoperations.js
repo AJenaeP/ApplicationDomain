@@ -35,8 +35,6 @@ async function getAccount(data) {
             .input('account_subcategory', '')
             .input('initial_balance', '')
             .input('balance', '')
-            .input('initial_balance', '')
-            .input('balance', '')
             .input('userId', '')
             .input('date_time_account_added', '')
             .input('account_status', '')
