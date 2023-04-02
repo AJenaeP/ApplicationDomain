@@ -24,6 +24,7 @@ import {
     MenuItem,
     Select
 } from '@mui/material'
+import '../css/journal.css'
 
 
 import DeleteJournal from "./Journal/DeleteJournal";
@@ -34,13 +35,13 @@ import EditJournal from "./Journal/EditJournal";
 const Journals = () => {
   const [journalData, setJournalData] = useState([{}]);
   const [role, setRole] = useState(window.localStorage.getItem('userRole'))
-    const [backendData, setBackendData] = useState([{}]);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [selectedJournal, setSelectedJournal] = useState({});
-    const [isRowSelected, setIsRowSelected] = useState(false)
-    const [openAdd, setOpenAdd] = useState(false)
-    const [openEdit, setOpenEdit] = useState(false)
-    const [openDelete, setOpenDelete] = useState(false)
+  const [backendData, setBackendData] = useState([{}]);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedJournal, setSelectedJournal] = useState({});
+  const [isRowSelected, setIsRowSelected] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
 
   const data = {
     ref: '',
@@ -49,21 +50,33 @@ const Journals = () => {
   }
 
   useEffect(() => {
-    fetch('/api/journal/' + JSON.stringify(data), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    if(role === 'Accountant'){
+      fetch('/api/journal/' + JSON.stringify(data), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
       }
+      ).then(
+        response => response.json()
+      ).then(
+        data => {
+          console.log(data)
+          setJournalData(data)
+          console.log(journalData)
+        }
+      )
     }
-    ).then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log(data)
-        setJournalData(data)
-        console.log(journalData)
-      }
-    )
+    if(role === 'Manager'){
+      fetch('/api/journals')
+        .then(
+          response => response.json()
+        ).then(
+          data => {
+            setJournalData(data)
+          }
+        )
+    }
   }, [])
 
   const openAddJournal = () => {
@@ -128,9 +141,9 @@ const Journals = () => {
           left: "15%",
         }}
       >  
-          <TableContainer>
+          <TableContainer sx={{height: 500}}>
             <Table
-            sx={{ minWidth: 650 }}
+            sx={{ minWidth: 650}}
             size="small"
             stickyHeader
             aria-label="sticky table"
@@ -142,6 +155,7 @@ const Journals = () => {
                   <TableCell> Ref </TableCell>
                   <TableCell> Debit </TableCell>
                   <TableCell> Credit </TableCell>
+                  <TableCell> Journal Status </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className="JournalRows">
@@ -152,7 +166,7 @@ const Journals = () => {
                         id={i}
                         key={i}
                         onClick={() => handleJournalSelection(journal, i)}
-                      className={(selectedRow === i ? "isSelected" : "") 
+                        className={(selectedRow === i ? "isSelected" : "") 
                     }
                       >
                         <TableCell>{journal.date}</TableCell>
@@ -160,6 +174,13 @@ const Journals = () => {
                         <TableCell>{journal.ref}</TableCell>
                         <TableCell>{journal.debit}</TableCell>
                         <TableCell>{journal.credit}</TableCell>
+                        <TableCell
+                          className={
+                            (journal.journal_status === 'Approved' ? 'approved' : "") ||
+                            (journal.journal_status === 'Pending' ? 'pending' : "") ||
+                            (journal.journal_status === 'Rejected' ? 'rejected' : "")
+                          }
+                        >{journal.journal_status}</TableCell>
                         </TableRow>
                   </>
                 );

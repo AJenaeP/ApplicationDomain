@@ -10,11 +10,11 @@
 }
 
 .approved{
-  color: green;
+  color: green !important;
 }
 .pending{
-  color: yellow;
+  color: rgba(255, 200, 0, 0.643) !important;
 }
 .rejected{
-  color: red
+  color: red !important;
 }
