@@ -33,7 +33,6 @@ async function getJournal(data) {
             .input('journal_status', data.journal_status)
             .input('Type', 'SELECT_FROM')
             .execute('Journal_Management');
-        /*.query("SELECT * from ChartOfAccounts WHERE account_number = ? OR account_name = ?")*/
         console.log(journal.recordsets)
         return journal.recordsets;
 
@@ -51,7 +50,6 @@ async function getJournalbyRefStatus(ref) {
             .input('journal_status', journal.journal_status)
             .input('Type', 'SELECT_FROM_ACCTNUM')
             .execute('Journal_Management')
-        //.query("SELECT * from ChartOfAccounts where account_number = @input_parameter")
         return journal.recordsets;
     } catch (error) {
         console.log(error)
@@ -102,11 +100,11 @@ async function updateJournal(journal) {
         let pool = await sql.connect(config);
         let journalUpdate = await pool.request()
             .input('ref', journal.ref)
-            .input('account_name', journal.account_name)
+            .input('account_name', journal.journalName)
             .input('date', journal.date)
             .input('debit', journal.debit)
             .input('credit', journal.credit)
-            .input('journal_status', journal.journal_status)
+            .input('journal_status', journal.journalStatus)
             .input('Type', 'UPDATE')
             .execute('Journal_Management');
         return journalUpdate.recordsets;

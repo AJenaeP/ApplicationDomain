@@ -18,9 +18,9 @@ const EditJournal = ({ journal }) => {
        date: journal.selectedJournal.date,
        journalName: journal.selectedJournal.account_name,
        ref: journal.selectedJournal.ref,
-        debit: journal.selectedJournal.debit,
-        credit: journal.selectedJournal.credit,
-       
+       debit: journal.selectedJournal.debit,
+       credit: journal.selectedJournal.credit,
+       journalStatus: journal.selectedJournal.journal_status
     })
 
 
@@ -35,7 +35,7 @@ const EditJournal = ({ journal }) => {
         console.log(journal.selectedJournal)
         console.log(updatedJournal)
         console.log('trying to update...')
-        fetch('/api/journal/update', {
+        fetch('/api/journals/update', {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
@@ -54,12 +54,10 @@ const EditJournal = ({ journal }) => {
         )
     }
 
-  
-
+    
     return (
         <>
             <DialogTitle> Edit An Entry</DialogTitle>
-
             <TextField
                 required
                 id="outlined-required"
@@ -67,13 +65,11 @@ const EditJournal = ({ journal }) => {
                 defaultValue={journal.selectedJournal.date}
                 onChange={handleJournalDateChange}
             />
-           
-          
             <TextField
                 required
                 id="outlined-required"
                 label="Journal Name "
-                defaultValue={journal.selectedJournal.journalName}
+                defaultValue={journal.selectedJournal.account_name}
                 onChange={handleJournalAccountNameChange}
             />
              <TextField
@@ -87,7 +83,7 @@ const EditJournal = ({ journal }) => {
             <TextField
                 id="outlined-required"
                 label="Debit"
-                defaultValue={journal.selectedjournal.debit}
+                defaultValue={journal.selectedJournal.debit}
                 onChange={handleJournalDebitChange}
             />
             <TextField
@@ -99,7 +95,7 @@ const EditJournal = ({ journal }) => {
            
             <DialogActions>
                 <Button onClick={handleUpdate}>Update Entry</Button>
-            </DialogActions>
+            </DialogActions> 
         </>
     )
 }
