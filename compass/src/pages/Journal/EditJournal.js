@@ -14,8 +14,6 @@ import React, { useState, useEffect } from 'react'
 
 
 const EditJournal = ({ journal }) => {
-
-
     const [updatedJournal, setUpdatedJournal] = useState({
        date: journal.selectedJournal.date,
        journalName: journal.selectedJournal.account_name,
@@ -26,13 +24,13 @@ const EditJournal = ({ journal }) => {
     })
 
 
-    function handleJournalDateChange(e) { journal.date = e.target.value; }
-    function handleJournalAccountNameChange(e) { journal.account_name= e.target.value; }
-    function handleJournalRefChange(e) { journal.ref= e.target.value; }
-    function handleJournalDebitChange(e) { journal.debit = Number(e.target.value); } 
-    function handleJournalCreditChange(e) { journal.credit = Number(e.target.value); } 
+    function handleJournalDateChange(e) { updatedJournal.date = e.target.value; }
+    function handleJournalAccountNameChange(e) { updatedJournal.account_name= e.target.value; }
+    function handleJournalRefChange(e) { updatedJournal.ref= e.target.value; }
+    function handleJournalDebitChange(e) { updatedJournal.debit = Number(e.target.value); } 
+    function handleJournalCreditChange(e) { updatedJournal.credit = Number(e.target.value); } 
     
-    function handleEdit(e) {
+    function handleUpdate(e) {
         e.preventDefault();
         console.log(journal.selectedJournal)
         console.log(updatedJournal)
@@ -65,17 +63,25 @@ const EditJournal = ({ journal }) => {
             <TextField
                 required
                 id="outlined-required"
-                label="Journal Date -- Required"
+                label="Journal Date"
                 defaultValue={journal.selectedJournal.date}
                 onChange={handleJournalDateChange}
             />
+           
           
             <TextField
                 required
                 id="outlined-required"
-                label="Journal Name -- Required"
+                label="Journal Name "
                 defaultValue={journal.selectedJournal.journalName}
                 onChange={handleJournalAccountNameChange}
+            />
+             <TextField
+                required
+                id="outlined-required"
+                label="Journal Ref"
+                defaultValue={journal.selectedJournal.ref}
+                onChange={handleJournalRefChange}
             />
     
             <TextField
@@ -92,7 +98,7 @@ const EditJournal = ({ journal }) => {
             />
            
             <DialogActions>
-                <Button onClick={handleEdit}>Update Entry</Button>
+                <Button onClick={handleUpdate}>Update Entry</Button>
             </DialogActions>
         </>
     )
