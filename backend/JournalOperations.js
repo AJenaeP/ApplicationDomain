@@ -57,10 +57,11 @@ async function getJournalbyRefStatus(ref) {
 } 
 async function addJournal(journal) {
     console.log('connecting...')
+    console.log(journal)
     try {
         let pool = await sql.connect(config);
         console.log('connecting...')
-        console.log(account)
+        console.log(journal)
         let insertJournal = await pool.request()
             .input('ref', journal.ref)
             .input('account_name', journal.account_name)

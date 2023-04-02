@@ -17,25 +17,25 @@ const DeleteJournal = ({journal}) => {
 
     function handleDelete(e) {
         //e.preventDefault();
-        console.log(journal.selectedJournal.journal_name)
+        console.log(journal.selectedJournal.account_name)
         console.log(journal.selectedJournal)
         console.log('trying to delete...')
-        fetch('/api/accounts/delete', {
+        fetch('/api/journals/delete', {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(journal.selectedJournal)
         })
-            .then(
-                response => { 
-                    if(response.statusText === "Created"){
-                        alert('Account Deleted')
-                    } else {
-                        alert(response.statusText)
-                    } 
-                },
-            )
+        .then(
+            response => { 
+                if(response.statusText === "Created"){
+                    alert('Account Deleted')
+                } else {
+                    alert(response.statusText)
+                } 
+            },
+        )
     }
 
     return (
@@ -46,7 +46,7 @@ const DeleteJournal = ({journal}) => {
                 disabled
                 id="outlined-disabled"
                 label="Journal Name"
-                defaultValue={journal.selectedJournal.journal_name}
+                defaultValue={journal.selectedJournal.account_name}
             />
             
             

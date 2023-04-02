@@ -128,6 +128,7 @@ router.route('/journals/add').post((request, response) => {
     console.log("post is working")
 
     let journal = request.body
+    console.log(journal)
     journalOperations.addJournal(journal).then(result => {
         response.status(201).json(result);
     })
@@ -136,7 +137,8 @@ router.route('/journals/delete').delete((request, response) => {
     console.log("delete is working")
 
     let journal = request.body
-    jounalOperations.deleteJournal(journal).then(result => {
+    console.log(journal)
+    journalOperations.deleteJournal(journal).then(result => {
         response.status(201).json(result);
     })
 })

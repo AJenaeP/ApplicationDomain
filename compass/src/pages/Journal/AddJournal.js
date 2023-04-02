@@ -33,8 +33,7 @@ const AddJournal = () => {
         ref:'',
         debit:'',
         credit:'',
-
-
+        journal_status: 'Pending'
   })
 
 function handleJournalDateChange(e) { journal.date = e.target.value; }
@@ -49,7 +48,7 @@ function handleAdd(e) {
         e.preventDefault();
         console.log(journal)
         console.log('trying to add...')
-        fetch('/api/journal/add', {
+        fetch('/api/journals/add', {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
