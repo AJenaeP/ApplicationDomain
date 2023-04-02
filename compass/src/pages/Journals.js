@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import {
@@ -286,7 +283,7 @@ const Journals = () => {
               }
             }
           />
-          { (role === 'Manager') &&
+          { (role === 'Manager' || 'Accountant' || 'Administrator') &&
             <>
               <RadioGroup row value={value} onChange={handleRadioFilter}>
                 <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
@@ -388,7 +385,7 @@ const Journals = () => {
         }}
       >
       {
-        (role === "Accountant" || "Manager") && 
+        
           <>
             <Tooltip title="Add Journal Entry">
                 <Button
@@ -443,4 +440,3 @@ const Journals = () => {
 }
 
 export default Journals;
-
