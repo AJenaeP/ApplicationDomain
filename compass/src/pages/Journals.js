@@ -29,7 +29,7 @@ import EditJournal from "./Journal/EditJournal";
 //import JournalList from "./Journal/JournalList";
 
 const Journals = () => {
-  const [journalData, setJournalData] = useState([{}])
+  const [journalData, setJournalData] = useState([{}]);
   const [role, setRole] = useState(window.localStorage.getItem('userRole'))
     const [backendData, setBackendData] = useState([{}]);
     const [selectedRow, setSelectedRow] = useState(null);
@@ -141,7 +141,7 @@ const Journals = () => {
                   <TableCell> Credit </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className="JournalRows">
+              <TableBody className="journalRows">
                 {journalData.map((journal, i) => {
                   return (
                     <>
@@ -167,7 +167,7 @@ const Journals = () => {
       </Paper>
       <Dialog open={openAdd} onClose={closeAddJournal}>
         <DialogContent>
-       
+        <AddJournal journal={{ selectedJournal }} />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeAddJournal}>Cancel</Button>
@@ -198,7 +198,7 @@ const Journals = () => {
         }}
       >
       {
-       (role === "Accountant" || "Manager") && 
+        (role === "Accountant" || "Manager") && 
           <>
             <Tooltip title="Add Journal Entry">
                 <Button
