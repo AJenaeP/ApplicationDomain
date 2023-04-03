@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useEffect, useState } from 'react';
 import { elastic as Menu } from 'react-burger-menu';
 import '../css/Sidebar.css';
@@ -9,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CreateIcon from '@mui/icons-material/Create';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LockResetIcon from '@mui/icons-material/LockReset';
@@ -99,6 +102,16 @@ const Sidebar = () => {
               <CreateIcon />
             </ListItemIcon>
             <ListItemText primary="Journals" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton className="menu-item" href='/events'>
+            <ListItemIcon>
+              <EventNoteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Event Log" />
           </ListItemButton>
         </ListItem>
       </List>
