@@ -22,7 +22,8 @@ import DashboardAccountant from "./pages/AccountantPages/DashboardAccountant";
 import Users from "./pages/AdminPages/Users";
 import Journal from "./pages/Journal";
 import Email from "./utilities/Email";
-import Journals from "./pages/Journals"
+import Journals from "./pages/Journals";
+import EventLog from "./pages/EventLog";
 /* add to admin protected route after creation
   <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
 */
@@ -72,6 +73,7 @@ function App() {
             <Route path="/journals" element={<Journals />}></Route>
             <Route path="/journal" element={<Journal />}></Route>
             <Route path="/email" element={<Email />}></Route>
+            <Route path="/events"element={<EventLog/>}></Route>
           </Routes>
         </Router>
       </AuthProvider>
