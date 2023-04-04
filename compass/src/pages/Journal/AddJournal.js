@@ -137,9 +137,6 @@ const AddJournal = () => {
         onChange={handleJournalCreditChange}
       />
 
-      {/* <input type="file" />
-<input type="button" value="Browse..." onclick="document.getElementById('selectedFile').click();" /> */}
-
       <div>
         <Button
           component="label"
