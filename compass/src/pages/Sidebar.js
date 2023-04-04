@@ -21,6 +21,7 @@ import { UserAuth } from '../utilities/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from "@mui/icons-material/Help";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 
 const Sidebar = () => {
@@ -131,7 +132,7 @@ const Sidebar = () => {
         <ListItem disablePadding>
           <ListItemButton className="menu-item" href='/ledgers'>
             <ListItemIcon>
-              <CreateIcon />
+              <MenuBookIcon />
             </ListItemIcon>
             <ListItemText primary="Ledgers" />
           </ListItemButton>
