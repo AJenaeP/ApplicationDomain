@@ -36,6 +36,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DeleteJournal from "./Journal/DeleteJournal";
 import AddJournal from "./Journal/AddJournal";
 import EditJournal from "./Journal/EditJournal";
+import ViewJournal from "./Journal/ViewJournals";
 import { arrayIncludes } from "@mui/x-date-pickers/internals/utils/utils";
 
 //import JournalList from "./Journal/JournalList";
@@ -47,6 +48,7 @@ const Journals = () => {
   const [selectedJournal, setSelectedJournal] = useState({});
   const [isRowSelected, setIsRowSelected] = useState(false)
   const [openAdd, setOpenAdd] = useState(false)
+  const [openView, setOpenView] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [statusFilter, setStatusFilter] = React.useState('All');
@@ -201,6 +203,11 @@ const Journals = () => {
     setOpenAdd(true);
     console.log(openAdd)
   };
+  const openViewJournal = () => {
+    if (isRowSelected) {
+      setOpenView(true);
+    }
+  };
   
   const openEditJournal = () => {
     if (isRowSelected) {
@@ -216,6 +223,8 @@ const Journals = () => {
   const closeAddJournal = () => {
     setOpenAdd(false);
   };
+
+  const closeViewJournal = () => { setOpenView(false); };
   
   const closeEditJournal = () => {
     setOpenEdit(false);
@@ -305,6 +314,7 @@ const Journals = () => {
                   <TableCell key={'debit'}> Debit </TableCell>
                   <TableCell key={'credit'}> Credit </TableCell>
                   <TableCell key={'status'}> Journal Status </TableCell>
+               
                 </TableRow>
               </TableHead>
               <TableBody className="JournalRows" id='JournalRows'>
@@ -331,6 +341,7 @@ const Journals = () => {
                             (journal.journal_status === 'Rejected' ? 'rejected' : "")
                           }
                         >{journal.journal_status}</TableCell>
+                    
                         </TableRow>
                   </>
                 );
@@ -345,6 +356,14 @@ const Journals = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeAddJournal}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openView} onClose={closeViewJournal}>
+        <DialogContent>
+          <ViewJournal journal={{ selectedJournal }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeViewJournal}>Close</Button>
         </DialogActions>
       </Dialog>
       <Dialog open={openEdit} onClose={closeEditJournal}>
@@ -363,6 +382,7 @@ const Journals = () => {
           <Button onClick={closeDeleteJournal}>Close</Button>
         </DialogActions>
       </Dialog>
+     
       <div
         style={{
           display: "flex",
@@ -371,7 +391,7 @@ const Journals = () => {
           justifyContent: "center",
         }}
       >
-      {
+      { (role!=="Accountant") &&
         
           <>
             <Tooltip title="Add Journal Entry">
@@ -417,6 +437,52 @@ const Journals = () => {
             </Tooltip>
           </>
       }
+      { (role === "Accountant") &&
+        
+      <>
+        <Tooltip title="Add Journal Entry">
+            <Button
+              variant="outlined"
+              size="large"
+              type="submit"
+              style={{ width: 100, marginRight: 20 }}
+              className="submit"
+              sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+              onClick={openAddJournal}
+            >
+              Add Journal
+            </Button>
+        </Tooltip>
+
+        <Tooltip title="ViewJournal">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openViewJournal}
+          >
+          View Comment
+          </Button>
+        </Tooltip>
+        
+        <Tooltip title="Delete Journal">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openDeleteJournal}
+          >
+            Delete Journal
+          </Button>
+        </Tooltip>
+      </>
+  }
      
       </div>
     </div> 
