@@ -5,6 +5,7 @@ async function getLedgers() {
     try {
         let pool = await sql.connect(config);
         let ledgers = await pool.request()
+            .input('account_name', '')
             .input('account_number', '')
             .input('ref', '')
             .input('debit', '')
@@ -21,16 +22,17 @@ async function getLedgers() {
 }
 
 async function getLedger(data) {
-    //console.log(data)
+    console.log(data)
     //let input_parameter = id;
     try {
         let pool = await sql.connect(config);
         let ledger = await pool.request()
+            .input('account_name', data.account_name)
             .input('account_number', sql.Int, data.account_number)
             .input('ref', data.ref)
-            .input('debit', '')
-            .input('credit', '')
-            .input('balance', '')
+            .input('debit', data.debit)
+            .input('credit', data.credit)
+            .input('balance', data.balance)
             .input('date', '')
             .input('explanation', '')
             .input('Type', 'SELECT_FROM')

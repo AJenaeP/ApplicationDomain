@@ -95,7 +95,7 @@ const ViewAccount = ({ account }) => {
                                             className='ledgerExplain'
                                         >{ledger.explanation}</TableCell>
                                         <TableCell
-                                            className='ledgerExplain'
+                                            className='ledgerRef'
                                         >
                                             <Button
                                                 variant="text"

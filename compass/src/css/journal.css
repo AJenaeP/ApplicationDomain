@@ -27,7 +27,7 @@
 }
 
 .filter .MuiInputBase-root.MuiOutlinedInput-root {
-  width: 410px;
+  width: 410px !important;
 }
 
 .filter .MuiInputBase-input.MuiOutlinedInput-input {

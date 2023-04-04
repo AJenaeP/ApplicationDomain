@@ -129,6 +129,16 @@ const Sidebar = () => {
       </List>
       <List>
         <ListItem disablePadding>
+          <ListItemButton className="menu-item" href='/ledgers'>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary="Ledgers" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <List>
+        <ListItem disablePadding>
           <ListItemButton className="menu-item" href='/events'>
             <ListItemIcon>
               <EventNoteIcon />

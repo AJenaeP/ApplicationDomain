@@ -24,6 +24,7 @@ import Journal from "./pages/Journal";
 import Email from "./utilities/Email";
 import Journals from "./pages/Journals";
 import EventLog from "./pages/EventLog";
+import Ledgers from "./pages/Ledgers";
 /* add to admin protected route after creation
   <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
 */
@@ -71,6 +72,7 @@ function App() {
             <Route path="/accounts" element={<Accounts />}></Route>
             <Route path="/helppage" element={<HelpPage />}></Route>
             <Route path="/journals" element={<Journals />}></Route>
+            <Route path="/ledgers" element={<Ledgers />}></Route>
             <Route path="/journal" element={<Journal />}></Route>
             <Route path="/email" element={<Email />}></Route>
             <Route path="/events"element={<EventLog/>}></Route>
