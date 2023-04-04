@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from 'react-dom/client';
 import Header from "./Header";
 import {
   TableCell,
@@ -27,30 +26,26 @@ import {
 } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import '../css/journal.css'
-import { MultiInputDateRangeField, DateRangePicker } from '@mui/x-date-pickers-pro';
-import { LocalizationProvider, DateField } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+
 import DeleteJournal from "./Journal/DeleteJournal";
 import AddJournal from "./Journal/AddJournal";
 import EditJournal from "./Journal/EditJournal";
-import { arrayIncludes } from "@mui/x-date-pickers/internals/utils/utils";
-
 //import JournalList from "./Journal/JournalList";
 
 const Journals = () => {
   const [journalData, setJournalData] = useState([{}]);
   const [role, setRole] = useState(window.localStorage.getItem('userRole'))
+  const [backendData, setBackendData] = useState([{}]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJournal, setSelectedJournal] = useState({});
   const [isRowSelected, setIsRowSelected] = useState(false)
   const [openAdd, setOpenAdd] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
-  const [statusFilter, setStatusFilter] = React.useState('All');
-  const [dateFilter, setDateFilter] = React.useState([null,null])
- 
+  const [value, setValue] = React.useState('All');
+
   const data = {
     ref: '',
     account_number: '',
@@ -67,19 +62,39 @@ const Journals = () => {
   }
   function clearSearchField() {
     document.getElementById("search").value = null;
-    fetch('/api/journals')
-      .then(
+    if (role === 'Accountant') {
+      fetch('/api/journal/' + JSON.stringify(data), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      ).then(
         response => response.json()
       ).then(
         data => {
+          console.log(data)
           setJournalData(data)
+          console.log(journalData)
         }
       )
+    }
+    if (role === 'Manager'|| 'Administrator') {
+      fetch('/api/journals')
+        .then(
+          response => response.json()
+        ).then(
+          data => {
+            setJournalData(data)
+          }
+        )
+    }
+    
   }
 
   function handleSearchField() {
     let value = document.getElementById("search").value;
-    
+
     if (isNaN(value)) {
       console.log('is a string')
       searchCriteria.account_name = String(value);
@@ -135,28 +150,35 @@ const Journals = () => {
   function handleRadioFilter(e){
     console.log(e.target.value)
     let filter = e.target.value;
-    setStatusFilter(e.target.value);
-    if(filter === 'All'){
-      fetch('/api/journals')
-        .then(
-          response => response.json()
-        ).then(
-          data => {
-            setJournalData(data)
-          }
-        )
-    } else {
-      if (filter === 'Approved') {
-        searchCriteria.journal_status = 'Approved'
-        console.log(searchCriteria)
-      } else if (filter === 'Pending') {
-        searchCriteria.journal_status = 'Pending'
-        console.log(searchCriteria)
-      } else if (filter === 'Rejected') {
-        searchCriteria.journal_status = 'Rejected'
-        console.log(searchCriteria)
+    setValue(e.target.value);
+    if(filter === 'Approved'){
+      searchCriteria.journal_status = 'Approved'
+      console.log(searchCriteria)
+    } else if (filter === 'Pending'){
+      searchCriteria.journal_status = 'Pending'
+      console.log(searchCriteria)
+    } else if (filter === 'Rejected'){ 
+      searchCriteria.journal_status = 'Rejected'
+      console.log(searchCriteria)
+    }
+    fetch('/api/journal/' + JSON.stringify(searchCriteria), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       }
-      fetch('/api/journal/' + JSON.stringify(searchCriteria), {
+    }
+    ).then(
+      response => response.json()
+    ).then(
+      data => {
+        console.log(data)
+        setJournalData(data)
+      }
+    )
+  }
+  useEffect(() => {
+    if(role === 'Accountant'){
+      fetch('/api/journal/' + JSON.stringify(data), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -168,21 +190,11 @@ const Journals = () => {
         data => {
           console.log(data)
           setJournalData(data)
+          console.log(journalData)
         }
       )
-    } 
-  }
-
-  const handleDateFilter = () => {
-    let Array = journalData.slice().sort(function(a,b){
-      var objA = a.date;
-      var objB = b.date;
-      return (objA < objB) ? -1 : (objA > objB) ? 1 : 0
-    })
-    setJournalData(Array)
-  }
-
-  useEffect(() => {
+    }
+    if(role === 'Manager' || 'Administrator'){
       fetch('/api/journals')
         .then(
           response => response.json()
@@ -191,7 +203,7 @@ const Journals = () => {
             setJournalData(data)
           }
         )
-  
+    }
   }, [])
 
   const openAddJournal = () => {
@@ -245,7 +257,7 @@ const Journals = () => {
     return (
       <div className="App">  
         <Header />
-        <div className="filter">
+        <div className="searchField">
           <TextField
             id="search"
             label="Search by Account Name, Amount or Date"
@@ -272,12 +284,16 @@ const Journals = () => {
               }
             }
           />
-            <RadioGroup row value={statusFilter} onChange={handleRadioFilter} sx={{marginLeft: 30}}>
-              <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
-              <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
-              <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />
-              <FormControlLabel value='Rejected' control={<Radio size="small" />} label="Rejected" />
-            </RadioGroup>
+          { (role === 'Manager' || 'Accountant' || 'Administrator') &&
+            <>
+              <RadioGroup row value={value} onChange={handleRadioFilter}>
+                <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
+                <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
+                <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />
+                <FormControlLabel value='Rejected' control={<Radio size="small" />} label="Rejected" />
+              </RadioGroup>
+            </>
+          }
         </div>
         <Paper 
         sx={{
@@ -297,16 +313,16 @@ const Journals = () => {
             aria-label="sticky table"
           >
               <TableHead >
-                <TableRow key={'row'}>
-                  <TableCell key={'date'}> Date <IconButton onClick={handleDateFilter}><FilterListIcon /></IconButton></TableCell>
-                  <TableCell key={'name'}> Account Titles</TableCell>
-                  <TableCell key={'ref'}> Ref </TableCell>
-                  <TableCell key={'debit'}> Debit </TableCell>
-                  <TableCell key={'credit'}> Credit </TableCell>
-                  <TableCell key={'status'}> Journal Status </TableCell>
+                <TableRow >
+                  <TableCell> Date </TableCell>
+                  <TableCell> Account Titles</TableCell>
+                  <TableCell> Ref </TableCell>
+                  <TableCell> Debit </TableCell>
+                  <TableCell> Credit </TableCell>
+                  <TableCell> Journal Status </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className="JournalRows" id='JournalRows'>
+              <TableBody className="JournalRows">
                 {journalData.map((journal, i) => {
                   return (
                     <>
@@ -317,13 +333,12 @@ const Journals = () => {
                         className={(selectedRow === i ? "isSelected" : "") 
                     }
                       >
-                        <TableCell key={i + 'date'}>{journal.date}</TableCell>
-                        <TableCell key={i + 'name'}>{journal.account_name}</TableCell>
-                        <TableCell key={i + 'ref'}>{journal.ref}</TableCell>
-                        <TableCell key={i + 'debit'}>{journal.debit}</TableCell>
-                        <TableCell key={i + 'credit'}>{journal.credit}</TableCell>
+                        <TableCell>{journal.date}</TableCell>
+                        <TableCell>{journal.account_name}</TableCell>
+                        <TableCell>{journal.ref}</TableCell>
+                        <TableCell>{journal.debit}</TableCell>
+                        <TableCell>{journal.credit}</TableCell>
                         <TableCell
-                          key={i + 'status'}
                           className={
                             (journal.journal_status === 'Approved' ? 'approved' : "") ||
                             (journal.journal_status === 'Pending' ? 'pending' : "") ||
@@ -426,3 +441,4 @@ const Journals = () => {
 }
 
 export default Journals;
+
