@@ -127,7 +127,7 @@ if (role !== "Accountant")
                 onChange={handleJournalCommentChange}
             >
                 <MenuItem value='UnbalancedEntry'>Unbalanced Entry</MenuItem>
-                <MenuItem value='FailedPayment'>FailedPayment</MenuItem>
+                <MenuItem value='FailedPayment'>Failed Payment</MenuItem>
                 <MenuItem value='Other'>Other - see email</MenuItem>
             </Select>
 
