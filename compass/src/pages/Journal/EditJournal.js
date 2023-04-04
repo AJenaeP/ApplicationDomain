@@ -21,7 +21,9 @@ const EditJournal = ({ journal }) => {
        ref: journal.selectedJournal.ref,
        debit: journal.selectedJournal.debit,
        credit: journal.selectedJournal.credit,
-       journalStatus: journal.selectedJournal.journal_status
+       journalStatus: journal.selectedJournal.journal_status,
+       comment: journal.selectedJournal.journal_comment
+//Need to add comment for reject 
     })
 
 
@@ -31,6 +33,7 @@ const EditJournal = ({ journal }) => {
     function handleJournalDebitChange(e) { updatedJournal.debit = Number(e.target.value); } 
     function handleJournalCreditChange(e) { updatedJournal.credit = Number(e.target.value); }
     function handleJournalStatusChange(e){updatedJournal.journal_status =e.target.value;} 
+    function handleJournalCommentChange(e){updatedJournal.journal_comment =e.target.value;} 
     
     function handleUpdate(e) {
         e.preventDefault();
@@ -111,9 +114,24 @@ if (role !== "Accountant")
                 <MenuItem value='Approved'>Approved</MenuItem>
                 <MenuItem value='Pending'>Pending</MenuItem>
                 <MenuItem value='Rejected'>Rejected</MenuItem>
-                
             </Select>
 
+            <InputLabel id="demo-simple-select-label status">Rejection Comment</InputLabel>
+            <Select
+           
+                labelId="demo-simple-select-label status"
+                id="demo-simple-select"
+                label="Comment"
+                sx={{ width: 'fit-content' }}
+                defaultValue={journal.selectedJournal.journal_comment}
+                onChange={handleJournalCommentChange}
+            >
+                <MenuItem value='UnbalancedEntry'>Unbalanced Entry</MenuItem>
+                <MenuItem value='FailedPayment'>FailedPayment</MenuItem>
+                <MenuItem value='Other'>Other - see email</MenuItem>
+            </Select>
+
+            
             <DialogActions>
                 <Button onClick={handleUpdate}>Update Entry</Button>
             </DialogActions> 
