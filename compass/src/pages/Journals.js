@@ -79,7 +79,7 @@ const Journals = () => {
 
   function handleSearchField() {
     let value = document.getElementById("search").value;
-
+    
     if (isNaN(value)) {
       console.log('is a string')
       searchCriteria.account_name = String(value);
@@ -272,7 +272,7 @@ const Journals = () => {
               }
             }
           />
-            <RadioGroup row value={statusFilter} onChange={handleRadioFilter}>
+            <RadioGroup row value={statusFilter} onChange={handleRadioFilter} sx={{marginLeft: 30}}>
               <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
               <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
               <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />

@@ -41,14 +41,36 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
       <List> 
-        <ListItem disablePadding>
-          <ListItemButton className="menu-item"href='/'>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
+        {(role === 'Administrator') && 
+          <ListItem disablePadding>
+            <ListItemButton className="menu-item" href='/admindashboard'>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+        }
+        {(role === 'Manager') &&
+          <ListItem disablePadding>
+            <ListItemButton className="menu-item" href='/managerdashboard'>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+        }
+        {(role === 'Accountant') &&
+          <ListItem disablePadding>
+            <ListItemButton className="menu-item" href='/accountantdashboard'>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+        }
       </List>
       {
         (role === 'Administrator') && 
