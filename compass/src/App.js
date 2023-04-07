@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import PermissionDenied from "./pages/PermissionDenied";
 import Sidebar from "./pages/Sidebar";
 import DashboardAdmin from "./pages/AdminPages/DashboardAdmin";
+import ExpiredPasswords from "./pages/AdminPages/ExpiredPasswords";
 /*import CreateNewUser from './pages/AdminPages/CreateNewUser';
 import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
 import Manager from "./pages/Manager";
@@ -49,6 +50,7 @@ function App() {
                 element={<DashboardAdmin />}
               ></Route>
               <Route path="/users" element={<Users/>}></Route>
+              <Route path="/ExpiredPasswords" element={<ExpiredPasswords/>}></Route>
             </Route>
             <Route 
                 path="/" 
