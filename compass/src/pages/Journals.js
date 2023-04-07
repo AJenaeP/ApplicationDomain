@@ -1,30 +1,14 @@
 
 import React, { useEffect, useState } from "react";
-import ReactDOM from 'react-dom/client';
 import Header from "./Header";
 import {
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableBody,
-  Table,
-  Paper,
-  Button,
-  TextField,
-  DialogActions,
-  DialogContent,
-  Tooltip,
-  Dialog,
-  DialogTitle,
-  InputLabel,
-  MenuItem,
-  Select,
-  InputAdornment,
-  IconButton,
-  RadioGroup,
-  FormControlLabel,
-  Radio
+  TableCell, TableContainer,  TableHead,
+  TableRow, TableBody, Table, Paper,
+  Button, TextField, DialogActions,
+  DialogContent, Tooltip, Dialog,
+  InputAdornment, IconButton,
+  RadioGroup, FormControlLabel,
+  Radio, FormLabel
 } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
@@ -282,12 +266,20 @@ const Journals = () => {
               }
             }
           />
-            <RadioGroup row value={statusFilter} onChange={handleRadioFilter}sx={{marginLeft: 30}}>
+          <div style={{ marginLeft: 50 }}>
+            <FormLabel id="demo-radio-buttons-group-label">Journal Status</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              row
+              value={statusFilter}
+              onChange={handleRadioFilter}
+            >
               <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
               <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
               <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />
               <FormControlLabel value='Rejected' control={<Radio size="small" />} label="Rejected" />
             </RadioGroup>
+          </div>   
         </div>
         <Paper 
         sx={{
@@ -352,7 +344,7 @@ const Journals = () => {
       </Paper>
       <Dialog open={openAdd} onClose={closeAddJournal}>
         <DialogContent>
-        <AddJournal journal={{ selectedJournal}} />
+        <AddJournal  />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeAddJournal}>Cancel</Button>
@@ -464,7 +456,7 @@ const Journals = () => {
             sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
             onClick={openViewJournal}
           >
-          View Comment
+          View Comments
           </Button>
         </Tooltip>
         

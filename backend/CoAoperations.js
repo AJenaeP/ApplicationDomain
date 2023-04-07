@@ -31,7 +31,7 @@ async function getAccount(data) {
             .input('account_number', sql.Int, data.account_number)
             .input('account_name', data.account_name)
             .input('account_description', '')
-            .input('account_category', '')
+            .input('account_category', data.account_category)
             .input('account_subcategory', '')
             .input('initial_balance', '')
             .input('balance', '')

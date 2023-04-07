@@ -8,7 +8,8 @@ import {
   TableRow, TableBody, Table,
   Paper, Button, Dialog,
   DialogActions, DialogContent, Tooltip,
-  TextField, InputAdornment, IconButton
+  TextField, InputAdornment, IconButton, RadioGroup,
+  FormControlLabel, Radio, FormLabel
 } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
@@ -29,11 +30,14 @@ const Accounts = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [openDeactivate, setOpenDeactivate] = useState(false)
+  const [statusFilter, setStatusFilter] = React.useState('All');
+  const [balanceFilter, setBalanceFilter] = React.useState();
 
   //this is for the search field 
   const data = {
     account_number: 0,
-    account_name: ''
+    account_name: '',
+    account_category: ''
   }
 
   function clearSearchField(){
@@ -79,6 +83,77 @@ const Accounts = () => {
     )
   }
 
+  function handleRadioFilter(e) {
+    let filter = e.target.value;
+    setStatusFilter(filter);
+    if (filter === 'All') {
+      fetch('/api/accounts')
+        .then(
+          response => response.json()
+        ).then(
+          data => {
+            setBackendData(data)
+          }
+        )
+    } else {
+      if (filter === 'Assets') {
+        data.account_category = 'assets'
+      } else if (filter === 'Liability') {
+        data.account_category = 'liability'
+      } else if (filter === 'Equity') {
+        data.account_category = 'equity'
+      }
+      fetch('/api/account/' + JSON.stringify(data), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      ).then(
+        response => response.json()
+      ).then(
+        data => {
+          setBackendData(data[0])
+        }
+      )
+    }
+  }
+
+  function handleBalanceFilter(e){
+    let balance = e.target.value
+    let Array = [];
+    if(balance === 'All'){
+      fetch('/api/accounts')
+        .then(
+          response => response.json()
+        ).then(
+          data => {
+            setBackendData(data)
+          }
+        )
+    } else if(balance === '-1000000'){
+      backendData.forEach((item) => {
+        if(item.balance <= 1000000){
+            Array.push(item)
+        }
+      })     
+      setBackendData(Array)
+    }else if (balance === '5000000'){
+      backendData.forEach((item) => {
+        if(item.balance > 1000000 && item.balance <=5000000){
+          Array.push(item)
+        }
+      })
+      setBackendData(Array)
+    } else if (balance === '5000000+'){
+      backendData.forEach((item) => {
+        if (item.balance > 5000000) {
+          Array.push(item)
+        }
+      })
+      setBackendData(Array)
+    }
+  }
   useEffect(() => {
     fetch('/api/accounts')
     .then(
@@ -167,6 +242,36 @@ const Accounts = () => {
             }
           }
         />
+        <div style={{marginLeft: 50}}>
+          <FormLabel id="demo-radio-buttons-group-label category">Category</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-radio-buttons-group-label category"
+            defaultValue="All"
+            value={statusFilter}
+            onChange={handleRadioFilter}
+          >
+            <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
+            <FormControlLabel value='Assets' control={<Radio size="small" />} label="Assets" />
+            <FormControlLabel value='Liability' control={<Radio size="small" />} label="Liability" />
+            <FormControlLabel value='Equity' control={<Radio size="small" />} label="Equity" />
+          </RadioGroup>
+        </div>
+        <div style={{ marginLeft: 50, width: 400 }}>
+          <FormLabel id="demo-radio-buttons-group-label balance">Balance</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-radio-buttons-group-label balance"
+            defaultValue="All"
+            value={balanceFilter}
+            onChange={handleBalanceFilter}
+          >
+            <FormControlLabel value='All' control={<Radio size="small" />} label="$0 - $5,000,000+" />
+            <FormControlLabel value='-1000000' control={<Radio size="small" />} label="$0 - $1,000,000" />
+            <FormControlLabel value='5000000' control={<Radio size="small" />} label="$1,000,000 - $5,000,000" />
+            <FormControlLabel value='5000000+' control={<Radio size="small" />} label="$5,000,000+" />
+          </RadioGroup>
+        </div>
       </div>
       <Paper
         sx={{

@@ -11,6 +11,7 @@ async function getJournals() {
             .input('debit', '')
             .input('credit', '')
             .input('journal_status', '')
+            .input('comment', '')
             .input('Type', 'SELECT')
             .execute('Journal_Management');
         return journals.recordsets;
@@ -31,6 +32,7 @@ async function getJournal(data) {
             .input('debit', data.debit)
             .input('credit', data.credit)
             .input('journal_status', data.journal_status)
+            .input('comment', data.comment)
             .input('Type', 'SELECT_FROM')
             .execute('Journal_Management');
         console.log(journal.recordsets)
@@ -88,6 +90,7 @@ async function deleteJournal(journal) {
             .input('debit', '')
             .input('credit', '')
             .input('journal_status', '')
+            .input('comment', '')
             .input('Type', 'DELETE')
             .execute('Journal_Management');
         return journalDel.recordsets;
@@ -106,6 +109,7 @@ async function updateJournal(journal) {
             .input('debit', journal.debit)
             .input('credit', journal.credit)
             .input('journal_status', journal.journalStatus)
+            .input('comment', journal.comment)
             .input('Type', 'UPDATE')
             .execute('Journal_Management');
         return journalUpdate.recordsets;

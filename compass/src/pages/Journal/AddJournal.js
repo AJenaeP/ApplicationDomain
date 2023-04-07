@@ -32,8 +32,10 @@ const AddJournal = () => {
     debit: "",
     credit: "",
     journal_status: "Pending",
+    comment: "Journal Entry is Pending"
   });
-
+  const [fileAttached, setFileAttached] = useState('')
+  
   function handleJournalDateChange(e) {
     journal.date = e.target.value;
   }
