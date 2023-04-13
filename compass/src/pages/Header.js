@@ -36,6 +36,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 //import { auth } from '../index'
 const Header = () => {
   const [count, setCount] = useState(window.localStorage.getItem('setCount'))
+  const [role, setRole] = useState(window.localStorage.getItem('userRole'))
   const theme = useTheme();
   const { userData, logout } = UserAuth();
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Header = () => {
     userData = JSON.parse(userData);
   })
   */
-  if (count < 1){
+  if (count < 1 && role === "Manager"){
   return (
     <div className='header'>
       <div>
