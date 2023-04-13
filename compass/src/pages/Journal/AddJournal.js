@@ -23,6 +23,7 @@ import {
 
 const AddJournal = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [count, setCount] = useState(0)
   const [handleClose, setHandleClose] = useState(false);
   const [addJournal, setAddJournal] = useState(false);
   const [journal, setJournal] = useState({
@@ -35,6 +36,7 @@ const AddJournal = () => {
     comment: "Journal Entry is Pending"
   });
   const [fileAttached, setFileAttached] = useState('')
+  
   
   function handleJournalDateChange(e) {
     journal.date = e.target.value;
@@ -91,6 +93,8 @@ const AddJournal = () => {
       alert(response.statusText);
     });
   }
+
+  
 
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-US", {
@@ -157,6 +161,7 @@ const AddJournal = () => {
 
       <DialogActions>
         <Button onClick={handleAdd}>Create</Button>
+        <Button onClick={() => setCount(c => c + 1)}>Notify Manager</Button>
       </DialogActions>
     </>
   );

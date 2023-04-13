@@ -10,11 +10,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import '../css/Header.css'
 import Sidebar from './Sidebar';
+import Iconify from '../iconify'
+import Badge from '@mui/material/Badge';
 import Drawer from '@mui/material/Drawer';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
+import {
+  Box,} from '@mui/material';
+
+import { useState } from 'react';
+
+
 //TODO: user info is logged out / gone after page refresh 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -27,10 +35,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 //import { auth } from '../index'
 const Header = () => {
+  const [count, setCount] = useState(window.localStorage.getItem('setCount'))
   const theme = useTheme();
   const { userData, logout } = UserAuth();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -38,6 +47,12 @@ const Header = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const [open, setOpen] = useState(null);
+
+  const handleOpen = (event) => {
+    setOpen(event.currentTarget);
   };
 
   //this calls the logout function from authcontext
@@ -55,6 +70,7 @@ const Header = () => {
     userData = JSON.parse(userData);
   })
   */
+  if (count < 1){
   return (
     <div className='header'>
       <div>
@@ -82,6 +98,14 @@ const Header = () => {
                 style={{ display: 'flex' }}
               />
             </span>
+            <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen} sx={{ width: 40, height: 40 }}>
+            <Iconify icon="eva:bell-outline" color="black" />
+          <Typography variant="body2" sx={{ color: 'white' }}>
+          new pending journal entry 
+            </Typography>
+      </IconButton>
+
+           
           </Toolbar>
         </AppBar>
         <Drawer 
@@ -104,6 +128,9 @@ const Header = () => {
           </DrawerHeader>
           <Sidebar/>
         </Drawer>
+      
+       
+      
       </div>
        
     </div>
@@ -115,5 +142,71 @@ const Header = () => {
               <button type="button" id="logout" onClick={handleLogout}>Logout</button>
           </div>*/
   );
+}else 
+return (
+  <div className='header'>
+    <div>
+      <AppBar style={{ position: 'fixed' }} open={open}>
+        <Toolbar>
+          <span id='menu'>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleDrawerOpen}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon/>
+            </IconButton>
+          </span>
+          <span id='companylogo'>
+            <img src={compasslogo} alt="compass" width="90px" />
+            <span>Compass Credit Union</span>
+          </span>
+          <span id='userInfo'>
+            <span style={{color: 'white'}}>{userData.userId}</span>
+            <AccountCircleIcon
+              style={{ display: 'flex' }}
+            />
+          </span>
+       
+    
+        </Toolbar>
+      </AppBar>
+      <Drawer 
+        sx={{
+          width: 250,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+          width: 250,
+          boxSizing: 'border-box',
+        },
+      }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+         >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Sidebar/>
+      </Drawer>
+    
+     
+    
+    </div>
+     
+  </div>
+        /*<div className="header"> 
+            <img src={compasslogo} alt="compass" width="90px"/>
+            <span>Compass </span>
+            <AccountCircleIcon/>
+            <span >{userData.userId}</span>
+            <button type="button" id="logout" onClick={handleLogout}>Logout</button>
+        </div>*/
+);
 } //TO DO:: get user data from login and display name line 19
 export default Header;
