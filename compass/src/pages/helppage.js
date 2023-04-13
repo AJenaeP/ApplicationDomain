@@ -35,10 +35,29 @@ const HelpPage = () => {
             edit the selected account.
           </p>
 
+          <h4>ACTIVATE/DEACTIVATE ACCOUNT BUTTON:</h4>
+          <p>
+            The activate/deactivate account buttton gives the user the ability
+            to either activate or deactivate accounts.
+          </p>
+
           <h4>DELETE ACCOUNT BUTTON:</h4>
           <p>
             After the delete account button is pressed the selected account will
             be deleted.
+          </p>
+
+          <h4>EMAIL BUTTON:</h4>
+          <p>
+            After the email button is pressed a form is displayed for the user
+            to select a recipient and send a message.
+          </p>
+          <br />
+          <h2>Ledgers Page</h2>
+          <hr />
+          <p>
+            The user can select the post reference to go to the corresponding
+            journal entry which created the account.
           </p>
         </div>
       </div>
