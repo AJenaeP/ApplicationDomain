@@ -25,7 +25,18 @@ const EditJournal = ({ journal }) => {
        comment: journal.selectedJournal.journal_comment
 //Need to add comment for reject 
     })
+    const [errors, setErrors] = useState({})
 
+    useEffect(() => {
+        fetch('/api/journalErrors')
+            .then(
+                response => response.json()
+            ).then(
+                data => {
+                    setErrors(data)
+                }
+            )
+    })
 
     function handleJournalDateChange(e) { updatedJournal.date = e.target.value; }
     function handleJournalAccountNameChange(e) { updatedJournal.account_name= e.target.value; }
@@ -71,6 +82,7 @@ if (role !== "Accountant")
                 id="outlined-required"
                 label="Journal Date"
                 defaultValue={journal.selectedJournal.date}
+                sx={{ 'marginBottom': 1, 'marginRight': 1 }}
                 onChange={handleJournalDateChange}
             />
             <TextField
@@ -85,6 +97,7 @@ if (role !== "Accountant")
                 id="outlined-required"
                 label="Journal Ref"
                 defaultValue={journal.selectedJournal.ref}
+                sx={{ 'marginBottom': 1, 'marginRight': 1 }}
                 onChange={handleJournalRefChange}
             />
     
@@ -98,6 +111,7 @@ if (role !== "Accountant")
                 id="outlined-required"
                 label="Credit"
                 defaultValue={journal.selectedJournal.credit}
+                sx={{ 'marginBottom': 1, 'marginRight': 1 }}
                 onChange={handleJournalCreditChange}
             />
            
@@ -109,6 +123,7 @@ if (role !== "Accountant")
                 label="Status"
                 sx={{ width: 'fit-content' }}
                 defaultValue={journal.selectedJournal.journal_status}
+                sx={{ 'marginBottom': 1, 'marginRight': 1 }}
                 onChange={handleJournalStatusChange}
             >
                 <MenuItem value='Approved'>Approved</MenuItem>

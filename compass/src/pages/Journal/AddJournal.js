@@ -1,24 +1,11 @@
 import { useState, useEffect } from "react";
 import {
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableBody,
-  Table,
-  Paper,
   Button,
   TextField,
   DialogActions,
-  DialogContent,
-  Tooltip,
 } from "@mui/material";
 import {
-  Dialog,
   DialogTitle,
-  InputLabel,
-  MenuItem,
-  Select,
 } from "@mui/material";
 
 const AddJournal = () => {
@@ -36,22 +23,92 @@ const AddJournal = () => {
     comment: "Journal Entry is Pending"
   });
   const [fileAttached, setFileAttached] = useState('')
+  const [errors, setErrors] = useState({})
+  const [accountNames, setAccountNames] = useState([])
+  const [refNumbers, setRefNumbers] = useState([])
+  const [dateError, setDateError] = useState(false)
+  const [accountNameError, setAccountNameError] = useState(false)
+  const [refError, setRefError] = useState(false)
+  const [balanceError, setBalanceError] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/journalErrors')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          setErrors(data)
+        }
+      )
+    fetch('/api/accounts')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          data.forEach(element => {
+            accountNames.push(element.account_name)
+          });
+        }
+      )
+    fetch('/api/journals')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          data.forEach(element => {
+            //console.log(element.ref)
+            refNumbers.push(element.ref)
+          })
+        }
+      )
+  }, [])
   
   
   function handleJournalDateChange(e) {
-    journal.date = e.target.value;
+    const x = e.target.value
+    if(
+        ((x).charAt(4) !== '-') || //checks if 5th value -> YYYY(-) is "-"
+        ((x.length) !== 10) //checks if date is correct length
+      ){ 
+      setDateError(true)
+    } else {
+      setDateError(false)
+      journal.date = x;
+    } 
   }
   function handleJournalAccountNameChange(e) {
-    journal.account_name = e.target.value;
+    if(!accountNames.includes(e.target.value)){ //checks if account name exist
+      setAccountNameError(true)
+    } else {
+      setAccountNameError(false)
+      journal.account_name = e.target.value;
+    }
+    
   }
   function handleJournalRefChange(e) {
-    journal.ref = e.target.value;
+    if(refNumbers.includes(e.target.value)){
+      setRefError(true)
+    } else {
+      setRefError(false)
+      journal.ref = e.target.value;
+    }
   }
   function handleJournalDebitChange(e) {
     journal.debit = Number(e.target.value);
+    if(journal.debit !== journal.credit){
+      setBalanceError(true)
+    } else {
+      setBalanceError(false)
+    }
   }
   function handleJournalCreditChange(e) {
     journal.credit = Number(e.target.value);
+    if(journal.credit !== journal.debit){
+      setBalanceError(true)
+    } else {
+      setBalanceError(false)
+    }
   }
 
   const handleFileUpload = (e) => {
@@ -112,37 +169,43 @@ const AddJournal = () => {
         id="outlined-required"
         label="Date"
         defaultValue=""
+        placeholder="YYYY-MM-DD"
+        sx={{'marginBottom': 1, 'marginRight': 1}}
         onChange={handleJournalDateChange}
       />
+      { dateError && <div style={{'color': 'red'}}>{errors[0].errorMessage}</div>}
       <TextField
         required
         id="outlined-required"
         label="Account Name"
         defaultValue=""
-        onChange={handleJournalAccountNameChange}
+        onBlur={handleJournalAccountNameChange}
       />
+      {accountNameError && <div style={{ 'color': 'red' }}>{errors[1].errorMessage}</div>}
       <TextField
         required
         id="outlined-required"
         label="Ref"
         defaultValue=""
-        onChange={handleJournalRefChange}
+        sx={{ 'marginBottom': 1, 'marginRight': 1 }}
+        onBlur={handleJournalRefChange}
       />
+      {refError && <div style={{ 'color': 'red' }}>{errors[2].errorMessage}</div>}
       <TextField
         required
         id="outlined-required"
         label="Debit"
         defaultValue=""
-        onChange={handleJournalDebitChange}
+        onBlur={handleJournalDebitChange}
       />
       <TextField
         required
         id="outlined-required"
         label="Credit"
         defaultValue=""
-        onChange={handleJournalCreditChange}
+        onBlur={handleJournalCreditChange}
       />
-
+      {balanceError && <div style={{ 'color': 'red' }}>{errors[3].errorMessage}</div>}
       <div>
         <Button
           component="label"
@@ -160,8 +223,12 @@ const AddJournal = () => {
       </div>
 
       <DialogActions>
-        <Button onClick={handleAdd}>Create</Button>
         <Button onClick={() => setCount(c => c + 1)}>Notify Manager</Button>
+        {
+          (dateError || accountNameError || refError || balanceError) 
+            ? <Button disabled>Create</Button> 
+            : <Button onClick={handleAdd}>Create</Button>
+        }
       </DialogActions>
     </>
   );

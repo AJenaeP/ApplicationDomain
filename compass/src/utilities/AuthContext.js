@@ -94,6 +94,7 @@ export const AuthProvider = ({ children }) => {
           window.localStorage.setItem("userRole", doc.data().role);
           //window.localStorage.setItem('user', JSON.stringify(user))
           //console.log(user)
+          return true
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -105,13 +106,12 @@ export const AuthProvider = ({ children }) => {
                 loginAttempts +
                 " login attempt;"
             );
-            {
-              if (loginAttempts == 0) {
+              if (loginAttempts === 0) {
                 setIsDisabled(true);
                 console.log(isDisabled);
               }
-            }
           }
+          return false
         });
     });
   };

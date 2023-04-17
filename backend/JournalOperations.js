@@ -118,10 +118,21 @@ async function updateJournal(journal) {
     }
 }
 
+async function getJournalErrors() {
+    try {
+        let pool = await sql.connect(config);
+        let errors = await pool.request().query("SELECT * from Errors")
+        return errors.recordsets;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getJournals: getJournals,
     getJournal: getJournal,
     addJournal: addJournal,
+    getJournalErrors: getJournalErrors,
     deleteJournal: deleteJournal,
     updateJournal: updateJournal
 }

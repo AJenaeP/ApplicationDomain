@@ -336,9 +336,8 @@ const closeAdjustJournal = () => {
                         <TableCell key={i + 'date'}>{journal.date}</TableCell>
                         <TableCell key={i + 'name'}>{journal.account_name}</TableCell>
                         <TableCell key={i + 'ref'}>{journal.ref}</TableCell>
-                        <TableCell key={i + 'debit'}>{journal.debit}</TableCell>
-                        <TableCell key={i + 'credit'}>{journal.credit}</TableCell>
-
+                        <TableCell key={i + 'debit'}>{numberFormat(journal.debit)}</TableCell>
+                        <TableCell key={i + 'credit'}>{numberFormat(journal.credit)}</TableCell>
                         <TableCell
                           key={i + 'status'}
                           className={

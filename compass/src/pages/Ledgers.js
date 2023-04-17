@@ -272,9 +272,9 @@ const Ledgers = () => {
                                             >
                                                 {ledger.ref}
                                             </Button>    </TableCell>
-                                            <TableCell>{ledger.debit}</TableCell>
-                                            <TableCell>{ledger.credit}</TableCell>
-                                            <TableCell>{ledger.balance}</TableCell>
+                                            <TableCell>{numberFormat(ledger.debit)}</TableCell>
+                                            <TableCell>{numberFormat(ledger.credit)}</TableCell>
+                                            <TableCell>{numberFormat(ledger.balance)}</TableCell>
                                             <TableCell>{ledger.explanation}</TableCell>
                                         </TableRow>
                                     </>

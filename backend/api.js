@@ -133,6 +133,12 @@ router.route('/journals/update').put((request, response) => {
     })
 })
 
+router.route('/journalErrors').get((request, response) => {
+    journalOperations.getJournalErrors().then(result => {
+        response.json(result[0])
+    })
+})
+
 router.route('/*').get((req, res) => {
     res.sendFile(path.resolve(__dirname, '../compass/build', 'index.html'));
 });
