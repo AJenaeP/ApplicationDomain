@@ -31,11 +31,11 @@ const FinStatements = () => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [selectedAccount, setSelectedAccount] = useState({});
     const [isRowSelected, setIsRowSelected] = useState(false)
-    const [openAdd, setOpenAdd] = useState(false)
-    const [openEdit, setOpenEdit] = useState(false)
-    const [openView, setOpenView] = useState(false)
-    const [openDelete, setOpenDelete] = useState(false)
-    const [openDeactivate, setOpenDeactivate] = useState(false)
+    const [openGenerate, setOpenGenerate] = useState(false)
+    const [openEdit, setOpenPrint] = useState(false)
+    const [openView, setOpenSave] = useState(false)
+    const [openDelete, setOpenEmail] = useState(false)
+    const [openDeactivate, setOpenView] = useState(false)
     const [statusFilter, setStatusFilter] = React.useState('All');
     const [balanceFilter, setBalanceFilter] = React.useState();
   
@@ -44,6 +44,10 @@ const FinStatements = () => {
       account_number: 0,
       account_name: '',
       account_category: ''
+    }
+
+    const searchCriteria = {
+        date: ''
     }
   
     function clearSearchField(){
@@ -62,13 +66,11 @@ const FinStatements = () => {
   
       if(isNaN(value)){
         console.log('is a string')
-        data.account_name = String(value);
-        data.account_number = 0;
+        searchCriteria.date = String(value);
         console.log(data)
       }else if(!isNaN(value)){
         console.log('is a number')
-        data.account_number = Number(value);
-        data.account_name = '';
+        searchCriteria.date = '';
         console.log(data)
       } else {
         console.log('field is empty')
@@ -102,13 +104,19 @@ const FinStatements = () => {
             }
           )
       } else {
-        if (filter === 'Assets') {
-          data.account_category = 'assets'
-        } else if (filter === 'Liability') {
-          data.account_category = 'liability'
-        } else if (filter === 'Equity') {
-          data.account_category = 'equity'
+        if (filter === 'TBalance') {
+          //data.balance = 'balance'
+          //closing balances (debits and credits)
+        } else if (filter === 'Istate') {
+          //revenue, expenses, and profitability (P&L)
+        } else if (filter === 'RES') {
+          //data.account_category = 'equity'
+          //sum of earnings accumulated and kept 
         }
+        else if (filter === 'Bsheet') {
+         //data.account_category = 'equity'
+         //company’s assets, liabilities, and shareholder equity
+      }
         fetch('/api/account/' + JSON.stringify(data), {
           method: "GET",
           headers: {
@@ -171,34 +179,34 @@ const FinStatements = () => {
       )
     },[])
   
-    const openAddAccount = () => {
-      setOpenAdd(true);
+    const openGenerateStatement = () => {
+      setOpenGenerate(true);
     };
-    const openViewAccount = () => {
+    const openViewStatement = () => {
       if (isRowSelected) {
         setOpenView(true);
       }
     };
-    const openEditAccount = () => {
+    const openSaveStatement = () => {
       if (isRowSelected) {
-        setOpenEdit(true);
+        setOpenSave(true);
       }
     };
-    const openDeleteAccount = () => {
+    const openPrintStatement = () => {
       if (isRowSelected) {
-        setOpenDelete(true);
+        setOpenPrint(true);
       }
     };
-    const openDeactivateAccount = () => {
+    const openEmailStatement = () => {
       if (isRowSelected) {
-        setOpenDeactivate(true);
+        setOpenEmail(true);
       }
     };
-    const closeAddAccount = () => { setOpenAdd(false); };
-    const closeViewAccount = () => { setOpenView(false); };
-    const closeEditAccount = () => { setOpenEdit(false); };
-    const closeDeleteAccount = () => { setOpenDelete(false); };
-    const closeDeactivateAccount = () => { setOpenDeactivate(false); };
+    const closeGenerateStatement = () => { setOpenGenerate(false); };
+    const closeViewStatement = () => { setOpenView(false); };
+    const closeSaveStatement = () => { setOpenSave(false); };
+    const closePrintStatement = () => { setOpenPrint(false); };
+    const closeEmailStatement = () => { setOpenEmail(false); };
     function handleAccountSelection(account, i) {
       if (selectedRow === i) {
         setIsRowSelected(false);
@@ -224,7 +232,7 @@ const FinStatements = () => {
         <div className="searchField">
           <TextField 
             id="search" 
-            label="Search by Account Number or Name" 
+            label="Search by Date" 
             //type="search" 
             InputProps={
               {
@@ -257,6 +265,7 @@ const FinStatements = () => {
               value={statusFilter}
               onChange={handleRadioFilter}
             >
+                <FormControlLabel value='All' control={<Radio size="small" />} label="All Accounts" />
               <FormControlLabel value='TBalance' control={<Radio size="small" />} label="Trial Balance" />
               <FormControlLabel value='Istate' control={<Radio size="small" />} label="Income Statment" />
               <FormControlLabel value='Bsheet' control={<Radio size="small" />} label="Balance Sheet" />
@@ -325,46 +334,7 @@ const FinStatements = () => {
             </Table>
           </TableContainer>
         </Paper>
-        <Dialog open={openAdd} onClose={closeAddAccount}>
-          <DialogContent>
-            <AddAccount account={{ selectedAccount }} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeAddAccount}>Cancel</Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog open={openView} onClose={closeViewAccount}>
-          <DialogContent>
-            <ViewAccount account={{ selectedAccount }} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeViewAccount}>Close</Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog open={openEdit} onClose={closeEditAccount}>
-          <DialogContent>
-            <EditAccount account={{ selectedAccount }} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeEditAccount}>Close</Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog open={openDeactivate} onClose={closeDeactivateAccount}>
-          <DialogContent>
-            <DeactivateAccount account={{ selectedAccount }} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDeactivateAccount}>Close</Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog open={openDelete} onClose={closeDeleteAccount}>
-          <DialogContent>
-            <DeleteAccount account={{ selectedAccount }} />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDeleteAccount}>Close</Button>
-          </DialogActions>
-        </Dialog>
+        
         <div
           style={{
             display: "flex",
@@ -372,7 +342,7 @@ const FinStatements = () => {
             justifyContent: "center",
           }}
         >
-      <Tooltip title="Activate/Deactivate Account">
+      <Tooltip title="Generate">
                 <Button
                   variant="outlined"
                   size="large"
@@ -380,13 +350,13 @@ const FinStatements = () => {
                   style={{ width: 100, marginRight: 20 }}
                   className="submit"
                   sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openDeactivateAccount}
+                  onClick={openGenerateStatement}
                 >
                   Generate
                 </Button>
               </Tooltip>
           
-              <Tooltip title="Activate/Deactivate Account">
+              <Tooltip title="Save">
                 <Button
                   variant="outlined"
                   size="large"
@@ -394,12 +364,12 @@ const FinStatements = () => {
                   style={{ width: 100, marginRight: 20 }}
                   className="submit"
                   sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openDeactivateAccount}
+                  onClick={openSaveStatement}
                 >
                   Save
                 </Button>
               </Tooltip>
-              <Tooltip title="Delete Account">
+              <Tooltip title="Print">
                 <Button
                   variant="outlined"
                   size="large"
@@ -407,7 +377,7 @@ const FinStatements = () => {
                   style={{ width: 100, marginRight: 20 }}
                   className="submit"
                   sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openDeleteAccount}
+                  onClick={openPrintStatement}
                 >
                   Print
                 </Button>
@@ -415,14 +385,14 @@ const FinStatements = () => {
        
        
            
-              <Tooltip title="View Chart of Account">
+              <Tooltip title="View">
                 <Button
                   variant="outlined"
                   size="large"
                   type="submit"
                   style={{ width: 100, marginRight: 20 }}
                   className="submit"
-                  onClick={openViewAccount}
+                  onClick={openViewStatement}
                   sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
                 >
                   View 
@@ -446,3 +416,45 @@ const FinStatements = () => {
   );
         } 
 export default FinStatements;
+
+/*<Dialog open={openGenerateStatement} onClose={closeGenerateStatement}>
+          <DialogContent>
+     
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeGenerateStatement}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openViewStatement} onClose={closeViewStatement}>
+          <DialogContent>
+         
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeViewStatement}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openSaveStatement} onClose={closeSaveStatement}>
+          <DialogContent>
+            
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeSaveStatement}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openPrintStatement} onClose={closePrintStatement}>
+          <DialogContent>
+          
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closePrintStatement}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openEmailStatement} onClose={closeEmailStatement}>
+          <DialogContent>
+            
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeEmailStatement}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        */
