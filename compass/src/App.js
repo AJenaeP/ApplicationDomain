@@ -26,6 +26,7 @@ import Email from "./utilities/Email";
 import Journals from "./pages/Journals";
 import EventLog from "./pages/EventLog";
 import Ledgers from "./pages/Ledgers";
+import FinStatements from "./pages/FinStatements";
 /* add to admin protected route after creation
   <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
 */
@@ -58,6 +59,7 @@ function App() {
                 <Route 
                 path="/managerdashboard" 
                 element={<DashboardManager />}>
+                 
 
                 </Route>
             </Route>
@@ -78,6 +80,8 @@ function App() {
             <Route path="/journal" element={<Journal />}></Route>
             <Route path="/email" element={<Email />}></Route>
             <Route path="/events"element={<EventLog/>}></Route>
+            <Route path="/finstate" element={<FinStatements />}></Route>
+
           </Routes>
         </Router>
       </AuthProvider>
