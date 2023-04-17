@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from "@mui/icons-material/Help";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 
 const Sidebar = () => {
@@ -135,6 +136,16 @@ const Sidebar = () => {
               <MenuBookIcon />
             </ListItemIcon>
             <ListItemText primary="Ledgers" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <List> 
+        <ListItem disablePadding>
+          <ListItemButton className="menu-item" href='/finstate'>
+            <ListItemIcon>
+              <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="Financial Statements" />
           </ListItemButton>
         </ListItem>
       </List>
