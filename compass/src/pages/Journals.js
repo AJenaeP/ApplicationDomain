@@ -21,6 +21,7 @@ import DeleteJournal from "./Journal/DeleteJournal";
 import AddJournal from "./Journal/AddJournal";
 import EditJournal from "./Journal/EditJournal";
 import ViewJournal from "./Journal/ViewJournals";
+import AdjustJournal from "./Journal/AdjustJournal";
 //import { arrayIncludes } from "@mui/x-date-pickers/internals/utils/utils";
 
 //import JournalList from "./Journal/JournalList";
@@ -35,6 +36,7 @@ const Journals = () => {
   const [openView, setOpenView] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
+  const [openAdjust,setOpenAdjust] = useState(false)
   const [statusFilter, setStatusFilter] = React.useState('All');
   const [dateFilter, setDateFilter] = React.useState([null,null])
  
@@ -208,6 +210,17 @@ const Journals = () => {
     setOpenAdd(false);
   };
 
+  const openAdjustJournal = () =>
+{
+  if (isRowSelected){
+    setOpenAdjust(true);
+  }
+}
+
+const closeAdjustJournal = () => {
+  setOpenAdjust(false);
+};
+
   const closeViewJournal = () => { setOpenView(false); };
   
   const closeEditJournal = () => {
@@ -325,6 +338,7 @@ const Journals = () => {
                         <TableCell key={i + 'ref'}>{journal.ref}</TableCell>
                         <TableCell key={i + 'debit'}>{journal.debit}</TableCell>
                         <TableCell key={i + 'credit'}>{journal.credit}</TableCell>
+
                         <TableCell
                           key={i + 'status'}
                           className={
@@ -372,6 +386,14 @@ const Journals = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDeleteJournal}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openAdjust} onClose={closeAdjustJournal}>
+        <DialogContent>
+          <AdjustJournal journal={{ selectedJournal}} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAdjustJournal}>Close</Button>
         </DialogActions>
       </Dialog>
      
@@ -471,6 +493,20 @@ const Journals = () => {
             onClick={openDeleteJournal}
           >
             Delete Journal
+          </Button>
+        </Tooltip>
+
+        <Tooltip title="Adjust Journal">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openAdjustJournal}
+          >
+            Adjust Journal
           </Button>
         </Tooltip>
       </>
