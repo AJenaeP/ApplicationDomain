@@ -99,6 +99,19 @@ const Sidebar = () => {
             </List>
         </>
       }
+      {
+      (role !== 'Accountant') &&
+      <List> 
+      <ListItem disablePadding>
+        <ListItemButton className="menu-item" href='/finstate'>
+          <ListItemIcon>
+            <MonetizationOnIcon />
+          </ListItemIcon>
+          <ListItemText primary="Financial Statements" />
+        </ListItemButton>
+      </ListItem>
+    </List>
+}
       <List> 
         <ListItem disablePadding>
           <ListItemButton className="menu-item" href='/accounts'>
@@ -136,16 +149,6 @@ const Sidebar = () => {
               <MenuBookIcon />
             </ListItemIcon>
             <ListItemText primary="Ledgers" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <List> 
-        <ListItem disablePadding>
-          <ListItemButton className="menu-item" href='/finstate'>
-            <ListItemIcon>
-              <MonetizationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Financial Statements" />
           </ListItemButton>
         </ListItem>
       </List>
