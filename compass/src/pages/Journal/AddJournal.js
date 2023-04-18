@@ -18,7 +18,10 @@ const AddJournal = () => {
     account_name: "",
     ref: "",
     debit: "",
+    adjusted_debit:"",
     credit: "",
+    adjusted_credit:"",
+    explanation:"",
     journal_status: "Pending",
     comment: "Journal Entry is Pending"
   });

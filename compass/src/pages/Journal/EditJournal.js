@@ -69,6 +69,7 @@ const EditJournal = ({ journal }) => {
             },
         )
     }
+
 if (role !== "Accountant")
     
     return (

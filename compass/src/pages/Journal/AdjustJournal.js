@@ -42,7 +42,7 @@ const AdjustJournal = ({ journal }) => {
         console.log(journal.selectedJournal)
         console.log(AdjustJournal)
         console.log('trying to adjust...')
-        fetch('/api/journals/adjust', {
+        fetch('/api/journals/update', {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
@@ -60,8 +60,8 @@ const AdjustJournal = ({ journal }) => {
             },
         )
     }
-
-    if (role!== "Accountant ")
+    if (role !== "Accountant")
+   
         return (
         
 
@@ -104,6 +104,8 @@ const AdjustJournal = ({ journal }) => {
                 />
     
 
+
+
     <InputLabel id="demo-simple-select-label status">Status</InputLabel>
             <Select
            
@@ -142,8 +144,10 @@ const AdjustJournal = ({ journal }) => {
             </>
 
         )
+    
 
-else
+    if (role === "Accountant")
+
 return (
     <>
     

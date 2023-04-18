@@ -318,6 +318,7 @@ const closeAdjustJournal = () => {
                   <TableCell key={'ref'}> Ref </TableCell>
                   <TableCell key={'debit'}> Debit </TableCell>
                   <TableCell key={'credit'}> Credit </TableCell>
+                  
                   <TableCell key={'status'}> Journal Status </TableCell>
                
                 </TableRow>
@@ -338,6 +339,7 @@ const closeAdjustJournal = () => {
                         <TableCell key={i + 'ref'}>{journal.ref}</TableCell>
                         <TableCell key={i + 'debit'}>{numberFormat(journal.debit)}</TableCell>
                         <TableCell key={i + 'credit'}>{numberFormat(journal.credit)}</TableCell>
+                        
                         <TableCell
                           key={i + 'status'}
                           className={
@@ -448,7 +450,21 @@ const closeAdjustJournal = () => {
                 Delete Journal
               </Button>
             </Tooltip>
-          </>
+         
+           <Tooltip title="Adjust Journal">
+           <Button
+             variant="outlined"
+             size="large"
+             type="submit"
+             style={{ width: 100, marginRight: 20 }}
+             className="submit"
+             sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+             onClick={openAdjustJournal}
+           >
+             Adjust Journal
+           </Button>
+         </Tooltip>
+       </>
       }
       { (role === "Accountant") &&
         
