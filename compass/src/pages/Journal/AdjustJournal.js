@@ -10,6 +10,7 @@ import {
     Select
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
+import '../../css/journal.css'
 
 //CREATE THIS PAGE TO ADD TO LEDGER IN RED 
 

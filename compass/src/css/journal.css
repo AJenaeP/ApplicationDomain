@@ -19,6 +19,18 @@
   color: red !important;
 }
 
+
+.adjusted_credit{
+  color: red !important;
+}
+.adjusted_debit{
+  color: red !important;
+}
+.explanation{
+  color: red !important;
+}
+
+
 .filter {
   margin-top: 100px;
   margin-left: 205px;
