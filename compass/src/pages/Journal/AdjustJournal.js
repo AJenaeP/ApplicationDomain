@@ -20,7 +20,9 @@ const AdjustJournal = ({ journal }) => {
        journalName: journal.selectedJournal.account_name,
        ref: journal.selectedJournal.ref,
        debit: journal.selectedJournal.debit,
+       adjusted_debit: journal.selectedJournal.adjusted_debit,
        credit: journal.selectedJournal.credit,
+       adjusted_credit: journal.selectedJournal.adjusted_credit,
        journalexplanation: journal.selectedJournal.explanation,
        journalStatus: journal.selectedJournal.journal_status,
        comment: journal.selectedJournal.journal_comment

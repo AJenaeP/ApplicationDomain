@@ -317,8 +317,10 @@ const closeAdjustJournal = () => {
                   <TableCell key={'name'}> Account Titles</TableCell>
                   <TableCell key={'ref'}> Ref </TableCell>
                   <TableCell key={'debit'}> Debit </TableCell>
+                  <TableCell key={'adjusted_debit'}> Adjusted Debit</TableCell>
                   <TableCell key={'credit'}> Credit </TableCell>
-                  
+                  <TableCell key={'adjusted_credit'}> Adjusted Credit</TableCell>
+                  <TableCell key= {'explanation'}>Explanation</TableCell>
                   <TableCell key={'status'}> Journal Status </TableCell>
                
                 </TableRow>
@@ -338,8 +340,10 @@ const closeAdjustJournal = () => {
                         <TableCell key={i + 'name'}>{journal.account_name}</TableCell>
                         <TableCell key={i + 'ref'}>{journal.ref}</TableCell>
                         <TableCell key={i + 'debit'}>{numberFormat(journal.debit)}</TableCell>
+                        <TableCell key={i + 'adjusted_debit'}>{numberFormat(journal.adjusted_debit)}</TableCell>
                         <TableCell key={i + 'credit'}>{numberFormat(journal.credit)}</TableCell>
-                        
+                        <TableCell key={i + 'adjusted_credit'}>{numberFormat(journal.adjusted_credit)}</TableCell>
+                        <TableCell key={i + 'explanation'}>{journal.explanation}</TableCell>
                         <TableCell
                           key={i + 'status'}
                           className={
