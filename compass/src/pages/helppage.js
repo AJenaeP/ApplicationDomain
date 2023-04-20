@@ -12,7 +12,7 @@ const HelpPage = () => {
           <Header />
         </div>
         <div className="article">
-          <h1>Compass Credit Union Help</h1>
+          <h1>Help Page</h1>
           <br />
           <h2>Accounts Page</h2>
           <hr />

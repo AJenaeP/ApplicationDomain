@@ -1,5 +1,6 @@
 .Email {
     display: flex;
+    height: 100vh;
 }
 .emailForm {
     width: 50%;

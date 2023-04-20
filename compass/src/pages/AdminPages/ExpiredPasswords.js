@@ -31,7 +31,7 @@ const Users = () => {
             <Header/>
             <Paper
                 sx={{
-                    width: 1000,
+                    width: 'fit-content',
                     overflow: "hidden",
                     display: "flex",
                     position: "relative",

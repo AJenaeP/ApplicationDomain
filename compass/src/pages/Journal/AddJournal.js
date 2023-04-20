@@ -115,7 +115,13 @@ const AddJournal = () => {
   }
 
   const handleFileUpload = (e) => {
-    if (!e.target.files) {
+    console.log(e.target.files[0].name)
+    if(!e.target.files){
+      return
+    } else {
+      setFileAttached(e.target.files[0].name)
+    }
+    /* if (!e.target.files) {
       return;
     }
     const file = e.target.files[0];
@@ -136,7 +142,7 @@ const AddJournal = () => {
           skip_empty_lines: true,
         });
     };
-    reader.readAsBinaryString(file);
+    reader.readAsBinaryString(file); */
   };
 
   function handleAdd(e) {
@@ -223,6 +229,10 @@ const AddJournal = () => {
             onChange={handleFileUpload}
           />
         </Button>
+        {
+          (fileAttached !== '') &&
+          <span style={{'color': 'blue', 'fontStyle':'italic'}}>"{fileAttached}"</span>
+        }
       </div>
 
       <DialogActions>

@@ -377,6 +377,7 @@ const Accounts = () => {
         style={{
           display: "flex",
           marginTop: 150,
+          marginBottom: 50,
           justifyContent: "center",
         }}
       >

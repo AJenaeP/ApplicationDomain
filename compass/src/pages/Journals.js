@@ -406,7 +406,7 @@ const closeAdjustJournal = () => {
         style={{
           display: "flex",
           marginTop: 150,
-          marginLeft: 360,
+          marginBottom: 50,
           justifyContent: "center",
         }}
       >

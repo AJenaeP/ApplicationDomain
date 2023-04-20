@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react'
 import { db }  from '../../utilities/Firebase';
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import Header from '../Header';
+import '../../css/Users.css'
 
 
 const Users = () => {
