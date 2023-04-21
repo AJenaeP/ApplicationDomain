@@ -40,10 +40,11 @@ const FinStatements = () => {
     const [balanceFilter, setBalanceFilter] = React.useState();
   
     //this is for the search field 
-    const data = {
+    const finState = {
       account_number: 0,
       account_name: '',
-      account_category: ''
+      account_category: '',
+      statement: ''
     }
 
     const searchCriteria = {
@@ -67,16 +68,14 @@ const FinStatements = () => {
       if(isNaN(value)){
         console.log('is a string')
         searchCriteria.date = String(value);
-        console.log(data)
       }else if(!isNaN(value)){
         console.log('is a number')
         searchCriteria.date = '';
-        console.log(data)
       } else {
         console.log('field is empty')
       }
   
-      fetch('/api/account/' + JSON.stringify(data), {
+      fetch('/api/account/' + JSON.stringify(searchCriteria), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -104,20 +103,19 @@ const FinStatements = () => {
             }
           )
       } else {
-        if (filter === 'TBalance') {
+        if (filter === 'Istate') {
+          finState.statement = "Income Statement"
+        } else if (filter === 'RES') {
+          finState.statement = "Returned Earning Statement"
+        } else if (filter === 'Bsheet') {
+          finState.statement = "Balance Sheet"
+        } else if (filter === 'TBalance') {
           //data.balance = 'balance'
           //closing balances (debits and credits)
-        } else if (filter === 'Istate') {
-          //revenue, expenses, and profitability (P&L)
-        } else if (filter === 'RES') {
-          //data.account_category = 'equity'
-          //sum of earnings accumulated and kept 
+          finState.statement = "Trial Balance"
         }
-        else if (filter === 'Bsheet') {
-         //data.account_category = 'equity'
-         //company’s assets, liabilities, and shareholder equity
-      }
-        fetch('/api/account/' + JSON.stringify(data), {
+        console.log(finState)
+        fetch('/api/account/' + JSON.stringify(finState), {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -127,53 +125,20 @@ const FinStatements = () => {
           response => response.json()
         ).then(
           data => {
+            console.log(data)
             setBackendData(data[0])
           }
         )
       }
     }
   
-    function handleBalanceFilter(e){
-      let balance = e.target.value
-      let Array = [];
-      if(balance === 'All'){
-        fetch('/api/accounts')
-          .then(
-            response => response.json()
-          ).then(
-            data => {
-              setBackendData(data)
-            }
-          )
-      } else if(balance === '-1000000'){
-        backendData.forEach((item) => {
-          if(item.balance <= 1000000){
-              Array.push(item)
-          }
-        })     
-        setBackendData(Array)
-      }else if (balance === '5000000'){
-        backendData.forEach((item) => {
-          if(item.balance > 1000000 && item.balance <=5000000){
-            Array.push(item)
-          }
-        })
-        setBackendData(Array)
-      } else if (balance === '5000000+'){
-        backendData.forEach((item) => {
-          if (item.balance > 5000000) {
-            Array.push(item)
-          }
-        })
-        setBackendData(Array)
-      }
-    }
     useEffect(() => {
       fetch('/api/accounts')
       .then(
         response => response.json()
       ).then(
         data => {
+          console.log(data)
           setBackendData(data)
         }
       )
@@ -265,11 +230,11 @@ const FinStatements = () => {
               value={statusFilter}
               onChange={handleRadioFilter}
             >
-                <FormControlLabel value='All' control={<Radio size="small" />} label="All Accounts" />
+              <FormControlLabel value='All' control={<Radio size="small" />} label="All Accounts" />
               <FormControlLabel value='TBalance' control={<Radio size="small" />} label="Trial Balance" />
-              <FormControlLabel value='Istate' control={<Radio size="small" />} label="Income Statment" />
+              <FormControlLabel value='Istate' control={<Radio size="small" />} label="Income Statement" />
               <FormControlLabel value='Bsheet' control={<Radio size="small" />} label="Balance Sheet" />
-              <FormControlLabel value='RES' control={<Radio size="small" />} label="Returned Earning Statment" />
+              <FormControlLabel value='RES' control={<Radio size="small" />} label="Returned Earning Statement" />
             </RadioGroup>
           </div>
          

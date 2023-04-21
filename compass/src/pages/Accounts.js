@@ -37,7 +37,8 @@ const Accounts = () => {
   const data = {
     account_number: 0,
     account_name: '',
-    account_category: ''
+    account_category: '',
+    statement: ''
   }
 
   function clearSearchField(){

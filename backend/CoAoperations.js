@@ -15,6 +15,7 @@ async function getAccounts(){
             .input('userId',  '')
             .input('date_time_account_added',  '')
             .input('account_status', '')
+            .input('statement', '')
             .input('Type', 'SELECT')
             .execute('COA_Management');
         return accounts.recordsets;
@@ -38,6 +39,7 @@ async function getAccount(data) {
             .input('userId', '')
             .input('date_time_account_added', '')
             .input('account_status', '')
+            .input('statement', sql.VarChar, data.statement)
             .input('Type', 'SELECT_FROM')
             .execute('COA_Management')
             /*.query("SELECT * from ChartOfAccounts WHERE account_number = ? OR account_name = ?")*/
