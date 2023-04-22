@@ -11,7 +11,7 @@ import { db }  from '../../utilities/Firebase';
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import Header from '../Header';
 
-
+//CREATE snapshot to pull users from Firebase
 const Users = () => {
     const [users, setUsers] = useState([]);
     
@@ -25,7 +25,7 @@ const Users = () => {
         })
         setUsers(usersList)
     })
-
+//RETURN statement  to create table to hold information
     return (
         <div className='Users'>
             <Header/>

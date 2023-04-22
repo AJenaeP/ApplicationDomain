@@ -27,7 +27,7 @@ const Users = () => {
         })
         setUsers(usersList)
     })
-
+//RETURN function to create table to hold information
     return (
         <div className='Users'>
             <Header/>

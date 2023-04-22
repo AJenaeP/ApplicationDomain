@@ -85,6 +85,7 @@ const DashboardAdmin = () => {
         }
       )
   }, [])
+  //using props to call the parent/child pages
 return (
   <>
   <div className="DashboardAdmin" id="outer-container">

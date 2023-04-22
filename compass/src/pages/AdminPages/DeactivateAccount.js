@@ -8,7 +8,7 @@ import {
     InputLabel
 } from '@mui/material'
 import React, { useState } from 'react'
-
+//pull variables from Accounts and store in const object
 const DeactivateAccount = ({account}) => {
     const [message, setMessage] = useState({ error: false, msg: "" });
     const [updatedStatus, setUpdatedStatus] = useState('')
@@ -49,7 +49,7 @@ const DeactivateAccount = ({account}) => {
                 },
             )
     }
-
+//RETURN function to add buttons to call fuctions to handle deactivate features
     return (
         <>
             <DialogTitle> Deactivate/Activate An Account</DialogTitle>

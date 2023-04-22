@@ -56,6 +56,7 @@ const AddAccount = () => {
         )
     }
 
+    //All buttons calling functions to add account
     return (
         <>
             <DialogTitle> Add An Account</DialogTitle>

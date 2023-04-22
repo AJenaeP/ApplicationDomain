@@ -27,6 +27,8 @@ const DeleteAccount = ({account}) => {
             },
         )
     }
+    //RETURN function to delete an account 
+    //need to call handledelete function 
 
     return (
         <>

@@ -10,6 +10,8 @@ import {
 import React, { useState, useEffect } from 'react'
 import '../../css/EditAccount.css'
 
+//Call account to be able to create selection method to edit 
+//store in const object
 const EditAccount = ({ account }) => {
     const [updatedCategory, setUpdatedCategory] = useState('')
     const [updatedSubcategory, setUpdatedSubcategory] = useState('')
@@ -62,7 +64,7 @@ const EditAccount = ({ account }) => {
             },
         )
     }
-
+//CREATE return method to handle change on required items 
     return (
         <>
             <DialogTitle> Edit An Account</DialogTitle>
