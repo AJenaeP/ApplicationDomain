@@ -6,30 +6,28 @@ import { Chart, ArcElement, Tooltip, Legend, registerables } from "chart.js";
 Chart.register(
     ...registerables
 )
-const Ratios = (value) => {
-    console.log(value.props)
+const Ratios = (value) => { //importing values from dashboard
     const chartRef = useRef()
     const propData = value.props
-    //label
-    //high point for data
-    //value 
+
     useEffect(() => {
         const ctx = chartRef.current.getContext("2d")
-        const gradient = ctx.createLinearGradient(0, 0, 200, 0)
+        const gradient = ctx.createLinearGradient(0, 0, 200, 0) //this creates the gradient background
         gradient.addColorStop(0, 'red');
         gradient.addColorStop(0.5, 'yellow');
         gradient.addColorStop(1, 'green');
 
+        //data for the graphs
         const data = {
-            datasets: [{
-                data: [propData.highPoint],
+            datasets: [{ //sets data and gradient
+                data: [propData.lowPoint,propData.highPoint],
                 backgroundColor: [gradient],
                 borderColor: [gradient],
                 hoverBorderColor: ['#fff'],
                 needleValue: propData.value
             }]
         };
-
+        //options for the graphs
         const options = {
             responsive: true,
             maintainAspectRatio: false,
@@ -57,7 +55,7 @@ const Ratios = (value) => {
                 }
             }   
         };
-
+        //chart text
         const gaugeChartText = {
             id: 'gaugeChartText',
             afterDatasetsDraw(chart, args, options) {
@@ -82,20 +80,23 @@ const Ratios = (value) => {
                 ctx.fillText(data.datasets[0].needleValue + '%', xCoor, yCoor+10)
             }
         }
+        //chart needle
         const gaugeNeedle = {
             id: 'guageNeedle',
             afterDatasetDraw(chart, args, options) {
-                const { ctx, config, data,chartArea: { top, bottom, left, right, width, height } } = chart;
+                const { ctx, config, data, chartArea: { top, bottom, left, right, width, height } } = chart;
 
                 ctx.save();
-                const dataTotal = data.datasets[0].data;
+                const dataTotal = data.datasets[0].data.reduce((a,b) => a + b,0);
                 const needleValue = data.datasets[0].needleValue;
-                const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
-
+                let angle = 0 ;
+                if(needleValue < dataTotal){
+                    angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
+                } else {
+                    angle = (1 / dataTotal * needleValue * Math.PI);
+                }
                 const cx = width/2;
                 const cy = chart._metasets[0].data[0].y;
-
-
                 //needle
                 ctx.translate(cx,cy)
                 ctx.rotate(angle);
@@ -113,6 +114,7 @@ const Ratios = (value) => {
                 ctx.restore();
             }
         }
+        //chart rendering
         const chart = new Chart(chartRef.current, {
             type: 'doughnut',
             data: data,

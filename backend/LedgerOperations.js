@@ -1,7 +1,9 @@
 var config = require('./dbconfig')
 const sql = require('mssql')
 
-async function getLedgers() {
+//executing stored procedures:
+
+async function getLedgers() { //getting all ledgers
     try {
         let pool = await sql.connect(config);
         let ledgers = await pool.request()
@@ -20,10 +22,7 @@ async function getLedgers() {
         console.log(error);
     }
 }
-
-async function getLedger(data) {
-    console.log(data)
-    //let input_parameter = id;
+async function getLedger(data) { //getting specific ledger
     try {
         let pool = await sql.connect(config);
         let ledger = await pool.request()
@@ -44,7 +43,7 @@ async function getLedger(data) {
         console.log(error)
     }
 }
-
+//exports functions to api
 module.exports = {
     getLedgers: getLedgers,
     getLedger: getLedger,

@@ -1,4 +1,4 @@
-import React, { useInsertionEffect } from 'react'
+import React from 'react'
 import compasslogo from '../images/compassLogo.png';
 import { UserAuth } from '../utilities/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -11,15 +11,10 @@ import Typography from '@mui/material/Typography';
 import '../css/Header.css'
 import Sidebar from './Sidebar';
 import Iconify from '../iconify'
-import Badge from '@mui/material/Badge';
 import Drawer from '@mui/material/Drawer';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled, useTheme } from '@mui/material/styles';
-import { useEffect } from 'react';
-import {
-  Box,} from '@mui/material';
-
 import { useState } from 'react';
 
 
@@ -55,23 +50,7 @@ const Header = () => {
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
-
-  //this calls the logout function from authcontext
-  const handleLogout = () => {
-    try {
-      logout()
-      navigate('/home')
-    } catch (e) {
-      console.log(e.message)
-    }
-  }
   
-  /*useEffect(() => {
-    window.localStorage.setItem(userData, JSON.stringify(userData))
-    userData = JSON.parse(userData);
-  })
-  */
-  if (count < 1 && role === "Manager"){
   return (
     <div className='header'>
       <div>
@@ -99,15 +78,16 @@ const Header = () => {
                 style={{ display: 'flex' }}
               />
             </span>
-            <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen} sx={{ width: 40, height: 40 }}>
-            <Iconify icon="eva:bell-outline" color="black" />
-          <Typography variant="body2" sx={{ color: 'white' }}>
-          new pending journal entry 
-            </Typography>
-      </IconButton>
-
-           
-          </Toolbar>
+            {
+              ((count < 1) && (role === 'Manager')) &&
+              <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen} sx={{ width: 40, height: 40 }}>
+                <Iconify icon="eva:bell-outline" color="black" />
+                <Typography variant="body2" sx={{ color: 'white' }}>
+                  new pending journal entry
+                </Typography>
+              </IconButton>
+            }
+        </Toolbar>
         </AppBar>
         <Drawer 
           sx={{
@@ -129,85 +109,9 @@ const Header = () => {
           </DrawerHeader>
           <Sidebar/>
         </Drawer>
-      
-       
-      
-      </div>
-       
+      </div>    
     </div>
-          /*<div className="header"> 
-              <img src={compasslogo} alt="compass" width="90px"/>
-              <span>Compass </span>
-              <AccountCircleIcon/>
-              <span >{userData.userId}</span>
-              <button type="button" id="logout" onClick={handleLogout}>Logout</button>
-          </div>*/
   );
-}else 
-return (
-  <div className='header'>
-    <div>
-      <AppBar style={{ position: 'fixed' }} open={open}>
-        <Toolbar>
-          <span id='menu'>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerOpen}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon/>
-            </IconButton>
-          </span>
-          <span id='companylogo'>
-            <img src={compasslogo} alt="compass" width="90px" />
-            <span>Compass Credit Union</span>
-          </span>
-          <span id='userInfo'>
-            <span style={{color: 'white'}}>{userData.userId}</span>
-            <AccountCircleIcon
-              style={{ display: 'flex' }}
-            />
-          </span>
-       
-    
-        </Toolbar>
-      </AppBar>
-      <Drawer 
-        sx={{
-          width: 250,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-          width: 250,
-          boxSizing: 'border-box',
-        },
-      }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-         >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Sidebar/>
-      </Drawer>
-    
-     
-    
-    </div>
-     
-  </div>
-        /*<div className="header"> 
-            <img src={compasslogo} alt="compass" width="90px"/>
-            <span>Compass </span>
-            <AccountCircleIcon/>
-            <span >{userData.userId}</span>
-            <button type="button" id="logout" onClick={handleLogout}>Logout</button>
-        </div>*/
-);
-} //TO DO:: get user data from login and display name line 19
+} 
+
 export default Header;

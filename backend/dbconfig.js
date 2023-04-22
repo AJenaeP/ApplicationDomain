@@ -1,3 +1,5 @@
+//configurations to connect to database
+
 'use strict'
 
 const dotenv = require('dotenv');

@@ -1,7 +1,5 @@
 import {
-    Dialog,
     DialogTitle,
-    DialogContent,
     TextField,
     DialogActions,
     Button,
@@ -10,7 +8,6 @@ import {
     Select
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import Accounts from '../Accounts'
 import '../../css/EditAccount.css'
 
 const EditAccount = ({ account }) => {
@@ -32,6 +29,7 @@ const EditAccount = ({ account }) => {
         accountStatus: account.selectedAccount.account_status,
     })
 
+    //functions to handle form update
     function handleAccountNameChange(e) { updatedAccount.accountName = e.target.value; }
     function handleAccountDescChange(e) { updatedAccount.accountDescription = e.target.value; }
     function handleAccountCatChange(e) { setUpdatedCategory(e.target.value); updatedAccount.accountCategory = e.target.value; }
@@ -42,19 +40,16 @@ const EditAccount = ({ account }) => {
     //function handleAccountDateChange(e) { updatedAccountt.accountName = e.target.value; console.log(account) }
     function handleAccountStatusChange(e){setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value;}
 
+    //handles update of account
     function handleEdit(e) {
         e.preventDefault();
-        console.log(account.selectedAccount)
-        console.log(updatedAccount)
-        console.log('trying to update...')
         fetch('/api/accounts/update', {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(updatedAccount)
-        })
-        .then(
+        }).then(
             response => {
                 if (response.statusText === "Created") {
                     alert('Account Updated')
@@ -67,8 +62,6 @@ const EditAccount = ({ account }) => {
             },
         )
     }
-
-  
 
     return (
         <>
@@ -165,6 +158,5 @@ const EditAccount = ({ account }) => {
         </>
     )
 }
-
 
 export default EditAccount

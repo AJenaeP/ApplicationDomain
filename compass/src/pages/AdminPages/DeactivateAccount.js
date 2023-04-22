@@ -1,7 +1,5 @@
 import {
-    Dialog,
     DialogTitle,
-    DialogContent,
     TextField,
     DialogActions,
     Button,
@@ -9,8 +7,7 @@ import {
     MenuItem,
     InputLabel
 } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import Accounts from '../Accounts'
+import React, { useState } from 'react'
 
 const DeactivateAccount = ({account}) => {
     const [message, setMessage] = useState({ error: false, msg: "" });
@@ -30,27 +27,8 @@ const DeactivateAccount = ({account}) => {
     })
     function handleAccountStatusChange(e) { setUpdatedStatus(e.target.value); updatedAccount.accountStatus = e.target.value; }
 
+    //handles deactivation of account
     function handleDelete(e) {
-        //e.preventDefault();
-        console.log(account.selectedAccount.account_number)
-        console.log(account.selectedAccount)
-        console.log('trying to delete...')
-       /*fetch('/api/accounts/delete', {
-            method: "DELETE",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(account.selectedAccount)
-        })
-            .then(
-                response => { 
-                    if(response.statusText === "Created"){
-                        alert('Account Deleted')
-                    } else {
-                        alert(response.statusText)
-                    } 
-                },
-            )*/
         fetch('/api/accounts/update', {
             method: "PUT",
             headers: {
@@ -148,6 +126,5 @@ const DeactivateAccount = ({account}) => {
         </>
     )
 }
-
 
 export default DeactivateAccount

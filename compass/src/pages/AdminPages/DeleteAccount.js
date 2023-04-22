@@ -1,37 +1,31 @@
 import {
-    Dialog,
     DialogTitle,
-    DialogContent,
     TextField,
     DialogActions,
     Button
 } from '@mui/material'
 import React from 'react'
-import Accounts from '../Accounts'
 
 const DeleteAccount = ({account}) => {
 
+    //handles admin deletion of account
     function handleDelete(e) {
-        //e.preventDefault();
-        console.log(account.selectedAccount.account_number)
-        console.log(account.selectedAccount)
-        console.log('trying to delete...')
+        e.preventDefault();
         fetch('/api/accounts/delete', {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(account.selectedAccount)
-        })
-            .then(
-                response => { 
-                    if(response.statusText === "Created"){
-                        alert('Account Deleted')
-                    } else {
-                        alert(response.statusText)
-                    } 
-                },
-            )
+        }).then(
+            response => { 
+                if(response.statusText === "Created"){
+                    alert('Account Deleted')
+                } else {
+                    alert(response.statusText)
+                } 
+            },
+        )
     }
 
     return (

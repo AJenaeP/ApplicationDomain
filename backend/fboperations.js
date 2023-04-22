@@ -1,3 +1,5 @@
+//oprtation to get all users from firebase database
+
 var admin = require('./fbconfig')
 
 async function getUsers(){
@@ -5,7 +7,6 @@ async function getUsers(){
        admin.auth().getUsers([])
         .then((getUsersResult) => {
             console.log('Successfully fetched user data:');
-            console.log(getUsersResult)
             getUsersResult.users.forEach((userRecord) => {
                 console.log(userRecord);
             });})

@@ -1,7 +1,10 @@
 var config = require('./dbconfig')
 const sql = require('mssql')
 
-async function getAccounts(){
+//executing stored procedures:
+
+async function getAccounts(){  //select all
+    console.log('connecting...')
     try{
         let pool = await sql.connect(config);
         let accounts = await pool.request()
@@ -23,9 +26,8 @@ async function getAccounts(){
         console.log(error);
     }
 }
-async function getAccount(data) {
-    console.log(data)
-    //let input_parameter = id;
+async function getAccount(data) { //select all from
+    console.log('connecting...')
     try {
         let pool = await sql.connect(config);
         let account = await pool.request()
@@ -42,20 +44,15 @@ async function getAccount(data) {
             .input('statement', sql.VarChar, data.statement)
             .input('Type', 'SELECT_FROM')
             .execute('COA_Management')
-            /*.query("SELECT * from ChartOfAccounts WHERE account_number = ? OR account_name = ?")*/
-        console.log(account.recordsets)
         return account.recordsets;
-        
     } catch (error) {
         console.log(error)
     }
 }
-async function addAccount(account) {
+async function addAccount(account) { //insert
     console.log('connecting...')
     try {
         let pool = await sql.connect(config);
-        console.log('connecting...')
-        console.log(account)
         let insertAccount = await pool.request()
             .input('account_number', account.accountNumber)
             .input('account_name',  account.accountName)
@@ -70,12 +67,12 @@ async function addAccount(account) {
             .input('Type', 'INSERT')
             .execute('COA_Management');
         return insertAccount.recordsets;
-        console.log('fin')
     } catch (error) {
         console.log(error)
     }
 }
 async function deleteAccount(account) {
+    console.log('connecting...')
     try {
         let pool = await sql.connect(config);
         let accountDel = await pool.request()
@@ -96,8 +93,8 @@ async function deleteAccount(account) {
         console.log(error)
     }
 }
-async function updateAccount(account) {
-    console.log(account)
+async function updateAccount(account) { //update account
+    console.log('connecting...')
     try {
         let pool = await sql.connect(config);
         let accountUpdate = await pool.request()
@@ -118,6 +115,7 @@ async function updateAccount(account) {
         console.log(error)
     }
 }
+//exports functions to api
 module.exports = {
     getAccounts : getAccounts,
     getAccount : getAccount,

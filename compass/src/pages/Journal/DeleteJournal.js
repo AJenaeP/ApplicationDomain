@@ -1,11 +1,5 @@
-
-
-
-
 import {
-    Dialog,
     DialogTitle,
-    DialogContent,
     TextField,
     DialogActions,
     Button
@@ -15,19 +9,16 @@ import React from 'react'
 
 const DeleteJournal = ({journal}) => {
 
+    //this function handles the deletino of a journal
     function handleDelete(e) {
-        //e.preventDefault();
-        console.log(journal.selectedJournal.account_name)
-        console.log(journal.selectedJournal)
-        console.log('trying to delete...')
+        e.preventDefault();
         fetch('/api/journals/delete', {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(journal.selectedJournal)
-        })
-        .then(
+        }).then(
             response => { 
                 if(response.statusText === "Created"){
                     alert('Account Deleted')
@@ -41,16 +32,12 @@ const DeleteJournal = ({journal}) => {
     return (
         <>
             <DialogTitle> Delete An Entry</DialogTitle>
-            
             <TextField
                 disabled
                 id="outlined-disabled"
                 label="Journal Name"
                 defaultValue={journal.selectedJournal.account_name}
             />
-            
-            
-           
             <TextField
                 disabled
                 id="outlined-disabled"
@@ -62,14 +49,12 @@ const DeleteJournal = ({journal}) => {
                 id="outlined-disabled"
                 label="Credit"
                 defaultValue={journal.selectedJournal.credit}
-            />
-            
+            />            
             <DialogActions>
                 <Button onClick={handleDelete}>Delete Entry</Button>
             </DialogActions>
         </>
     )
 }
-
 
 export default DeleteJournal

@@ -1,7 +1,9 @@
 var config = require('./dbconfig')
 const sql = require('mssql')
 
-async function getJournals() {
+//executing stored procedures:
+
+async function getJournals() { //getting all journals
     try {
         let pool = await sql.connect(config);
         let journals = await pool.request()
@@ -19,10 +21,7 @@ async function getJournals() {
         console.log(error);
     }
 }
-
-async function getJournal(data) {
-    console.log('trying to get...')
-    console.log(data)
+async function getJournal(data) { //getting a certain journal
     try {
         let pool = await sql.connect(config);
         let journal = await pool.request()
@@ -35,16 +34,12 @@ async function getJournal(data) {
             .input('comment', data.comment)
             .input('Type', 'SELECT_FROM')
             .execute('Journal_Management');
-        console.log(journal.recordsets)
         return journal.recordsets;
-
     } catch (error) {
         console.log(error)
     } 
 }
-
-async function getJournalbyRefStatus(ref) {
-    console.log(ref)
+async function getJournalbyRefStatus(ref) { 
     try {
         let pool = await sql.connect(config);
         let journal = await pool.request()
@@ -57,13 +52,9 @@ async function getJournalbyRefStatus(ref) {
         console.log(error)
     }
 } 
-async function addJournal(journal) {
-    console.log('connecting...')
-    console.log(journal)
+async function addJournal(journal) { //inserting a journal
     try {
         let pool = await sql.connect(config);
-        console.log('connecting...')
-        console.log(journal)
         let insertJournal = await pool.request()
             .input('ref', journal.ref)
             .input('account_name', journal.account_name)
@@ -74,13 +65,11 @@ async function addJournal(journal) {
             .input('Type', 'INSERT')
             .execute('Journal_Management');
         return insertJournal.recordsets;
-        console.log('fin')
     } catch (error) {
         console.log(error)
     }
 }
-
-async function deleteJournal(journal) {
+async function deleteJournal(journal) { //deleting a journal
     try {
         let pool = await sql.connect(config);
         let journalDel = await pool.request()
@@ -98,8 +87,7 @@ async function deleteJournal(journal) {
         console.log(error)
     }
 }
-async function updateJournal(journal) {
-    console.log(journal)
+async function updateJournal(journal) { //updating a journal
     try {
         let pool = await sql.connect(config);
         let journalUpdate = await pool.request()
@@ -117,8 +105,7 @@ async function updateJournal(journal) {
         console.log(error)
     }
 }
-
-async function getJournalErrors() {
+async function getJournalErrors() { //gets errors from database
     try {
         let pool = await sql.connect(config);
         let errors = await pool.request().query("SELECT * from Errors")
@@ -127,8 +114,8 @@ async function getJournalErrors() {
         console.log(error);
     }
 }
-
-module.exports = {
+//exports functions to api
+module.exports = { 
     getJournals: getJournals,
     getJournal: getJournal,
     addJournal: addJournal,

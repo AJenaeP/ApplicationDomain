@@ -1,4 +1,3 @@
-var chartOfAccounts = require('./CoA')
 const CoAoperations = require('./CoAoperations')
 const fboperations = require('./fboperations')
 const ledgerOperations = require('./LedgerOperations')
@@ -27,122 +26,109 @@ router.use((request,response, next) => {
     next();
 })
 
-//operation
+//routes below: 
+
 router.route('/accounts').get((request,response) => {
+    console.log("get is starting")
     CoAoperations.getAccounts().then(result => {
         response.json(result[0])
     })
 })
 router.route('/account/:data').get((request, response) => {
-    console.log(JSON.parse(request.params.data))
+    console.log("get is starting")
     const data = JSON.parse(request.params.data);
-    //console.log(data)
-    //console.log(data)
     CoAoperations.getAccount(data).then(result => {
         response.json(result)
     })
 })
-
 router.route('/accounts/add').post((request, response) => {
-    console.log("post is working")
-
+    console.log("post is starting")
     let account = request.body
     CoAoperations.addAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
-
 router.route('/accounts/delete').delete((request, response) => {
-    console.log("delete is working")
-
+    console.log("delete is starting")
     let account = request.body 
     CoAoperations.deleteAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
 router.route('/accounts/update').put((request, response) => {
-    console.log("update is working")
-
+    console.log("update is starting")
     let account = request.body
-    console.log(account)
     CoAoperations.updateAccount(account).then(result => {
         response.status(201).json(result);
     })
 })
-
 router.route('/users').get((request, response) => {
+    console.log("get is starting")
     fboperations.getUsers().then(result => {
         response.status(201).json(result);
     })
 })
-
-//operation
 router.route('/ledgers').get((request, response) => {
+    console.log("get is starting")
     ledgerOperations.getLedgers().then(result => {
         response.json(result[0])
     })
 })
-
 router.route('/ledger/:data').get((request, response) => {
-    console.log(JSON.parse(request.params.data))
+    console.log("get is starting")
     const data = JSON.parse(request.params.data);
-    //console.log(data)
-    //console.log(data)
     ledgerOperations.getLedger(data).then(result => {
         response.json(result)
     })
 })
 router.route('/journals').get((request, response) => {
+    console.log("get is starting")
     journalOperations.getJournals().then(result => {
         response.json(result[0])
     })
 })
 router.route('/journal/:data').get((request, response) => {
-    console.log(JSON.parse(request.params.data))
+    console.log("get is starting")
     const data = JSON.parse(request.params.data);
-
     journalOperations.getJournal(data).then(result => {
         response.json(result[0])
     })
 })
 router.route('/journals/add').post((request, response) => {
-    console.log("post is working")
-
+    console.log("post is starting")
     let journal = request.body
-    console.log(journal)
     journalOperations.addJournal(journal).then(result => {
         response.status(201).json(result);
     })
 })
 router.route('/journals/delete').delete((request, response) => {
-    console.log("delete is working")
-
+    console.log("delete is starting")
     let journal = request.body
-    console.log(journal)
     journalOperations.deleteJournal(journal).then(result => {
         response.status(201).json(result);
     })
 })
 router.route('/journals/update').put((request, response) => {
-    console.log("update is working")
-
+    console.log("update is starting")
     let journal = request.body
-    console.log(journal)
     journalOperations.updateJournal(journal).then(result => {
         response.status(201).json(result);
     })
 })
 
 router.route('/journalErrors').get((request, response) => {
+    console.log("get is starting")
     journalOperations.getJournalErrors().then(result => {
         response.json(result[0])
     })
 })
 
+//file transfer
 router.route('/*').get((req, res) => {
     res.sendFile(path.resolve(__dirname, '../compass/build', 'index.html'));
 });
 
+//listener
 var port = process.env.PORT || 1433
 app.listen(port, () => 
     console.log('Chart of Account API is running at ' + port)

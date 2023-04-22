@@ -6,9 +6,9 @@ import {
     Paper,
     TableHead
 } from '@mui/material';
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { db }  from '../../utilities/Firebase';
-import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import Header from '../Header';
 import '../../css/Users.css'
 
@@ -19,6 +19,7 @@ const Users = () => {
     const ref = collection(db, 'users')
     const q = query(ref)
 
+    //retrieving list of users from firebase database
     onSnapshot(q, (snapshot) => {
         let usersList = []
         snapshot.docs.forEach((doc) => {

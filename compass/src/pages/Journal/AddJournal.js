@@ -35,6 +35,7 @@ const AddJournal = () => {
   const [balanceError, setBalanceError] = useState(false)
   const [isError, setIsError] = useState(false)
 
+  //this retrieves journal errors, journals, and account information for database
   useEffect(() => {
     fetch('/api/journalErrors')
       .then(
@@ -67,7 +68,8 @@ const AddJournal = () => {
       )
   }, [])
   
-  
+  //below are the functions that handle changes in the form:
+
   function handleJournalDateChange(e) {
     const x = e.target.value
     if(
@@ -90,7 +92,7 @@ const AddJournal = () => {
     
   }
   function handleJournalRefChange(e) {
-    if(refNumbers.includes(e.target.value)){
+    if(refNumbers.includes(e.target.value)){ //checks if ref is already in use
       setRefError(true)
     } else {
       setRefError(false)
@@ -115,7 +117,6 @@ const AddJournal = () => {
   }
 
   const handleFileUpload = (e) => {
-    console.log(e.target.files[0].name)
     if(!e.target.files){
       return
     } else {
@@ -147,8 +148,6 @@ const AddJournal = () => {
 
   function handleAdd(e) {
     e.preventDefault();
-    console.log(journal);
-    console.log("trying to add...");
     fetch("/api/journals/add", {
       method: "POST",
       headers: {
@@ -160,15 +159,6 @@ const AddJournal = () => {
     });
   }
 
-  
-
-  const numberFormat = (value) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(value);
-
-  //NEED return method that promised information
   return (
     <>
       <DialogTitle> Create a Journal Entry </DialogTitle>

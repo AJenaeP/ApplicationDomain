@@ -1,3 +1,5 @@
+//this connects to firebase database
+
 var admin = require("firebase-admin");
 
 const serviceAccount = require('./fbServiceKey.json')

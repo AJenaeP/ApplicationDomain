@@ -1,7 +1,5 @@
 import {
-    Dialog,
     DialogTitle,
-    DialogContent,
     DialogActions,
     Button,
     TextField,
@@ -10,9 +8,8 @@ import {
     InputAdornment,
     Select,
     MenuItem,
-    SelectChangeEvent
 } from '@mui/material'
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import '../../css/AddAccount.css';
 
 const AddAccount = () => {
@@ -34,19 +31,19 @@ const AddAccount = () => {
         dateTime: '',
         accountStatus: '',
     })
+
+    //functions to handle changes in form
     function handleAccountNumberChange(e) { account.accountNumber = Number(e.target.value); }
     function handleAccountNameChange(e) { account.accountName = e.target.value; }
     function handleAccountDescChange(e) { account.accountDescription = e.target.value; }
     function handleAccountCatChange(e) { setCategory(e.target.value); account.accountCategory = e.target.value; }
     function handleAccountSubCatChange(e) { setSubcategory(e.target.value); account.accountSubcategory = e.target.value; }
     function handleAccountInitialChange(e) { account.initialBalance = Number(e.target.value); }
-    //function handleAccountUserChange(e) { account.accountName = e.target.value; console.log(account) }
-    //function handleAccountDateChange(e) { account.accountName = e.target.value; console.log(account) }
     function handleAccountStatusChange(e) { setStatus(e.target.value); account.accountStatus = e.target.value; }
 
+    //handles adding account to database
     function handleAdd(e) {
         e.preventDefault();
-        console.log(account)
         console.log('trying to add...')
         fetch('/api/accounts/add', {
             method: "POST",
@@ -54,10 +51,9 @@ const AddAccount = () => {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(account)
-        })
-            .then(
-                response => { alert(response.statusText) }
-            )
+        }).then(
+            response => { alert(response.statusText) }
+        )
     }
 
     return (
@@ -157,6 +153,4 @@ const AddAccount = () => {
     )
 }
 
-
 export default AddAccount
-
