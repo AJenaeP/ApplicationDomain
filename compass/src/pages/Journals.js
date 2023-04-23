@@ -181,7 +181,7 @@ const Journals = () => {
           }
         )
   
-  }, [])
+  }, [journalData])
 
   const openAddJournal = () => {
     console.log('add journal button clicked ')

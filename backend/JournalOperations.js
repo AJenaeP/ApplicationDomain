@@ -62,6 +62,7 @@ async function addJournal(journal) { //inserting a journal
             .input('debit', journal.debit)
             .input('credit', journal.credit)
             .input('journal_status', journal.journal_status)
+            .input('comment', journal.comment)
             .input('Type', 'INSERT')
             .execute('Journal_Management');
         return insertJournal.recordsets;

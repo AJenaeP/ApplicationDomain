@@ -19,7 +19,6 @@ const EditJournal = ({ journal }) => {
        credit: journal.selectedJournal.credit,
        journalStatus: journal.selectedJournal.journal_status,
        comment: journal.selectedJournal.journal_comment
-//Need to add comment for reject 
     })
     const [errors, setErrors] = useState({})
 
@@ -38,16 +37,17 @@ const EditJournal = ({ journal }) => {
     //functions below handle changes in the form:
 
     function handleJournalDateChange(e) { updatedJournal.date = e.target.value; }
-    function handleJournalAccountNameChange(e) { updatedJournal.account_name= e.target.value; }
+    function handleJournalAccountNameChange(e) { updatedJournal.journalName= e.target.value; }
     function handleJournalRefChange(e) { updatedJournal.ref= e.target.value; }
     function handleJournalDebitChange(e) { updatedJournal.debit = Number(e.target.value); } 
     function handleJournalCreditChange(e) { updatedJournal.credit = Number(e.target.value); }
-    function handleJournalStatusChange(e){updatedJournal.journal_status =e.target.value;} 
-    function handleJournalCommentChange(e){updatedJournal.journal_comment =e.target.value;} 
+    function handleJournalStatusChange(e){updatedJournal.journalStatus =e.target.value;} 
+    function handleJournalCommentChange(e){updatedJournal.comment =e.target.value;} 
     
     //this handles update the specific journal
     function handleUpdate(e) {
         e.preventDefault();
+        console.log(updatedJournal)
         fetch('/api/journals/update', {
             method: "PUT",
             headers: {
