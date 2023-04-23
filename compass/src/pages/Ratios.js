@@ -11,6 +11,7 @@ const Ratios = (value) => { //importing values from dashboard
     const propData = value.props
 
     useEffect(() => {
+        console.log(propData)
         const ctx = chartRef.current.getContext("2d")
         const gradient = ctx.createLinearGradient(0, 0, 200, 0) //this creates the gradient background
         gradient.addColorStop(0, 'red');
@@ -20,7 +21,7 @@ const Ratios = (value) => { //importing values from dashboard
         //data for the graphs
         const data = {
             datasets: [{ //sets data and gradient
-                data: [propData.lowPoint,propData.highPoint],
+                data: [propData.lowPoint, propData.highPoint],
                 backgroundColor: [gradient],
                 borderColor: [gradient],
                 hoverBorderColor: ['#fff'],
@@ -34,6 +35,7 @@ const Ratios = (value) => { //importing values from dashboard
             rotation: 270,
             circumference: 180,
             cutout: 60,
+            borderRadius: 1,
             scales: {
                 y: {
                     min: 0,
@@ -70,14 +72,18 @@ const Ratios = (value) => { //importing values from dashboard
                 ctx.textBaseLine = 'top';
 
                 ctx.textAlign = 'left';
-                ctx.fillText('Low', left, yCoor+10)
+                ctx.fillText(propData.lowPointText, left, yCoor+10)
 
                 ctx.textAlign = 'right';
-                ctx.fillText('High', right, yCoor+10)
+                ctx.fillText(propData.highPointText, right, yCoor+10)
 
                 ctx.textAlign = 'center';
                 ctx.font = '17px sans-serif';
-                ctx.fillText(data.datasets[0].needleValue + '%', xCoor, yCoor+10)
+                ctx.fillText(data.datasets[0].needleValue + '%', xCoor, yCoor+15)
+
+                ctx.textAlign = 'center';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(propData.subtitle, xCoor, yCoor - 130)
             }
         }
         //chart needle
@@ -89,12 +95,8 @@ const Ratios = (value) => { //importing values from dashboard
                 ctx.save();
                 const dataTotal = data.datasets[0].data.reduce((a,b) => a + b,0);
                 const needleValue = data.datasets[0].needleValue;
-                let angle = 0 ;
-                if(needleValue < dataTotal){
-                    angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
-                } else {
-                    angle = (1 / dataTotal * needleValue * Math.PI);
-                }
+                let angle = Math.PI + (1 / dataTotal * needleValue * Math.PI)
+
                 const cx = width/2;
                 const cy = chart._metasets[0].data[0].y;
                 //needle

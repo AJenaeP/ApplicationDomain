@@ -122,28 +122,6 @@ const AddJournal = () => {
     } else {
       setFileAttached(e.target.files[0].name)
     }
-    /* if (!e.target.files) {
-      return;
-    }
-    const file = e.target.files[0];
-    const { name } = file;
-
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      if (!evt?.target?.result) {
-        return;
-      }
-      const { result } = evt.target;
-      const records =
-        (result,
-        {
-          columns: ["id", "value"],
-          delimiter: ";",
-          trim: true,
-          skip_empty_lines: true,
-        });
-    };
-    reader.readAsBinaryString(file); */
   };
 
   function handleAdd(e) {

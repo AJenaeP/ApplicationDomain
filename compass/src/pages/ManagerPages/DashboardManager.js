@@ -26,22 +26,31 @@ const DashboardManager = () => {
   const currentRatio = { //data for current ratio gauge
         label: 'Current Ratio',
         lowPoint: 0,
-        highPoint: 3, //high point needs to be 3 
-        value: (assetsSum)/(liabilitiesSum) 
+        lowPointText: 'Low',
+        highPoint: 2, //high point needs to be 3
+        highPointText: 'High',
+        value: (assetsSum)/(liabilitiesSum) ,
+        subtitle: '1.5% < good ratio > 2%'
   }
 
   const quickRatio = { //data for quick ratio
         label: 'Quick Ratio',
-        lowPoint: 0,
-        highPoint: 1, //high point needs to be 1 or more
-        value: (cash + stock)/(accountPayable)
+        lowPoint: 1,
+        lowPointText: 'Low',
+        highPoint: 11, //high point needs to be 1 or more
+        highPointText: 'High',
+        value: (cash + stock)/(accountPayable),
+        subtitle: 'good ratio > 1%'
   }
 
   const debtToAssets = { //data for debt to assets
         label: 'Debt to Assets',
         lowPoint: -1,
+        lowPointText: 'High',
         highPoint: 1, //high point is 1 or less, 2 or more is red
-        value: (liabilitiesSum)/(assetsSum)
+        value: (liabilitiesSum)/(assetsSum),
+        highPointText: 'Low',
+        subtitle: 'good ratio < 1%'
   }
 
   useEffect(() => { //using this useEffect to get the sums of different data points
@@ -101,13 +110,13 @@ return (
         <Calendar/>
     </div>
     <div className='Ratios' style={{'display': 'flex', 'justifyContent': 'space-around', 'marginTop': 20}}>
-        <span>
+        <span style={{'border': '.5px #8f8f84 solid'}}>
           <Ratios props={currentRatio} />
         </span>
-        <span>
+        <span style={{ 'border': '.5px #8f8f84 solid' }}>
           <Ratios props={quickRatio} />
         </span>
-        <span>
+        <span style={{ 'border': '.5px #8f8f84 solid' }}>
           <Ratios props={debtToAssets} />
         </span>
     </div> 
