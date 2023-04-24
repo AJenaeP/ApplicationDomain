@@ -11,7 +11,6 @@ const Ratios = (value) => { //importing values from dashboard
     const propData = value.props
 
     useEffect(() => {
-        console.log(propData)
         const ctx = chartRef.current.getContext("2d")
         const gradient = ctx.createLinearGradient(0, 0, 200, 0) //this creates the gradient background
         gradient.addColorStop(0, 'red');

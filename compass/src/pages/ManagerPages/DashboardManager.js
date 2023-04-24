@@ -11,6 +11,7 @@ import Header from '../Header';
 import Accounts from '../Accounts';
 import Ratios from '../Ratios';
 
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const DashboardManager = () => {
   const [assetsSum, setAssetsSum] = useState(0)
@@ -22,6 +23,7 @@ const DashboardManager = () => {
   const [loanDebt, setLoanDebt] = useState(0)
   const [stock, setStock] = useState(0)
   const [wages, setWages] = useState(0)
+  const [numPending, setNumPending] = useState(0)
 
   const currentRatio = { //data for current ratio gauge
         label: 'Current Ratio',
@@ -53,15 +55,32 @@ const DashboardManager = () => {
         subtitle: 'good ratio < 1%'
   }
 
-  useEffect(() => { //using this useEffect to get the sums of different data points
+  useEffect(() => {
+    setNumPending(0)
+    //counting pending journal entries
+    fetch('/api/journals')
+      .then(
+        response => response.json()
+      ).then(
+        data => {
+          data.forEach(element => {
+            if (element.journal_status === 'Pending') {
+              console.log(element)
+              setNumPending(numPending + 1)
+            }
+          })
+        }
+      )
+  }, [])
+  
+  useEffect(() => { 
+    //using this useEffect to get the sums of different data points
     fetch('/api/accounts')
       .then(
         response => response.json()
       ).then(
         data => {
-          console.log(data)
           data.forEach(element => {
-            console.log(element.balance)
             switch(element.account_category){
               case "assets":
                 setAssetsSum(assetsSum + element.balance)
@@ -106,8 +125,20 @@ return (
     <div>
         <Header/>
     </div>
-    <div className='calender'>
+    <div >
+      <span className='calender' style={{'justifyContent': 'space-evenly'}}>
+          {
+            (numPending > 0) && 
+                    <Box sx={{ 'backgroundColor': 'white', 'width': 200, 'height': 100, 'padding': 2 }}>
+                      <span style={{ 'alignItems': 'center', 'display': 'flex', 'justifyContent': 'center', 'marginBottom': 7 }}><NotificationsIcon sx={{ 'color': '#58d0fe' }} /> Notifications</span>
+                      <div>
+                        <span style={{ 'backgroundColor': '#58d0fe', 'color': 'white', 'borderRadius': 10, 'width': 20, 'fontSize': 15, 'display': 'flex', 'justifyContent': 'center' }}>{numPending}</span>
+                        New Pending Journal Entries
+                      </div>
+                    </Box>
+          }
         <Calendar/>
+      </span>
     </div>
     <div className='Ratios' style={{'display': 'flex', 'justifyContent': 'space-around', 'marginTop': 20}}>
         <span style={{'border': '.5px #8f8f84 solid'}}>

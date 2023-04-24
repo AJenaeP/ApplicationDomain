@@ -10,7 +10,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import '../css/Header.css'
 import Sidebar from './Sidebar';
-import Iconify from '../iconify'
 import Drawer from '@mui/material/Drawer';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -30,8 +29,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 //import { auth } from '../index'
 const Header = () => {
-  const [count, setCount] = useState(window.localStorage.getItem('setCount'))
-  const [role, setRole] = useState(window.localStorage.getItem('userRole'))
   const theme = useTheme();
   const { userData, logout } = UserAuth();
   const navigate = useNavigate();
@@ -78,15 +75,6 @@ const Header = () => {
                 style={{ display: 'flex' }}
               />
             </span>
-            {
-              ((count < 1) && (role === 'Manager')) &&
-              <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen} sx={{ width: 40, height: 40 }}>
-                <Iconify icon="eva:bell-outline" color="black" />
-                <Typography variant="body2" sx={{ color: 'white' }}>
-                  new pending journal entry
-                </Typography>
-              </IconButton>
-            }
         </Toolbar>
         </AppBar>
         <Drawer 
