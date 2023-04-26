@@ -1,8 +1,14 @@
-//Need Can generate, view, save, email, or print 
-//trial balance, income statement, balance sheet, and retained earnings statement for a particular date or a date range
-
-//CREATE buttons for generate, view, save, email, or print
-
+/*const generateReport = async () => {
+      try {
+          const res = await fetch(
+            `/api/reports?reportType=${reportName}&start=${startDateString}&end=${endDateString}`
+          );
+          const data = await res.json();
+          console.log(data);
+          setPdfUrl(data.publicUrl);
+        } catch (error) {}
+      };
+*/
 import React, { useState, useEffect } from "react";
 import { db } from "../utilities/Firebase";
 import Sidebar from "./Sidebar";

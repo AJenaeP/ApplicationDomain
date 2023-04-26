@@ -172,7 +172,13 @@ const HelpPage = () => {
             To view an account, click on view account. 
             An email button is available here for quick access. 
           </p>
-
+          
+          <h4>FINANCIAL STATEMENTS</h4>
+          <p>
+            Want to view a Profit and Loss Report? Reports that have been created and updated by staff will be visible here. 
+            Please click on filter options to display any available reports and click on View below table to see report for that entry. 
+            Generate will allow you to create a report, print will allow printing of report created or any available report, and email is available to send reports to another employee for further viewing. 
+          </p>
           <h4>EMAIL</h4>
           <p>
            Please select from the drop down menu to find the employee listing. This email will send from your work account and cannot be altered. 
