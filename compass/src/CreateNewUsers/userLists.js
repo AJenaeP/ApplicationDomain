@@ -38,7 +38,6 @@ const UsersList = ({ getUserId }) => {
             <th>role</th>
             <th>Start Date</th>
             <th>Account Status</th>
-            
           </tr>
         </thead>
         <tbody>

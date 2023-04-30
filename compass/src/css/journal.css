@@ -4,32 +4,30 @@
   margin: 0 10% 20px 10%;
 }
 
-.journalHeader1 span{
+.journalHeader1 span {
   font-weight: 700;
   font-size: 25px;
 }
 
-.approved{
+.approved {
   color: green !important;
 }
-.pending{
+.pending {
   color: rgba(255, 200, 0, 0.643) !important;
 }
-.rejected{
+.rejected {
   color: red !important;
 }
 
-
-.adjusted_credit{
+.adjusted_credit {
   color: red !important;
 }
-.adjusted_debit{
+.adjusted_debit {
   color: red !important;
 }
-.explanation{
+.explanation {
   color: red !important;
 }
-
 
 .filter {
   margin-top: 100px;
@@ -46,6 +44,6 @@
   width: 100%;
 }
 
-.filter .dateFilter .MuiInputBase-root.MuiOutlinedInput-root{
+.filter .dateFilter .MuiInputBase-root.MuiOutlinedInput-root {
   width: 200px !important;
 }

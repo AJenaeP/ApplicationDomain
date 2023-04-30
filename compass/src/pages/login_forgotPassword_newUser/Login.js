@@ -27,51 +27,51 @@ const Login = () => {
   const [goToHome, setgoToHome] = useState(false);
   const [goToDashboard, setGoToDashboard] = useState(true);
 
-
-    useEffect(()=>{
-        //go to forgot password
-        if(goToForgotPassword){
-            setgoToHome(false)
-            navigate('/forgotpassword')
-        }
-        //go to home
-        if(goToHome){
-            setgoToForgotPassword(false)
-            navigate('/home')
-        }
-    }, [goToForgotPassword, goToHome])
-
-    //this calls signin function from authcontext
-    const handleSignIn = (e) => {
-        e.preventDefault();
-        if (username === "") {
-            alert("Username can't be empty");
-        } else if (password === "") {
-            alert("Password can't be empty");
-        }
-        try{
-            if (signIn(username, password)){
-                handleNavigation()
-            }
-        }catch(error){
-            console.log(error)
-        }
+  useEffect(() => {
+    //go to forgot password
+    if (goToForgotPassword) {
+      setgoToHome(false);
+      navigate("/forgotpassword");
     }
-
-    function handleNavigation() {
-        if (user) {
-            if (goToDashboard) {
-                let role = window.localStorage.getItem('userRole')
-                if (role === "Administrator") {
-                    navigate('/admindashboard')
-                } else if (role === "Manager") {
-                    navigate('/managerdashboard')
-                } else if (role === "Accountant") {
-                    navigate('/accountantdashboard')
-                }
-            };
-        }
+    //go to home
+    if (goToHome) {
+      setgoToForgotPassword(false);
+      navigate("/home");
     }
+  }, [goToForgotPassword, goToHome]);
+
+  //this calls signin function from authcontext
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    if (username === "") {
+      alert("Username can't be empty");
+    } else if (password === "") {
+      alert("Password can't be empty");
+    }
+    try {
+      if (signIn(username, password)) {
+        handleNavigation();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function handleNavigation() {
+    //checks user role and takes them to dashboard
+    if (user) {
+      if (goToDashboard) {
+        let role = window.localStorage.getItem("userRole");
+        if (role === "Administrator") {
+          navigate("/admindashboard");
+        } else if (role === "Manager") {
+          navigate("/managerdashboard");
+        } else if (role === "Accountant") {
+          navigate("/accountantdashboard");
+        }
+      }
+    }
+  }
 
   return (
     <div className="login">

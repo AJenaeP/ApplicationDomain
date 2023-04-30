@@ -1,341 +1,119 @@
 .NewUser {
-    background: linear-gradient(45deg, #ffffff 30%, #58d0fe 100%);
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    padding: 0px 50px;
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: linear-gradient(45deg, #ffffff 30%, #58d0fe 100%);
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  padding: 0px 50px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-header{
-    display: flex;
-    align-items: center;
+header {
+  display: flex;
+  align-items: center;
 }
-.title{
-    position: relative;
-    left: 0px;
+.title {
+  position: relative;
+  left: 0px;
 }
 .form {
-    border-radius: 9px;
-    background-color: white;
-    overflow: hidden;
-    height: 500px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 9px;
+  background-color: white;
+  overflow: hidden;
+  height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #formHeader {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #formHeader h1 {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 .MuiFormControl-root .MuiTextField-root {
-    width: 225px;
-    
+  width: 225px;
 }
 .MuiContainer-root {
-    max-width: 650px;
+  max-width: 650px;
 }
-.MuiButtonBase-root.MuiIconButton-root{
-    width: fit-content;
-    justify-content: flex-start;
-    align-items: flex-start;
+.MuiButtonBase-root.MuiIconButton-root {
+  width: fit-content;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .MuiInputBase-input.MuiOutlinedInput-input {
-    width: 207px;
+  width: 207px;
 }
 .MuiInputBase-root.MuiOutlinedInput-root {
-    width: 100%;
-
+  width: 100%;
 }
 .MuiInputAdornment-root {
-    margin-right: 20px;
-    width: 10%;
+  margin-right: 20px;
+  width: 10%;
 }
 .imgcontainer {
-    display: flex;
+  display: flex;
 }
 #outlined-password-input#address {
-    width: 600px;
+  width: 600px;
 }
 
-.MuiContainer-root.MuiContainer-maxWidthLg{
-    max-width: 800px; 
+.MuiContainer-root.MuiContainer-maxWidthLg {
+  max-width: 800px;
 }
 .MuiButtonBase-root.MuiButton-root {
-    align-items: center;
+  align-items: center;
 }
 
 #outlined-helperText {
-    width: 50%;
+  width: 50%;
 }
 #formcontrol {
-    width: fit-content;
+  width: fit-content;
 }
 #personalInfo {
-    display: flex;
-    margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 10px;
 }
 #dateofbirth {
-    display: flex;
-    margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 10px;
 }
 #date {
-    width: 207px;
-    margin-right: 29px;
+  width: 207px;
+  margin-right: 29px;
 }
 #address {
-   margin-right: 10px;
+  margin-right: 10px;
 }
 #secretquestions {
-    display: flex;
+  display: flex;
 }
 #sq1 {
-   width: 300px;
-   margin-right: 10px;
+  width: 300px;
+  margin-right: 10px;
 }
 
 #sq2 {
-    width: 300px;
+  width: 300px;
 }
 #passwords {
-display: flex;
+  display: flex;
 }
 .select {
-   width: 225px;
-   height: 56px;
+  width: 225px;
+  height: 56px;
 }
 .css-13cymwt-control {
-    height: 100%;
+  height: 100%;
 }
 .css-t3ipsp-control {
-    height: 100%;
+  height: 100%;
 }
 #react-select-3-listbox {
-z-index: 3;
+  z-index: 3;
 }
-/*
-html {
-    height: 100%;
-}
-
-body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: rgb(235, 230, 230);
-}
-
-
-.slogan {
-    font-family: 'Public Sans, sans-serif';
-    font-style: italic;
-    margin-top: -9px;
-}
-
-.company-name {
-    font-family: 'Public Sans, sans-serif';
-    font-style: italic;
-    margin-top: -9px;
-}
-.cancel-btn {
-    width: 100px;
-    padding: 14px 20px;
-    background-color: navy;
-    color: white;
-}
-
-.sign-up-btn {
-    width: 100px;
-    padding: 14px 20px;
-}
-
-.select {
-    width: 100%;
-}
-
-
-.outlined-password-input {
-
-}
-
-.password {
-    
-}
-
-input[type=text]{
-    width: 0%;
-    padding: 0px 0px;
-    margin: 0px 0;
-    display: none;
-    border: 0;
-}
-input[type=password] {
-    width: 0px;
-    padding: 0px 0px;
-    margin: 0px 0;
-    display: none; 
-    border: 0px;
-    box-sizing: none; 
-}
-input[type=email],
-input[type=Birthdate] {
-    width: 0%;
-    padding: 0px 0px;
-    margin: 0px 0;
-    display: none;
-    border: 0;
-}
-
-input[type=text]:focus,
-input[type=password]:focus {
-    
-}
-
-input[type=submit] {
-    padding: 0 18px;
-    height: 29px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #527881;
-    text-shadow: 0 1px #e3f1f1;
-    background: #cbe3ee;
-    border: 1px solid;
-    border-color: #b4ccce #b3c0c8 #9eb9c2;
-    border-radius: 16px;
-    outline: 0;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    background-image: -webkit-linear-gradient(top, #edf5f8, #cde5ef);
-    background-image: -moz-linear-gradient(top, #edf5f8, #cde5ef);
-    background-image: -o-linear-gradient(top, #edf5f8, #cde5ef);
-    background-image: linear-gradient(to bottom, #edf5f8, #cde5ef);
-    -webkit-box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
-    box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-input[type=submit]:active {
-    background: #cde5ef;
-    border-color: #9eb9c2 #b3c0c8 #b4ccce;
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-
-
-input[type=checkbox],
-input[type=radio] {
-    border: 1px solid #c0c0c0;
-    margin: 0 0.1em 0 0;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1em;
-    width: 1.25em;
-    height: 1.25em;
-    background: #fff;
-
-
-    -webkit-appearance: none;
-    -webkit-box-shadow: 1px 1px 1px #fff;
-    -webkit-border-radius: 0.25em;
-    vertical-align: text-top;
-    display: inline-block;
-
-}
-
-input[type=radio] {
-    -webkit-border-radius: 2em;
-    /* Make radios round 
-}*/
-/*
-input[type=checkbox]:checked::after {
-
-    display: block;
-    text-align: center;
-    font-size: 16px;
-    height: 16px;
-    line-height: 18px;
-}
-
-input[type=radio]:checked::after {
-
-    display: block;
-    height: 16px;
-    line-height: 15px;
-    font-size: 20px;
-    text-align: center;
-}
-
-select {
-    border: 1px solid #D0D0D0;
-    background: url(https://www.quilor.com/i/select.png) no-repeat right center, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fbfbfb), to(#ededed));
-    background: -moz-linear-gradient(19% 75% 90deg, #ededed, #fbfbfb);
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-    color: #444;
-}
-
-body {
-    font: 13px/20px Tahoma, Verdana, sans-serif;
-    color: #404040;
-    background: #e5e5e5;
-}*/
-
-/* Set a style for all buttons *//*
-button {
-
-    background-color: white;
-    color: #000080;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: solid navy;
-    cursor: pointer;
-    width: auto;
-
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 15px 0;
-    display: block;
-
-}
-
-input[type="Birthdate"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 15px 0;
-    display: block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-input[type="password"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 15px 0;
-    display: block;
-    box-sizing: border-box;
-}
-
-input[type="email"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 15px 0;
-    display: block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}*/
-
-

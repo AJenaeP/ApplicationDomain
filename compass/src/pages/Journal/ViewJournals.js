@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 
 import {
   TableCell,
@@ -12,47 +11,39 @@ import {
   Paper,
 } from "@mui/material";
 
-import '../../css/journal.css'
+import "../../css/journal.css";
 
-const ViewJournal = ({journal}) => {
+const ViewJournal = ({ journal }) => {
+  const [journalData, setJournalData] = useState(journal.selectedJournal);
 
-    const [journalData, setJournalData] = useState(journal.selectedJournal);
-   
-      return (
-        <div className="App">  
-         
-         <Paper>
-
-          
-            <TableContainer sx={{height: 300}}>
-              <Table
-              sx={{ minWidth: 450}}
-              size="small"
-              stickyHeader
-              aria-label="sticky table"
-            >
-                <TableHead >
-                  <TableRow key={'row'}>
-                    
-                    <TableCell key={'name'}> Account Title</TableCell>
-                    <TableCell key={'ref'}> Ref</TableCell>
-                    <TableCell key={'comment'}> Comment </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className="JournalRows" id='JournalRows'>
-                  <TableRow>
-                      <TableCell key={'name'}>{journalData.account_name}</TableCell>
-                      <TableCell key={'ref'}>{journalData.ref}</TableCell>
-                      <TableCell key={'comment'}>{journalData.comment}</TableCell>
-                  </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-
-        </div>
-    
-    
-        );
-    }
-export default ViewJournal
+  return (
+    <div className="App">
+      <Paper>
+        <TableContainer sx={{ height: 300 }}>
+          <Table
+            sx={{ minWidth: 450 }}
+            size="small"
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow key={"row"}>
+                <TableCell key={"name"}> Account Title</TableCell>
+                <TableCell key={"ref"}> Ref</TableCell>
+                <TableCell key={"comment"}> Comment </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="JournalRows" id="JournalRows">
+              <TableRow>
+                <TableCell key={"name"}>{journalData.account_name}</TableCell>
+                <TableCell key={"ref"}>{journalData.ref}</TableCell>
+                <TableCell key={"comment"}>{journalData.comment}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </div>
+  );
+};
+export default ViewJournal;

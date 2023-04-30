@@ -1,49 +1,44 @@
 .Home {
-    background: linear-gradient(45deg, #ffffff 30%, #58d0fe 100%);
-    position: relative;
-    width: 100%;
-    top: 0;
-    padding: 50px;
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+  background: linear-gradient(45deg, #ffffff 30%, #58d0fe 100%);
+  position: relative;
+  width: 100%;
+  top: 0;
+  padding: 50px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
 .title {
-    display: flex;
-    margin: 0px 0px;
-    flex-direction: column;
-    align-items: center;
-    
-    /*padding-top: 100px;
-    //width: 200px;*/
+  display: flex;
+  margin: 0px 0px;
+  flex-direction: column;
+  align-items: center;
 }
 .welcome {
-    margin: 0px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-style: normal;
-    font-weight: 100;
-    font-size: 80px;
-    margin: 0px 0px 80px;
+  margin: 0px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 80px;
+  margin: 0px 0px 80px;
 }
 .compass {
-    margin: 0px;
-    font-family:serif;
-    font-style: italic;
-    font-size: 80px;
+  margin: 0px;
+  font-family: serif;
+  font-style: italic;
+  font-size: 80px;
 }
 .subtitle {
-    font-style: italic;
+  font-style: italic;
 }
-.buttons { 
-    display: flex;
-    width: 400px;
-    justify-content: space-evenly;
-    margin-top: 20px;
-    
+.buttons {
+  display: flex;
+  width: 400px;
+  justify-content: space-evenly;
+  margin-top: 20px;
 }
 Button {
-    width: 180px;   
+  width: 180px;
 }
-

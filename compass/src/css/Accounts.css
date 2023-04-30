@@ -1,29 +1,29 @@
-.accountRows :hover{
-    background-color:#71d7ff;
+.accountRows :hover {
+  background-color: #71d7ff;
 }
 
-.isSelected{
-    background-color: #71d7ff;
+.isSelected {
+  background-color: #71d7ff;
 }
 
 .bgred {
-    background-color: rgb(255, 140, 140);
+  background-color: rgb(255, 140, 140);
 }
 .MuiPaper-root.MuiPaper-elevation {
-    left: 0;
-    margin-left: auto;
-    margin-right: auto;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .searchField {
-    margin-top: 100px;
-    margin-left: 205px;
-    margin-bottom: -60px;
-    display: flex;
+  margin-top: 100px;
+  margin-left: 205px;
+  margin-bottom: -60px;
+  display: flex;
 }
 .searchField .MuiInputBase-root.MuiOutlinedInput-root {
-    width: 350px;
+  width: 350px;
 }
 .searchField .MuiInputBase-input.MuiOutlinedInput-input {
-    width: 100%;
+  width: 100%;
 }

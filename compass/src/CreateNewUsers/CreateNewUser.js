@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { Form, Alert, InputGroup, Button, ButtonGroup } from "react-bootstrap";
 import UserDataService from "../services/users.services";
 
 const AddUser = ({ id, setUserId }) => {
-const [userId, setuserId] = useState("");
+  const [userId, setuserId] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [email, setemail] = useState("");
@@ -46,13 +45,12 @@ const [userId, setuserId] = useState("");
     }
 
     setuserId("");
-      setfirstName("");
-      setlastName("");
-      setemail("");
-      setrole("");
-      setstartDate("");
-      setaccountStatus("");
-   
+    setfirstName("");
+    setlastName("");
+    setemail("");
+    setrole("");
+    setstartDate("");
+    setaccountStatus("");
   };
 
   const editHandler = async () => {
@@ -67,7 +65,6 @@ const [userId, setuserId] = useState("");
       setrole(docSnap.data().role);
       setstartDate(docSnap.data().startDate);
       setaccountStatus(docSnap.data().accountStatus);
-    
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
@@ -117,7 +114,6 @@ const [userId, setuserId] = useState("");
             </InputGroup>
           </Form.Group>
 
-
           <Form.Group className="mb-3" controlId="formlastName">
             <InputGroup>
               <InputGroup.Text id="formlastName"></InputGroup.Text>
@@ -129,7 +125,6 @@ const [userId, setuserId] = useState("");
               />
             </InputGroup>
           </Form.Group>
-          
 
           <Form.Group className="mb-3" controlId="formemail">
             <InputGroup>
@@ -143,7 +138,6 @@ const [userId, setuserId] = useState("");
             </InputGroup>
           </Form.Group>
 
-
           <Form.Group className="mb-3" controlId="formrole">
             <InputGroup>
               <InputGroup.Text id="formrole"></InputGroup.Text>
@@ -155,7 +149,6 @@ const [userId, setuserId] = useState("");
               />
             </InputGroup>
           </Form.Group>
-
 
           <Form.Group className="mb-3" controlId="formstartDate">
             <InputGroup>
@@ -180,7 +173,6 @@ const [userId, setuserId] = useState("");
               />
             </InputGroup>
           </Form.Group>
-
 
           <ButtonGroup aria-label="Basic example" className="mb-3">
             <Button

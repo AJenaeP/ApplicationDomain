@@ -25,10 +25,6 @@ const sqlAuth = process.env.AUTHENTICAION === "default";
 assert(PORT, 'PORT is required');
 assert(HOST, 'HOST is required');
 
-/*port: PORT,
-host: HOST,
-url: HOST_URL,*/
-
 const config = {
     user: SQL_USER, // better stored in an app setting such as process.env.DB_USER
     password: SQL_PASSWORD, // better stored in an app setting such as process.env.DB_PASSWORD

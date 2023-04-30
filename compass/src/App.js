@@ -9,13 +9,10 @@ import { AuthProvider } from "./utilities/AuthContext";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import Home from "./pages/Home";
 import PermissionDenied from "./pages/PermissionDenied";
-import Sidebar from "./pages/Sidebar";
 import DashboardAdmin from "./pages/AdminPages/DashboardAdmin";
 import ExpiredPasswords from "./pages/AdminPages/ExpiredPasswords";
 /*import CreateNewUser from './pages/AdminPages/CreateNewUser';
 import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
-import Manager from "./pages/Manager";
-import Accountant from "./pages/Accountant";
 import Accounts from "./pages/Accounts";
 import HelpPage from "./pages/helppage";
 import DashboardManager from "./pages/ManagerPages/DashboardManager";
@@ -27,9 +24,7 @@ import Journals from "./pages/Journals";
 import EventLog from "./pages/EventLog";
 import Ledgers from "./pages/Ledgers";
 import FinStatements from "./pages/FinStatements";
-/* add to admin protected route after creation
-  <Route path='/ExpiredPasswords' element={<ExpiredPasswords />}></Route>
-*/
+
 function App() {
   return (
     <>
@@ -90,6 +85,3 @@ function App() {
 }
 
 export default App;
-
-//<Route path='/managerdashboard' element={<Manager/>}></Route>
-//<Route path='/accountantdashboard' element={<Accountant/>}></Route>

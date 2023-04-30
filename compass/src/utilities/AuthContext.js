@@ -40,39 +40,38 @@ export const AuthProvider = ({ children }) => {
   const [loginAttempts, setLoginAttempts] = useState(2);
   const decrementCounter = () => setLoginAttempts(loginAttempts - 1);
 
-    auth.onAuthStateChanged(user => {
-        if(user) {
-            const data = JSON.parse(window.localStorage.getItem('userData'));
-            setUserData(data)
-        } else {
-            console.log('user logged out')
-        }  
-    })
-    
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      const data = JSON.parse(window.localStorage.getItem("userData"));
+      setUserData(data);
+    } else {
+      console.log("user logged out");
+    }
+  });
 
-    const createUser = async (email, password, userInfo) => {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      setDoc(doc(db, "users", user.uid), userInfo);
-      //send email to admin account with userId, firstName, LastName and email
-    };
+  const createUser = async (email, password, userInfo) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    setDoc(doc(db, "users", user.uid), userInfo);
+    //send email to admin account with userId, firstName, LastName and email
+  };
 
-    const logout = () => {
-      signOut(auth)
-        .then(() => {
-          // Sign-out successful.
-          setIsLoggedIn(false);
-          localStorage.clear();
-        })
-        .catch((error) => {
-          // An error happened.
-          alert(error);
-        });
-    };
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        setIsLoggedIn(false);
+        localStorage.clear();
+      })
+      .catch((error) => {
+        // An error happened.
+        alert(error);
+      });
+  };
 
   const signIn = async (username, password) => {
     const userName = username;
@@ -94,7 +93,7 @@ export const AuthProvider = ({ children }) => {
           window.localStorage.setItem("userRole", doc.data().role);
           //window.localStorage.setItem('user', JSON.stringify(user))
           //console.log(user)
-          return true
+          return true;
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -106,12 +105,12 @@ export const AuthProvider = ({ children }) => {
                 loginAttempts +
                 " login attempt;"
             );
-              if (loginAttempts === 0) {
-                setIsDisabled(true);
-                console.log(isDisabled);
-              }
+            if (loginAttempts === 0) {
+              setIsDisabled(true);
+              console.log(isDisabled);
+            }
           }
-          return false
+          return false;
         });
     });
   };

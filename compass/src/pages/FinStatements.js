@@ -15,15 +15,28 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import "../css/Accounts.css";
 import {
-  TableCell, TableContainer, TableHead,
-  TableRow, TableBody, Table,
-  Paper, Button, Dialog,
-  DialogActions, DialogContent, Tooltip,
-  TextField, InputAdornment, IconButton, RadioGroup,
-  FormControlLabel, Radio, FormLabel
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  Table,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Tooltip,
+  TextField,
+  InputAdornment,
+  IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormLabel,
 } from "@mui/material";
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
 import AddAccount from "./AdminPages/AddAccount";
 import ViewAccount from "./ViewAccount";
 import EditAccount from "./AdminPages/EditAccount";
@@ -31,362 +44,376 @@ import DeactivateAccount from "./AdminPages/DeactivateAccount";
 import DeleteAccount from "./AdminPages/DeleteAccount";
 
 const FinStatements = () => {
+  const [role, setRole] = useState(window.localStorage.getItem("userRole"));
+  const [backendData, setBackendData] = useState([{}]);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState({});
+  const [isRowSelected, setIsRowSelected] = useState(false);
+  const [openGenerate, setOpenGenerate] = useState(false);
+  const [openEdit, setOpenPrint] = useState(false);
+  const [openView, setOpenSave] = useState(false);
+  const [openDelete, setOpenEmail] = useState(false);
+  const [openDeactivate, setOpenView] = useState(false);
+  const [statusFilter, setStatusFilter] = React.useState("All");
+  const [balanceFilter, setBalanceFilter] = React.useState();
 
-    const [role, setRole] = useState(window.localStorage.getItem('userRole'))
-    const [backendData, setBackendData] = useState([{}]);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [selectedAccount, setSelectedAccount] = useState({});
-    const [isRowSelected, setIsRowSelected] = useState(false)
-    const [openGenerate, setOpenGenerate] = useState(false)
-    const [openEdit, setOpenPrint] = useState(false)
-    const [openView, setOpenSave] = useState(false)
-    const [openDelete, setOpenEmail] = useState(false)
-    const [openDeactivate, setOpenView] = useState(false)
-    const [statusFilter, setStatusFilter] = React.useState('All');
-    const [balanceFilter, setBalanceFilter] = React.useState();
-  
-    //this is for the search field 
-    const finState = {
-      account_number: 0,
-      account_name: '',
-      account_category: '',
-      statement: ''
+  //this is for the search field
+  const finState = {
+    account_number: 0,
+    account_name: "",
+    account_category: "",
+    statement: "",
+  };
+
+  const searchCriteria = {
+    date: "",
+  };
+
+  function clearSearchField() {
+    document.getElementById("search").value = null;
+    fetch("/api/accounts")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }
+  function handleSearchField() {
+    let value = document.getElementById("search").value;
+
+    if (isNaN(value)) {
+      console.log("is a string");
+      searchCriteria.date = String(value);
+    } else if (!isNaN(value)) {
+      console.log("is a number");
+      searchCriteria.date = "";
+    } else {
+      console.log("field is empty");
     }
 
-    const searchCriteria = {
-        date: ''
-    }
-  
-    function clearSearchField(){
-      document.getElementById("search").value = null;
-      fetch('/api/accounts')
-        .then(
-          response => response.json()
-        ).then(
-          data => {
-            setBackendData(data)
-          }
-        )
-    }
-    function handleSearchField(){
-      let value = document.getElementById("search").value;
-  
-      if(isNaN(value)){
-        console.log('is a string')
-        searchCriteria.date = String(value);
-      }else if(!isNaN(value)){
-        console.log('is a number')
-        searchCriteria.date = '';
-      } else {
-        console.log('field is empty')
+    fetch("/api/account/" + JSON.stringify(searchCriteria), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data[0]);
+      });
+  }
+
+  function handleRadioFilter(e) {
+    let filter = e.target.value;
+    setStatusFilter(filter);
+    if (filter === "All") {
+      fetch("/api/accounts")
+        .then((response) => response.json())
+        .then((data) => {
+          setBackendData(data);
+        });
+    } else {
+      if (filter === "Istate") {
+        finState.statement = "Income Statement";
+      } else if (filter === "RES") {
+        finState.statement = "Returned Earning Statement";
+      } else if (filter === "Bsheet") {
+        finState.statement = "Balance Sheet";
+      } else if (filter === "TBalance") {
+        //data.balance = 'balance'
+        //closing balances (debits and credits)
+        finState.statement = "Trial Balance";
       }
-  
-      fetch('/api/account/' + JSON.stringify(searchCriteria), {
+      console.log(finState);
+      fetch("/api/account/" + JSON.stringify(finState), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        }
-      }
-      ).then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data[0])
-        }
-      )
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setBackendData(data[0]);
+        });
     }
-  
-    function handleRadioFilter(e) {
-      let filter = e.target.value;
-      setStatusFilter(filter);
-      if (filter === 'All') {
-        fetch('/api/accounts')
-          .then(
-            response => response.json()
-          ).then(
-            data => {
-              setBackendData(data)
-            }
-          )
-      } else {
-        if (filter === 'Istate') {
-          finState.statement = "Income Statement"
-        } else if (filter === 'RES') {
-          finState.statement = "Returned Earning Statement"
-        } else if (filter === 'Bsheet') {
-          finState.statement = "Balance Sheet"
-        } else if (filter === 'TBalance') {
-          //data.balance = 'balance'
-          //closing balances (debits and credits)
-          finState.statement = "Trial Balance"
-        }
-        console.log(finState)
-        fetch('/api/account/' + JSON.stringify(finState), {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        }
-        ).then(
-          response => response.json()
-        ).then(
-          data => {
-            console.log(data)
-            setBackendData(data[0])
-          }
-        )
-      }
+  }
+
+  useEffect(() => {
+    fetch("/api/accounts")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setBackendData(data);
+      });
+  }, []);
+
+  const openGenerateStatement = () => {
+    setOpenGenerate(true);
+  };
+  const openViewStatement = () => {
+    if (isRowSelected) {
+      setOpenView(true);
     }
-  
-    useEffect(() => {
-      fetch('/api/accounts')
-      .then(
-        response => response.json()
-      ).then(
-        data => {
-          console.log(data)
-          setBackendData(data)
-        }
-      )
-    },[])
-  
-    const openGenerateStatement = () => {
-      setOpenGenerate(true);
-    };
-    const openViewStatement = () => {
-      if (isRowSelected) {
-        setOpenView(true);
-      }
-    };
-    const openSaveStatement = () => {
-      if (isRowSelected) {
-        setOpenSave(true);
-      }
-    };
-    const openPrintStatement = () => {
-      if (isRowSelected) {
-        setOpenPrint(true);
-      }
-    };
-    const openEmailStatement = () => {
-      if (isRowSelected) {
-        setOpenEmail(true);
-      }
-    };
-    const closeGenerateStatement = () => { setOpenGenerate(false); };
-    const closeViewStatement = () => { setOpenView(false); };
-    const closeSaveStatement = () => { setOpenSave(false); };
-    const closePrintStatement = () => { setOpenPrint(false); };
-    const closeEmailStatement = () => { setOpenEmail(false); };
-    function handleAccountSelection(account, i) {
-      if (selectedRow === i) {
-        setIsRowSelected(false);
-        setSelectedRow(null);
-      } else {
-        setSelectedRow(i);
-        setSelectedAccount(account);
-        setIsRowSelected(true);
-        const row = document.getElementById(i);
-        row.classList.add("isSelected");
-      }
+  };
+  const openSaveStatement = () => {
+    if (isRowSelected) {
+      setOpenSave(true);
     }
-  
-    const numberFormat = (value) =>
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+  };
+  const openPrintStatement = () => {
+    if (isRowSelected) {
+      setOpenPrint(true);
+    }
+  };
+  const openEmailStatement = () => {
+    if (isRowSelected) {
+      setOpenEmail(true);
+    }
+  };
+  const closeGenerateStatement = () => {
+    setOpenGenerate(false);
+  };
+  const closeViewStatement = () => {
+    setOpenView(false);
+  };
+  const closeSaveStatement = () => {
+    setOpenSave(false);
+  };
+  const closePrintStatement = () => {
+    setOpenPrint(false);
+  };
+  const closeEmailStatement = () => {
+    setOpenEmail(false);
+  };
+  function handleAccountSelection(account, i) {
+    if (selectedRow === i) {
+      setIsRowSelected(false);
+      setSelectedRow(null);
+    } else {
+      setSelectedRow(i);
+      setSelectedAccount(account);
+      setIsRowSelected(true);
+      const row = document.getElementById(i);
+      row.classList.add("isSelected");
+    }
+  }
+
+  const numberFormat = (value) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
     }).format(value);
-  
-    return (
-      <div className="App">
-        <Header />
-        <div className="searchField">
-          <TextField 
-            id="search" 
-            label="Search by Date" 
-            //type="search" 
-            InputProps={
-              {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      onClick={handleSearchField}
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                    <IconButton
-                      onClick={clearSearchField}
-                      //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
-                      edge="end"
-                    >
-                      <ClearIcon />
-                    </IconButton>
-                  </InputAdornment>           
-                )
-              }
-            }
-          />
-          <div style={{marginLeft: 50}}>
-            <FormLabel id="demo-radio-buttons-group-label category">Financial Statement</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-radio-buttons-group-label category"
-              defaultValue="All"
-              value={statusFilter}
-              onChange={handleRadioFilter}
-            >
-              <FormControlLabel value='All' control={<Radio size="small" />} label="All Accounts" />
-              <FormControlLabel value='TBalance' control={<Radio size="small" />} label="Trial Balance" />
-              <FormControlLabel value='Istate' control={<Radio size="small" />} label="Income Statement" />
-              <FormControlLabel value='Bsheet' control={<Radio size="small" />} label="Balance Sheet" />
-              <FormControlLabel value='RES' control={<Radio size="small" />} label="Returned Earning Statement" />
-            </RadioGroup>
-          </div>
-         
+
+  return (
+    <div className="App">
+      <Header />
+      <div className="searchField">
+        <TextField
+          id="search"
+          label="Search by Date"
+          //type="search"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton edge="end" onClick={handleSearchField}>
+                  <SearchIcon />
+                </IconButton>
+                <IconButton
+                  onClick={clearSearchField}
+                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                  edge="end"
+                >
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <div style={{ marginLeft: 50 }}>
+          <FormLabel id="demo-radio-buttons-group-label category">
+            Financial Statement
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-radio-buttons-group-label category"
+            defaultValue="All"
+            value={statusFilter}
+            onChange={handleRadioFilter}
+          >
+            <FormControlLabel
+              value="All"
+              control={<Radio size="small" />}
+              label="All Accounts"
+            />
+            <FormControlLabel
+              value="TBalance"
+              control={<Radio size="small" />}
+              label="Trial Balance"
+            />
+            <FormControlLabel
+              value="Istate"
+              control={<Radio size="small" />}
+              label="Income Statement"
+            />
+            <FormControlLabel
+              value="Bsheet"
+              control={<Radio size="small" />}
+              label="Balance Sheet"
+            />
+            <FormControlLabel
+              value="RES"
+              control={<Radio size="small" />}
+              label="Returned Earning Statement"
+            />
+          </RadioGroup>
         </div>
-        <Paper
-          sx={{
-            width: 1000,
-            overflow: "hidden",
-            display: "flex",
-            position: "relative",
-            top: 100,
-            left: "15%",
-          }}
-        >
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 650 }}
-              size="small"
-              stickyHeader
-              aria-label="sticky table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell> Account Number </TableCell>
-                  <TableCell> Account Name </TableCell>
-                  <TableCell> Account Description </TableCell>
-                  <TableCell> Account Category </TableCell>
-                  <TableCell> Account Subcategory </TableCell>
-                  <TableCell> Initial Balance </TableCell>
-                  <TableCell> Balance </TableCell>
-                  <TableCell> UserId </TableCell>
-                  <TableCell> Date/Time Added </TableCell>
-                  <TableCell> Status </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="accountRows">
-                {backendData.map((account, i) => {
-                  return (
-                    <>
-                      <TableRow
-                        id={i}
-                        key={i}
-                        onClick={() => handleAccountSelection(account, i)}
-                        className={(selectedRow === i ? "isSelected" : "") ||
-                        (account.account_status === 'Deactivated' ? 'bgred' : '')}
-                      >
-                        <TableCell>{account.account_number}</TableCell>
-                        <TableCell>{account.account_name}</TableCell>
-                        <TableCell>{account.account_description}</TableCell>
-                        <TableCell>{account.account_category}</TableCell>
-                        <TableCell>{account.account_subcategory}</TableCell>
-                        <TableCell>{numberFormat(account.initial_balance)}</TableCell>
-                        <TableCell>{numberFormat(account.balance)}</TableCell>
-                        <TableCell>{account.userId}</TableCell>
-                        <TableCell>{account.date_time_account_added}</TableCell>
-                        <TableCell>{account.account_status}</TableCell>
-                      </TableRow>
-                    </>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        
-        <div
-          style={{
-            display: "flex",
-            marginTop: 150,
-            marginBottom: 50,
-            justifyContent: "center",
-          }}
-        >
-      <Tooltip title="Generate">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openGenerateStatement}
-                >
-                  Generate
-                </Button>
-              </Tooltip>
-          
-              <Tooltip title="Save">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openSaveStatement}
-                >
-                  Save
-                </Button>
-              </Tooltip>
-              <Tooltip title="Print">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openPrintStatement}
-                >
-                  Print
-                </Button>
-              </Tooltip>
-       
-       
-           
-              <Tooltip title="View">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  onClick={openViewStatement}
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                >
-                  View 
-                </Button>
-              </Tooltip>
+      </div>
+      <Paper
+        sx={{
+          width: 1000,
+          overflow: "hidden",
+          display: "flex",
+          position: "relative",
+          top: 100,
+          left: "15%",
+        }}
+      >
+        <TableContainer>
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell> Account Number </TableCell>
+                <TableCell> Account Name </TableCell>
+                <TableCell> Account Description </TableCell>
+                <TableCell> Account Category </TableCell>
+                <TableCell> Account Subcategory </TableCell>
+                <TableCell> Initial Balance </TableCell>
+                <TableCell> Balance </TableCell>
+                <TableCell> UserId </TableCell>
+                <TableCell> Date/Time Added </TableCell>
+                <TableCell> Status </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="accountRows">
+              {backendData.map((account, i) => {
+                return (
+                  <>
+                    <TableRow
+                      id={i}
+                      key={i}
+                      onClick={() => handleAccountSelection(account, i)}
+                      className={
+                        (selectedRow === i ? "isSelected" : "") ||
+                        (account.account_status === "Deactivated"
+                          ? "bgred"
+                          : "")
+                      }
+                    >
+                      <TableCell>{account.account_number}</TableCell>
+                      <TableCell>{account.account_name}</TableCell>
+                      <TableCell>{account.account_description}</TableCell>
+                      <TableCell>{account.account_category}</TableCell>
+                      <TableCell>{account.account_subcategory}</TableCell>
+                      <TableCell>
+                        {numberFormat(account.initial_balance)}
+                      </TableCell>
+                      <TableCell>{numberFormat(account.balance)}</TableCell>
+                      <TableCell>{account.userId}</TableCell>
+                      <TableCell>{account.date_time_account_added}</TableCell>
+                      <TableCell>{account.account_status}</TableCell>
+                    </TableRow>
+                  </>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <div
+        style={{
+          display: "flex",
+          marginTop: 150,
+          marginBottom: 50,
+          justifyContent: "center",
+        }}
+      >
+        <Tooltip title="Generate">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openGenerateStatement}
+          >
+            Generate
+          </Button>
+        </Tooltip>
+
+        <Tooltip title="Save">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openSaveStatement}
+          >
+            Save
+          </Button>
+        </Tooltip>
+        <Tooltip title="Print">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+            onClick={openPrintStatement}
+          >
+            Print
+          </Button>
+        </Tooltip>
+
+        <Tooltip title="View">
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            onClick={openViewStatement}
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+          >
+            View
+          </Button>
+        </Tooltip>
         <Tooltip title="Email">
-            <Button
-              variant="outlined"
-              size="large"
-              type="submit"
-              style={{ width: 100, marginRight: 20 }}
-              className="submit"
-              href='/email'
-              sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-            >
-              Email
-            </Button>
-          </Tooltip>
-        </div>
-      </div> 
+          <Button
+            variant="outlined"
+            size="large"
+            type="submit"
+            style={{ width: 100, marginRight: 20 }}
+            className="submit"
+            href="/email"
+            sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+          >
+            Email
+          </Button>
+        </Tooltip>
+      </div>
+    </div>
   );
-        } 
+};
 export default FinStatements;
 
 /*<Dialog open={openGenerateStatement} onClose={closeGenerateStatement}>

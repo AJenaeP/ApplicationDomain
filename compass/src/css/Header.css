@@ -1,33 +1,30 @@
 .header {
-    width: 100%;
-    
+  width: 100%;
 }
 .MuiPaper-root.MuiAppBar-root {
-    width: 100%;
-    /*background: linear-gradient( #ffffff 1%, #58d0fe 100%);*/
-    background: radial-gradient(#58d0fe 75%, #ffffff 100%);
-    z-index: 1000;
+  width: 100%;
+  background: radial-gradient(#58d0fe 75%, #ffffff 100%);
+  z-index: 1000;
 }
 .MuiToolbar-root.MuiToolbar-gutters {
-    justify-content: space-between;
-    width: 100%;
+  justify-content: space-between;
+  width: 100%;
 }
 .MuiDrawer-docked.MuiDrawer-paper {
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 .MuiPaper-root.MuiDrawer-paper {
-    transform: translateX(-50%);
-    
+  transform: translateX(-50%);
 }
 #menu {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 #companylogo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 #userInfo {
-    margin-right: 20px;
-    display: flex;
-    align-items: center;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
 }

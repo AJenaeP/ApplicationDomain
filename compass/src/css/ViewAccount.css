@@ -1,32 +1,32 @@
 .ledgerTableHead {
-    width: 100%;
-    flex-direction: column;
-} 
-.ledgerHeader1{
-    display: flex;
-    justify-content: space-between;
-    margin: 0 16px;
+  width: 100%;
+  flex-direction: column;
 }
-.ledgerHeader1 span{
-    font-weight: 700;
-    font-size: 25px;
+.ledgerHeader1 {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 16px;
+}
+.ledgerHeader1 span {
+  font-weight: 700;
+  font-size: 25px;
 }
 .ledgerTableHead .ledgerAccountName {
-    display: flex;
+  display: flex;
 }
 .ledgerTableHead .ledgerAccountNum {
-    display: flex;
+  display: flex;
 }
-.ledgerTableBody .ledgerTableRow  {
-    width: 100%;
+.ledgerTableBody .ledgerTableRow {
+  width: 100%;
 }
-.ledgerTableBody .ledgerTableRow .ledgerDate{
-    width: 200 !important;
+.ledgerTableBody .ledgerTableRow .ledgerDate {
+  width: 200 !important;
 }
 .ledgerExplain {
-    margin: 0
+  margin: 0;
 }
 
 .ledgerTableBody TableCell {
-    width:fit-content
+  width: fit-content;
 }

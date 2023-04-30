@@ -4,15 +4,28 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import "../css/Accounts.css";
 import {
-  TableCell, TableContainer, TableHead,
-  TableRow, TableBody, Table,
-  Paper, Button, Dialog,
-  DialogActions, DialogContent, Tooltip,
-  TextField, InputAdornment, IconButton, RadioGroup,
-  FormControlLabel, Radio, FormLabel
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  Table,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Tooltip,
+  TextField,
+  InputAdornment,
+  IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormLabel,
 } from "@mui/material";
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
 import AddAccount from "./AdminPages/AddAccount";
 import ViewAccount from "./ViewAccount";
 import EditAccount from "./AdminPages/EditAccount";
@@ -20,151 +33,133 @@ import DeactivateAccount from "./AdminPages/DeactivateAccount";
 import DeleteAccount from "./AdminPages/DeleteAccount";
 
 const Accounts = () => {
-  const [role, setRole] = useState(window.localStorage.getItem('userRole'))
+  const [role, setRole] = useState(window.localStorage.getItem("userRole"));
   const [backendData, setBackendData] = useState([{}]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState({});
-  const [isRowSelected, setIsRowSelected] = useState(false)
-  const [openAdd, setOpenAdd] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openView, setOpenView] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [openDeactivate, setOpenDeactivate] = useState(false)
-  const [statusFilter, setStatusFilter] = React.useState('All');
+  const [isRowSelected, setIsRowSelected] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openView, setOpenView] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openDeactivate, setOpenDeactivate] = useState(false);
+  const [statusFilter, setStatusFilter] = React.useState("All");
   const [balanceFilter, setBalanceFilter] = React.useState();
 
-  //this is for the search field 
+  //this is for the search field
   const data = {
     account_number: 0,
-    account_name: '',
-    account_category: '',
-    statement: ''
-  }
+    account_name: "",
+    account_category: "",
+    statement: "",
+  };
 
-  function clearSearchField(){
+  function clearSearchField() {
     document.getElementById("search").value = null;
-    fetch('/api/accounts')
-      .then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data)
-        }
-      )
+    fetch("/api/accounts")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
   }
-  function handleSearchField(){
+  function handleSearchField() {
     let value = document.getElementById("search").value;
 
-    if(isNaN(value)){
-      console.log('is a string')
+    if (isNaN(value)) {
+      console.log("is a string");
       data.account_name = String(value);
       data.account_number = 0;
-      console.log(data)
-    }else if(!isNaN(value)){
-      console.log('is a number')
+      console.log(data);
+    } else if (!isNaN(value)) {
+      console.log("is a number");
       data.account_number = Number(value);
-      data.account_name = '';
-      console.log(data)
+      data.account_name = "";
+      console.log(data);
     } else {
-      console.log('field is empty')
+      console.log("field is empty");
     }
 
-    fetch('/api/account/' + JSON.stringify(data), {
+    fetch("/api/account/" + JSON.stringify(data), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      }
-    }
-    ).then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data[0])
-      }
-    )
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data[0]);
+      });
   }
 
   function handleRadioFilter(e) {
     let filter = e.target.value;
     setStatusFilter(filter);
-    if (filter === 'All') {
-      fetch('/api/accounts')
-        .then(
-          response => response.json()
-        ).then(
-          data => {
-            setBackendData(data)
-          }
-        )
+    if (filter === "All") {
+      fetch("/api/accounts")
+        .then((response) => response.json())
+        .then((data) => {
+          setBackendData(data);
+        });
     } else {
-      if (filter === 'Assets') {
-        data.account_category = 'assets'
-      } else if (filter === 'Liability') {
-        data.account_category = 'liability'
-      } else if (filter === 'Equity') {
-        data.account_category = 'equity'
+      if (filter === "Assets") {
+        data.account_category = "assets";
+      } else if (filter === "Liability") {
+        data.account_category = "liability";
+      } else if (filter === "Equity") {
+        data.account_category = "equity";
       }
-      fetch('/api/account/' + JSON.stringify(data), {
+      fetch("/api/account/" + JSON.stringify(data), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        }
-      }
-      ).then(
-        response => response.json()
-      ).then(
-        data => {
-          setBackendData(data[0])
-        }
-      )
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setBackendData(data[0]);
+        });
     }
   }
 
-  function handleBalanceFilter(e){
-    let balance = e.target.value
+  function handleBalanceFilter(e) {
+    let balance = e.target.value;
     let Array = [];
-    if(balance === 'All'){
-      fetch('/api/accounts')
-        .then(
-          response => response.json()
-        ).then(
-          data => {
-            setBackendData(data)
-          }
-        )
-    } else if(balance === '-1000000'){
+    if (balance === "All") {
+      fetch("/api/accounts")
+        .then((response) => response.json())
+        .then((data) => {
+          setBackendData(data);
+        });
+    } else if (balance === "-1000000") {
       backendData.forEach((item) => {
-        if(item.balance <= 1000000){
-            Array.push(item)
+        if (item.balance <= 1000000) {
+          Array.push(item);
         }
-      })     
-      setBackendData(Array)
-    }else if (balance === '5000000'){
+      });
+      setBackendData(Array);
+    } else if (balance === "5000000") {
       backendData.forEach((item) => {
-        if(item.balance > 1000000 && item.balance <=5000000){
-          Array.push(item)
+        if (item.balance > 1000000 && item.balance <= 5000000) {
+          Array.push(item);
         }
-      })
-      setBackendData(Array)
-    } else if (balance === '5000000+'){
+      });
+      setBackendData(Array);
+    } else if (balance === "5000000+") {
       backendData.forEach((item) => {
         if (item.balance > 5000000) {
-          Array.push(item)
+          Array.push(item);
         }
-      })
-      setBackendData(Array)
+      });
+      setBackendData(Array);
     }
   }
   useEffect(() => {
-    fetch('/api/accounts')
-    .then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  },[])
+    fetch("/api/accounts")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
 
   const openAddAccount = () => {
     setOpenAdd(true);
@@ -189,11 +184,21 @@ const Accounts = () => {
       setOpenDeactivate(true);
     }
   };
-  const closeAddAccount = () => { setOpenAdd(false); };
-  const closeViewAccount = () => { setOpenView(false); };
-  const closeEditAccount = () => { setOpenEdit(false); };
-  const closeDeleteAccount = () => { setOpenDelete(false); };
-  const closeDeactivateAccount = () => { setOpenDeactivate(false); };
+  const closeAddAccount = () => {
+    setOpenAdd(false);
+  };
+  const closeViewAccount = () => {
+    setOpenView(false);
+  };
+  const closeEditAccount = () => {
+    setOpenEdit(false);
+  };
+  const closeDeleteAccount = () => {
+    setOpenDelete(false);
+  };
+  const closeDeactivateAccount = () => {
+    setOpenDeactivate(false);
+  };
   function handleAccountSelection(account, i) {
     if (selectedRow === i) {
       setIsRowSelected(false);
@@ -208,43 +213,40 @@ const Accounts = () => {
   }
 
   const numberFormat = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(value);
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(value);
 
   return (
     <div className="App">
       <Header />
       <div className="searchField">
-        <TextField 
-          id="search" 
-          label="Search by Account Number or Name" 
-          //type="search" 
-          InputProps={
-            {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    edge="end"
-                    onClick={handleSearchField}
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={clearSearchField}
-                    //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
-                    edge="end"
-                  >
-                    <ClearIcon />
-                  </IconButton>
-                </InputAdornment>           
-              )
-            }
-          }
+        <TextField
+          id="search"
+          label="Search by Account Number or Name"
+          //type="search"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton edge="end" onClick={handleSearchField}>
+                  <SearchIcon />
+                </IconButton>
+                <IconButton
+                  onClick={clearSearchField}
+                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                  edge="end"
+                >
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
-        <div style={{marginLeft: 50}}>
-          <FormLabel id="demo-radio-buttons-group-label category">Category</FormLabel>
+        <div style={{ marginLeft: 50 }}>
+          <FormLabel id="demo-radio-buttons-group-label category">
+            Category
+          </FormLabel>
           <RadioGroup
             row
             aria-labelledby="demo-radio-buttons-group-label category"
@@ -252,14 +254,32 @@ const Accounts = () => {
             value={statusFilter}
             onChange={handleRadioFilter}
           >
-            <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
-            <FormControlLabel value='Assets' control={<Radio size="small" />} label="Assets" />
-            <FormControlLabel value='Liability' control={<Radio size="small" />} label="Liability" />
-            <FormControlLabel value='Equity' control={<Radio size="small" />} label="Equity" />
+            <FormControlLabel
+              value="All"
+              control={<Radio size="small" />}
+              label="All"
+            />
+            <FormControlLabel
+              value="Assets"
+              control={<Radio size="small" />}
+              label="Assets"
+            />
+            <FormControlLabel
+              value="Liability"
+              control={<Radio size="small" />}
+              label="Liability"
+            />
+            <FormControlLabel
+              value="Equity"
+              control={<Radio size="small" />}
+              label="Equity"
+            />
           </RadioGroup>
         </div>
         <div style={{ marginLeft: 50, width: 400 }}>
-          <FormLabel id="demo-radio-buttons-group-label balance">Balance</FormLabel>
+          <FormLabel id="demo-radio-buttons-group-label balance">
+            Balance
+          </FormLabel>
           <RadioGroup
             row
             aria-labelledby="demo-radio-buttons-group-label balance"
@@ -267,10 +287,26 @@ const Accounts = () => {
             value={balanceFilter}
             onChange={handleBalanceFilter}
           >
-            <FormControlLabel value='All' control={<Radio size="small" />} label="$0 - $5,000,000+" />
-            <FormControlLabel value='-1000000' control={<Radio size="small" />} label="$0 - $1,000,000" />
-            <FormControlLabel value='5000000' control={<Radio size="small" />} label="$1,000,000 - $5,000,000" />
-            <FormControlLabel value='5000000+' control={<Radio size="small" />} label="$5,000,000+" />
+            <FormControlLabel
+              value="All"
+              control={<Radio size="small" />}
+              label="$0 - $5,000,000+"
+            />
+            <FormControlLabel
+              value="-1000000"
+              control={<Radio size="small" />}
+              label="$0 - $1,000,000"
+            />
+            <FormControlLabel
+              value="5000000"
+              control={<Radio size="small" />}
+              label="$1,000,000 - $5,000,000"
+            />
+            <FormControlLabel
+              value="5000000+"
+              control={<Radio size="small" />}
+              label="$5,000,000+"
+            />
           </RadioGroup>
         </div>
       </div>
@@ -313,15 +349,21 @@ const Accounts = () => {
                       id={i}
                       key={i}
                       onClick={() => handleAccountSelection(account, i)}
-                      className={(selectedRow === i ? "isSelected" : "") ||
-                      (account.account_status === 'Deactivated' ? 'bgred' : '')}
+                      className={
+                        (selectedRow === i ? "isSelected" : "") ||
+                        (account.account_status === "Deactivated"
+                          ? "bgred"
+                          : "")
+                      }
                     >
                       <TableCell>{account.account_number}</TableCell>
                       <TableCell>{account.account_name}</TableCell>
                       <TableCell>{account.account_description}</TableCell>
                       <TableCell>{account.account_category}</TableCell>
                       <TableCell>{account.account_subcategory}</TableCell>
-                      <TableCell>{numberFormat(account.initial_balance)}</TableCell>
+                      <TableCell>
+                        {numberFormat(account.initial_balance)}
+                      </TableCell>
                       <TableCell>{numberFormat(account.balance)}</TableCell>
                       <TableCell>{account.userId}</TableCell>
                       <TableCell>{account.date_time_account_added}</TableCell>
@@ -382,21 +424,20 @@ const Accounts = () => {
           justifyContent: "center",
         }}
       >
-      {
-        (role === "Administrator") &&
+        {role === "Administrator" && (
           <>
             <Tooltip title="Add Chart of Account Entry">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  type="submit"
-                  style={{ width: 100, marginRight: 20 }}
-                  className="submit"
-                  sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                  onClick={openAddAccount}
-                >
-                  Add Account
-                </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                type="submit"
+                style={{ width: 100, marginRight: 20 }}
+                className="submit"
+                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
+                onClick={openAddAccount}
+              >
+                Add Account
+              </Button>
             </Tooltip>
             <Tooltip title="View Chart of Account">
               <Button
@@ -408,7 +449,7 @@ const Accounts = () => {
                 onClick={openViewAccount}
                 sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
               >
-                  View Account
+                View Account
               </Button>
             </Tooltip>
             <Tooltip title="Edit Chart of Account">
@@ -421,7 +462,7 @@ const Accounts = () => {
                 sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
                 onClick={openEditAccount}
               >
-              Edit Account
+                Edit Account
               </Button>
             </Tooltip>
             <Tooltip title="Activate/Deactivate Account">
@@ -451,9 +492,8 @@ const Accounts = () => {
               </Button>
             </Tooltip>
           </>
-      }
-      {
-        (role !== "Administrator") &&
+        )}
+        {role !== "Administrator" && (
           <>
             <Tooltip title="View Chart of Account">
               <Button
@@ -469,7 +509,7 @@ const Accounts = () => {
               </Button>
             </Tooltip>
           </>
-        }
+        )}
         <Tooltip title="Email">
           <Button
             variant="outlined"
@@ -477,14 +517,14 @@ const Accounts = () => {
             type="submit"
             style={{ width: 100, marginRight: 20 }}
             className="submit"
-            href='/email'
+            href="/email"
             sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
           >
             Email
           </Button>
         </Tooltip>
       </div>
-    </div> 
-);
-      }
+    </div>
+  );
+};
 export default Accounts;
