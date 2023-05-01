@@ -24,3 +24,4 @@ export const db = getFirestore(app);
 /*(async () => {
     await setPersistence(auth,browserLocalPersistence);
 })();*/
+export default db;

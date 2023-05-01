@@ -16,7 +16,7 @@ const AddUser = ({ id, setUserId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    if (title === "" || author === "") {
+    if (firstName === "" || lastName === "") {
       setMessage({ error: true, msg: "All fields are mandatory!" });
       return;
     }
