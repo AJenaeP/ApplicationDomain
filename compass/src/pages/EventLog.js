@@ -11,7 +11,7 @@ import '../css/AddAccount.css';
 import db from '../utilities/Firebase'
 import React, { useState, useEffect } from "react";
 import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
-
+import Header from "./Header";
 
 import {
     TableCell, TableContainer, TableHead,
@@ -19,9 +19,10 @@ import {
     Paper, Dialog, DialogContent, Tooltip,
 } from "@mui/material";
 
-function EventLog() {
+const EventLog = () => {
     const [autoId, setautoId] = useState('')
-
+    const [events, setEvents] = useState([]);
+  
     const [addEvent, setEvent] = useState('')
     const [userId, setuserId] = useState('')
     const [time, setTime] = useState('')
@@ -33,16 +34,20 @@ function EventLog() {
     const [updateDate, setUpdateSetDate] = useState('')
     const [updateRecord, setUpdateSetRecord] = useState('')
     const [dataIdToBeUpdated, setDataIdToBeUpdated] = useState('')
-    const [events, setEvents] = useState([]);
+  
+    const ref = collection(db, "events");
+    const q = query(ref);
 
 
+//retrieving list of events from firebase database
+useEffect(() => {
+    const q = query(collection(db, "events"))
+    const setEvent = onSnapshot(q, (querySnapshot) => {
+      console.log("events", querySnapshot.docs.map(d => doc.data()));
+    });
+  }, [])
 
-    useEffect(() => {
-        const q = query(collection(db, "events"))
-        const unsub = onSnapshot(q, (querySnapshot) => {
-          console.log("events", querySnapshot.docs.map(d => doc.data()));
-        });
-      }, [])
+
 
     //handles adding event to database (firestore)
 
@@ -90,7 +95,7 @@ function EventLog() {
     return (
 
         <div className="App">
-
+   <Header />
             {!dataIdToBeUpdated ? (
                 <div className="App__form">
                     

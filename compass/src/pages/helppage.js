@@ -9,7 +9,7 @@ import React, { useState } from "react";
 const HelpPage = () => {
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
 
-  if (role === "Administator")
+  if (role === "Administrator")
     return (
       <>
         <div className="HelpPage" id="outer-container">
