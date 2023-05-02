@@ -12,7 +12,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/material/Button";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
-//import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 
@@ -50,7 +50,7 @@ const NewUser = () => {
 
   const [FirstName, setFirstName] = React.useState("");
   const [LastName, setLastName] = React.useState("");
-  const [Address, setAddress] = React.useState("");
+  
   const [DateOfBirth, setDateOfBirth] = React.useState("");
   const UserId = FirstName.charAt(0) + LastName + dateSliced;
   const [Email, setEmail] = React.useState("");
@@ -68,7 +68,7 @@ const NewUser = () => {
   const userInfo = {
     firstName: FirstName,
     lastName: LastName,
-    address: Address,
+
     dateOfBirth: DateOfBirth,
     userId: UserId,
     email: Email,
@@ -149,7 +149,7 @@ const NewUser = () => {
             <span id="date">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Date of Birth"
+                  label="DOB"
                   value={value}
                   onChange={(newValue) => {
                     setValue(newValue);
@@ -157,32 +157,27 @@ const NewUser = () => {
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
+                
               </LocalizationProvider>
             </span>
-            <span id="address">
-              <TextField
-                id="outlined-password-input address"
-                label="Address"
-                type="text"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </span>
+        
+            
             <span>
               <Select
-                className="select role"
-                id="role"
+                className="select"
+                id="role" 
                 value={SelectedRole}
                 onChange={setSelectedRole}
                 options={options3}
-                styles={{ width: 225, height: 56 }}
+                
               />
             </span>
-          </div>
+            </div>
           <div id="secretquestions" style={{ marginBottom: 10 }}>
             <span id="sq1">
               <TextField
                 id="outlined-helperText SQ"
-                label="What is your favorite Color?"
+                label="Favorite Color?"
                 helperText="Secret Question 1"
                 style={{ width: 300 }}
                 onChange={(e) => setSelectedQ1A(e.target.value)}
@@ -191,7 +186,7 @@ const NewUser = () => {
             <span id="sq2">
               <TextField
                 id="outlined-helperText SQ2"
-                label="What is your best friends first name?"
+                label="Best friend's first name?"
                 helperText="Secret Question 2"
                 style={{ width: 300 }}
                 onChange={(e) => setSelectedQ2A(e.target.value)}
@@ -270,136 +265,3 @@ const NewUser = () => {
 };
 
 export default NewUser;
-/*<div className="NewUser">
-    <header>
-        <h1 className="company-name">Compass Credit Union</h1>
-        <p className="slogan">
-            Helping navigate the way for financial freedom yesterday, today, and
-            tomorrow
-        </p>
-        <div className="imgcontainer">
-            <img src={compasslogo} alt="Avatar" className="picture" />
-        </div>
-    </header>
-    <h1>Sign Up</h1>
-    <p>Please fill in this form to create an account.</p>
-    <form onSubmit={handleSumbit}>
-        <div>
-            <label htmlFor="firstName">First Name:</label>
-            <input
-                type="text"
-                name="first-name"
-                placeholder="First Name"
-                id="firstName"
-                onChange={(e) => setFirstName(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="lastName">Last Name:</label>
-            <input
-                type="text"
-                name="last-name"
-                placeholder="Last Name"
-                id="lastName"
-                onChange={(e) => setLastName(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="email">Email:</label>
-            <input
-                type="email"
-                name="email"
-                placeholder="Enter Email"
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="address">Address:</label>
-            <input
-                type="text"
-                name="address"
-                placeholder="address"
-                id="address"
-                onChange={(e) => setAddress(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="dateOfBirth">Date of Birth:</label>
-            <input
-                type="date"
-                name="Birthdate"
-                id="dateOfBirth"
-                onChange={(e) => setDateOfBirth(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="role">Role:</label>
-            <Select
-                className="select"
-                id="role"
-                value={SelectedRole}
-                onChange={setSelectedRole}
-                options={options3}
-            />
-        </div>
-        <div>
-            <label htmlFor="password">Password:</label>
-            <input
-                type="password"
-                required placeholder="Enter Password"
-                id="password"
-                onChange={e => setPassword(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="passwordAgain">Confirm Password:</label>
-            <input
-                type="password"
-                required placeholder="Confirm Password"
-                id="passwordAgain"
-                onChange={e => setPasswordAgain(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <PasswordChecklist
-                rules={['minLength', 'specialChar', 'number', 'letter', "match", "firstLetter"]}
-                minLength={8}
-                value={Password}
-                valueAgain={passwordAgain}
-                onChange={(isValid) => { }}
-                messages={{
-                    firstLetter: "First character must be a letter"
-                }}
-            />
-        </div>
-        <div>
-            <label htmlFor="secretQ1"> Secret Question 1: What is your favorite Color?</label>
-            <input
-                type="text"
-                id="secretQA1"
-                placeholder="Secret Question 1 Answer"
-                onChange={(e) => setSelectedQ1A(e.target.value)}
-            ></input>
-        </div>
-        <div>
-            <label htmlFor="SecretQ2">Secret Question 2: What is your bestfriends first name?</label>
-            <input
-                type="text"
-                id="secretQA2"
-                placeholder="Secret Question 2 Answer"
-                onChange={(e) => setSelectedQ2A(e.target.value)}
-            ></input>
-        </div>
-        <button
-            className="sign-up-btn"
-            type="submit"
-            onClick={() => { setgoToLogin(true) }}
-        >Sign Up</button>
-        <button
-            className="cancel-btn"
-            type="submit"
-            onClick={() => { setgoToLogin(true) }}
-        >Cancel</button>
-    </form>
-</div>*/

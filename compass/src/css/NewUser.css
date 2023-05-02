@@ -23,7 +23,7 @@ header {
   border-radius: 9px;
   background-color: white;
   overflow: hidden;
-  height: 500px;
+  height: 1000px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #formHeader {
@@ -82,15 +82,14 @@ header {
 }
 #dateofbirth {
   display: flex;
-  margin-bottom: 10px;
+ 
 }
 #date {
-  width: 207px;
-  margin-right: 29px;
-}
-#address {
+  width: 27px;
   margin-right: 10px;
+
 }
+
 #secretquestions {
   display: flex;
 }
@@ -100,14 +99,16 @@ header {
 }
 
 #sq2 {
-  width: 300px;
+  width: 600px;
 }
 #passwords {
   display: flex;
 }
 .select {
+  margin-left: 450px;
   width: 225px;
   height: 56px;
+  
 }
 .css-13cymwt-control {
   height: 100%;

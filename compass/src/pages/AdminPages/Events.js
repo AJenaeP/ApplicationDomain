@@ -21,12 +21,8 @@ import {
 
 
 const Events = ({accounts}) => {
- 
   const [backendData, setBackendData] = useState([{}]);
-  const [selectedRow, setSelectedRow] = useState(null);
- 
-
-//CREATE use effect method to fetch accounts 
+//CREATE use effect method to fetch accounts that are added
 useEffect(() => {
     fetch("/api/accounts")
       .then((response) => response.json())
@@ -35,7 +31,7 @@ useEffect(() => {
       });
   }, []);
 
-
+//RETURN information in a Sticky Table
 
   return (
     <div className="App">
