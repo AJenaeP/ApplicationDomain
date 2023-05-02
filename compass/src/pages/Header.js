@@ -16,7 +16,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
-//TODO: user info is logged out / gone after page refresh
+//CREATE header to help with consistent theme throughout website
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -26,7 +26,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-//import { auth } from '../index'
+
 const Header = () => {
   const theme = useTheme();
   const { userData, logout } = UserAuth();

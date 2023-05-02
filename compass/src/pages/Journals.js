@@ -25,18 +25,13 @@ import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import "../css/journal.css";
-//import { MultiInputDateRangeField, DateRangePicker } from '@mui/x-date-pickers-pro';
-//import { LocalizationProvider, DateField } from '@mui/x-date-pickers';
-//import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DeleteJournal from "./Journal/DeleteJournal";
 import AddJournal from "./Journal/AddJournal";
 import EditJournal from "./Journal/EditJournal";
 import ViewJournal from "./Journal/ViewJournals";
 import AdjustJournal from "./Journal/AdjustJournal";
-//import { arrayIncludes } from "@mui/x-date-pickers/internals/utils/utils";
 
-//import JournalList from "./Journal/JournalList";
-
+//CREATE Journal Page to Pull from CoA 
 const Journals = () => {
   const [journalData, setJournalData] = useState([{}]);
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
@@ -56,7 +51,7 @@ const Journals = () => {
     account_number: "",
     journal_status: "Approved",
   };
-
+//CREATE search function
   const searchCriteria = {
     ref: "",
     account_name: "",
@@ -121,7 +116,7 @@ const Journals = () => {
         });
     }
   }
-
+//CREATE filter function
   function handleRadioFilter(e) {
     console.log(e.target.value);
     let filter = e.target.value;
@@ -165,7 +160,7 @@ const Journals = () => {
     });
     setJournalData(Array);
   };
-
+//CREATE use effect to access api and Journal entry
   useEffect(() => {
     fetch("/api/journals")
       .then((response) => response.json())
@@ -173,7 +168,7 @@ const Journals = () => {
         setJournalData(data);
       });
   }, [journalData]);
-
+//CREATE functions to help handle buttons
   const openAddJournal = () => {
     console.log("add journal button clicked ");
     console.log(selectedJournal);
@@ -234,13 +229,14 @@ const Journals = () => {
       row.classList.add("isSelected");
     }
   }
-
+//CREATE function to display as US currency
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     }).format(value);
 
+    //CREATE return information for sticky table
   return (
     <div className="App">
       <Header />
@@ -257,7 +253,7 @@ const Journals = () => {
                 </IconButton>
                 <IconButton
                   onClick={clearSearchField}
-                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                 
                   edge="end"
                 >
                   <ClearIcon />

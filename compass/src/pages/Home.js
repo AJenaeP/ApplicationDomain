@@ -7,11 +7,13 @@ import Button from "@mui/material/Button";
 import LoginIcon from "@mui/icons-material/Login";
 import CreateIcon from "@mui/icons-material/Create";
 
+//CREATE a landing/Home page with logo, icon, and title
 const Home = () => {
   const navigate = useNavigate();
   const [goToLogin, setgoToLogin] = useState(false);
   const [goToSignUp, setgoToSignUp] = useState(false);
-
+//CREATE if Login route to login
+//CREATE if new user route to new user
   useEffect(() => {
     if (goToLogin) {
       navigate("/login");
@@ -21,7 +23,7 @@ const Home = () => {
       navigate("/newuser");
     }
   });
-
+//CREATE return method to display login, sign up, slogan, and logo
   return (
     <div className="Home">
       <div className="title">

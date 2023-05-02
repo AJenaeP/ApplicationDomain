@@ -14,13 +14,14 @@ import {
 import "../css/journal.css";
 const JournalListing = (journalRef) => {
   const [journalData, setJournalData] = useState({});
+//CREATE Journal page to handle Approve, pedning, rejected
 
   const data = {
     ref: journalRef.props,
     account_number: "",
     journal_status: "",
   };
-
+//USE GET method with API
   useEffect(() => {
     fetch("/api/journal/" + JSON.stringify(data), {
       method: "GET",
@@ -33,7 +34,7 @@ const JournalListing = (journalRef) => {
         setJournalData(data[0]);
       });
   }, []);
-
+//CREATE return method to return sticky table with data
   return (
     <>
       <Paper className="JournalPaper">

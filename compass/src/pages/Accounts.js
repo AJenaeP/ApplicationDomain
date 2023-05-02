@@ -46,7 +46,7 @@ const Accounts = () => {
   const [statusFilter, setStatusFilter] = React.useState("All");
   const [balanceFilter, setBalanceFilter] = React.useState();
 
-  //this is for the search field
+  //CREATE data for search field 
   const data = {
     account_number: 0,
     account_name: "",

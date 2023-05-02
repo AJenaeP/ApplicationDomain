@@ -1,14 +1,4 @@
-/*const generateReport = async () => {
-      try {
-          const res = await fetch(
-            `/api/reports?reportType=${reportName}&start=${startDateString}&end=${endDateString}`
-          );
-          const data = await res.json();
-          console.log(data);
-          setPdfUrl(data.publicUrl);
-        } catch (error) {}
-      };
-*/
+
 import React, { useState, useEffect } from "react";
 import { db } from "../utilities/Firebase";
 import Sidebar from "./Sidebar";
@@ -57,7 +47,7 @@ const FinStatements = () => {
   const [statusFilter, setStatusFilter] = React.useState("All");
   const [balanceFilter, setBalanceFilter] = React.useState();
 
-  //this is for the search field
+  
   const finState = {
     account_number: 0,
     account_name: "",

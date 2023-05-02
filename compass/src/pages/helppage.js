@@ -5,7 +5,7 @@ import Header from "./Header";
 
 import React, { useState } from "react";
 
-//Add Role Based Page
+//CREATE role base to display only what each user can see
 const HelpPage = () => {
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
 
