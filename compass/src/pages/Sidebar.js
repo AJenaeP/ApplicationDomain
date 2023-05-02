@@ -20,6 +20,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
+
+//CREATE Role based side bar that will prevent manager and accountant from accessing all feature
 const Sidebar = () => {
   const { userData, logout, auth } = UserAuth();
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
@@ -34,7 +36,7 @@ const Sidebar = () => {
       console.log(e.message);
     }
   };
-
+//RETURN MUI icons for different displays
   return (
     <div className="sidebar">
       <List>

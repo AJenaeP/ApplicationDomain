@@ -38,7 +38,7 @@ function Manager() {
         setBackendData(data);
       });
   }, [backendData]);
-
+//CREATE and call methods to create button functions:
   const openAddAccount = () => {
     setOpenAdd(true);
   };

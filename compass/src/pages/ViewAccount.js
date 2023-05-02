@@ -25,6 +25,7 @@ import "../css/ViewAccount.css";
 import Ledger from "../images/Ledger.png";
 import Journal from "./Journal";
 
+//Call account to view Accounts created
 const ViewAccount = ({ account }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [handleClose, setHandleClose] = useState(false);
@@ -37,6 +38,7 @@ const ViewAccount = ({ account }) => {
     ref: "",
   };
 
+  //Use Fetch method with API to get data
   useEffect(() => {
     fetch("/api/ledger/" + JSON.stringify(data), {
       method: "GET",
@@ -54,6 +56,7 @@ const ViewAccount = ({ account }) => {
     setOpenJournal(false);
   };
 
+  //CREATE return to display table with required information
   return (
     <>
       <Paper className="ledgerPaper">

@@ -100,35 +100,7 @@ const Ledgers = () => {
     setLedgerData(Array);
   };
 
-  /* function handleRadioFilter(e) {
-        console.log(e.target.value)
-        let filter = e.target.value;
-        setValue(e.target.value);
-        if (filter === 'Approved') {
-            searchCriteria.journal_status = 'Approved'
-            console.log(searchCriteria)
-        } else if (filter === 'Pending') {
-            searchCriteria.journal_status = 'Pending'
-            console.log(searchCriteria)
-        } else if (filter === 'Rejected') {
-            searchCriteria.journal_status = 'Rejected'
-            console.log(searchCriteria)
-        }
-        fetch('/api/ledger/' + JSON.stringify(searchCriteria), {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }
-        ).then(
-            response => response.json()
-        ).then(
-            data => {
-                console.log(data)
-                setLedgerData(data)
-            }
-        )
-    } */
+  
   useEffect(() => {
     fetch("/api/ledgers")
       .then((response) => response.json())
@@ -137,35 +109,7 @@ const Ledgers = () => {
       });
   }, []);
 
-  /*     const openAddJournal = () => {
-        console.log('add journal button clicked ')
-        console.log(selectedLedger)
-        setOpenAdd(true);
-        console.log(openAdd)
-    };
-
-    const openEditJournal = () => {
-        if (isRowSelected) {
-            setOpenEdit(true);
-        }
-    };
-    const openDeleteJournal = () => {
-        if (isRowSelected) {
-            setOpenDelete(true);
-        }
-    };
-
-    const closeAddJournal = () => {
-        setOpenAdd(false);
-    };
-
-    const closeEditJournal = () => {
-        setOpenEdit(false);
-    };
-    const closeDeleteJournal = () => {
-        setOpenDelete(false);
-    }; */
-
+ 
   function handleLedgerSelection(ledger, i) {
     if (selectedRow === i) {
       setIsRowSelected(false);
@@ -205,7 +149,7 @@ const Ledgers = () => {
                 </IconButton>
                 <IconButton
                   onClick={clearSearchField}
-                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                  
                   edge="end"
                 >
                   <ClearIcon />
@@ -214,12 +158,7 @@ const Ledgers = () => {
             ),
           }}
         />
-        {/* <RadioGroup row value={value} onChange={handleRadioFilter} sx={{ marginLeft: 30 }}>
-                    <FormControlLabel value='All' control={<Radio size="small" />} label="All" />
-                    <FormControlLabel value='Approved' control={<Radio size="small" />} label="Approved" />
-                    <FormControlLabel value='Pending' control={<Radio size="small" />} label="Pending" />
-                    <FormControlLabel value='Rejected' control={<Radio size="small" />} label="Rejected" />
-                </RadioGroup> */}
+     
       </div>
       <Paper
         sx={{
@@ -307,86 +246,7 @@ const Ledgers = () => {
           <Button onClick={closeJournalAccount}>Close</Button>
         </DialogActions>
       </Dialog>
-      {/* <Dialog open={openAdd} onClose={closeAddJournal}>
-                <DialogContent>
-                    <AddJournal journal={{ selectedJournal }} />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeAddJournal}>Cancel</Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog open={openEdit} onClose={closeEditJournal}>
-                <DialogContent>
-                    <EditJournal journal={{ selectedJournal }} />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeEditJournal}>Close</Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog open={openDelete} onClose={closeDeleteJournal}>
-                <DialogContent>
-                    <DeleteJournal journal={{ selectedJournal }} />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeDeleteJournal}>Close</Button>
-                </DialogActions>
-            </Dialog>
-            <div
-                style={{
-                    display: "flex",
-                    marginTop: 150,
-                    marginLeft: 360,
-                    justifyContent: "center",
-                }}
-            >
-                {
-
-                    <>
-                        <Tooltip title="Add Journal Entry">
-                            <Button
-                                variant="outlined"
-                                size="large"
-                                type="submit"
-                                style={{ width: 100, marginRight: 20 }}
-                                className="submit"
-                                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                                onClick={openAddJournal}
-                            >
-                                Add Journal
-                            </Button>
-                        </Tooltip>
-
-                        <Tooltip title="Edit Journal">
-                            <Button
-                                variant="outlined"
-                                size="large"
-                                type="submit"
-                                style={{ width: 100, marginRight: 20 }}
-                                className="submit"
-                                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                                onClick={openEditJournal}
-                            >
-                                Edit Journal
-                            </Button>
-                        </Tooltip>
-
-                        <Tooltip title="Delete Journal">
-                            <Button
-                                variant="outlined"
-                                size="large"
-                                type="submit"
-                                style={{ width: 100, marginRight: 20 }}
-                                className="submit"
-                                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                                onClick={openDeleteJournal}
-                            >
-                                Delete Journal
-                            </Button>
-                        </Tooltip> 
-                }
-
-                    </>
-            </div> */}
+     
     </div>
   );
 };
