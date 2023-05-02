@@ -30,8 +30,11 @@ const AddAccount = () => {
     userId: "",
     dateTime: "",
     accountStatus: "",
+    statement: ""
   });
 
+  let userId = JSON.parse(window.localStorage.getItem('userData'))
+  
   //functions to handle changes in form
   function handleAccountNumberChange(e) {
     account.accountNumber = Number(e.target.value);
@@ -52,6 +55,10 @@ const AddAccount = () => {
   }
   function handleAccountInitialChange(e) {
     account.initialBalance = Number(e.target.value);
+  }
+    function handleAccountStatementChange(e) {
+    setStatement(e.target.value);
+    account.statement = e.target.value;
   }
   function handleAccountStatusChange(e) {
     setStatus(e.target.value);
@@ -131,7 +138,7 @@ const AddAccount = () => {
         <MenuItem value="shareholder\'s equity">Shareholder's Equity'</MenuItem>
         <MenuItem value="expenses">Expenses</MenuItem>
       </Select>
-      <div style={{ width: 250 }}>
+      <div style={{ width: 250, marginBottom:10 }}>
         <InputLabel htmlFor="outlined-adornment-amount">
           Initial Balance
         </InputLabel>
@@ -142,17 +149,31 @@ const AddAccount = () => {
           onChange={handleAccountInitialChange}
         />
       </div>
+      <InputLabel id="demo-simple-select-label category">Statement</InputLabel>
+      <Select
+        labelId="demo-simple-select-label category"
+        id="demo-simple-select"
+        value={statement}
+        label="Category"
+        sx={{ width: "auto", marginBottom: 10}}
+        onChange={handleAccountStatementChange}
+      >
+        <MenuItem value="trial">Trial Balance</MenuItem>
+        <MenuItem value="balance">Balance Sheet</MenuItem>
+        <MenuItem value="income">Income Statement</MenuItem>
+        <MenuItem value="returned">Returned Earning Statement</MenuItem>
+      </Select>
       <TextField
         disabled
         id="outlined-disabled"
         label="User Id"
-        defaultValue="userId"
+        defaultValue={userId.userId}
       />
       <TextField
         disabled
         id="outlined-disabled"
-        label="Disabled"
-        defaultValue="DateTime"
+        label="Date/Time"
+        defaultValue={new Date(Date.now()).toISOString()}
       />
       <InputLabel id="demo-simple-select-label status">Status</InputLabel>
       <Select

@@ -29,8 +29,11 @@ const EditAccount = ({ account }) => {
     userId: account.selectedAccount.userId,
     dateTime: account.selectedAccount.dateTime,
     accountStatus: account.selectedAccount.account_status,
+    statment: account.selectedAccount.statement
   });
 
+  let userId = JSON.parse(window.localStorage.getItem('userData'))
+  
   //functions to handle form update
   function handleAccountNameChange(e) {
     updatedAccount.accountName = e.target.value;
@@ -51,6 +54,10 @@ const EditAccount = ({ account }) => {
   }
   function handleAccountBalanceChange(e) {
     updatedAccount.balance = Number(e.target.value);
+  }
+  function handleAccountStatementChange(e) {
+    setUpdatedStatement(e.target.value);
+    updatedAccount.statement = e.target.value;
   }
   //function handleAccountUserChange(e) { updatedAccount.accountName = e.target.value; console.log(account) }
   //function handleAccountDateChange(e) { updatedAccountt.accountName = e.target.value; console.log(account) }
@@ -138,6 +145,20 @@ const EditAccount = ({ account }) => {
         <MenuItem value="shareholder\'s equity">Shareholder's Equity'</MenuItem>
         <MenuItem value="expenses">Expenses</MenuItem>
       </Select>
+      <InputLabel id="demo-simple-select-label category">Statement</InputLabel>
+      <Select
+        labelId="demo-simple-select-label category"
+        id="demo-simple-select"
+        value={updatedStatus}
+        label="Category"
+        sx={{ width: "auto", marginBottom:3}}
+        onChange={handleAccountStatementChange}
+      >
+        <MenuItem value="trial">Trial Balance</MenuItem>
+        <MenuItem value="balance">Balance Sheet</MenuItem>
+        <MenuItem value="income">Income Statement</MenuItem>
+        <MenuItem value="returned">Returned Earning Statement</MenuItem>
+      </Select>
       <TextField
         id="outlined-required"
         label="Initial Balance"
@@ -147,6 +168,7 @@ const EditAccount = ({ account }) => {
         id="outlined-required"
         label="Balance"
         defaultValue={account.selectedAccount.balance}
+        sx={{marginBottom:3}}
       />
       <TextField
         disabled

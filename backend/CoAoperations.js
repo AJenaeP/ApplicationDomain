@@ -70,6 +70,7 @@ async function addAccount(account) {
       .input("userId", account.userId)
       .input("date_time_account_added", account.dateTime)
       .input("account_status", account.accountStatus)
+      .input("statement", account.statement)
       .input("Type", "INSERT")
       .execute("COA_Management");
     return insertAccount.recordsets;
@@ -93,6 +94,7 @@ async function deleteAccount(account) {
       .input("userId", "")
       .input("date_time_account_added", "")
       .input("account_status", "")
+      .input("statement", "")
       .input("Type", "DELETE")
       .execute("COA_Management");
     return accountDel.recordsets;
@@ -117,6 +119,7 @@ async function updateAccount(account) {
       .input("userId", account.userId)
       .input("date_time_account_added", account.dateTime)
       .input("account_status", account.accountStatus)
+      .input("statement", account.statement)
       .input("Type", "UPDATE")
       .execute("COA_Management");
     return accountUpdate.recordsets;

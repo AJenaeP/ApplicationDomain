@@ -167,8 +167,8 @@ const Journals = () => {
       .then((data) => {
         setJournalData(data);
       });
-  }, [journalData]);
-//CREATE functions to help handle buttons
+  }, []);
+
   const openAddJournal = () => {
     console.log("add journal button clicked ");
     console.log(selectedJournal);
@@ -529,20 +529,6 @@ const Journals = () => {
                 onClick={openViewJournal}
               >
                 View Comments
-              </Button>
-            </Tooltip>
-
-            <Tooltip title="Delete Journal">
-              <Button
-                variant="outlined"
-                size="large"
-                type="submit"
-                style={{ width: 100, marginRight: 20 }}
-                className="submit"
-                sx={{ ":hover": { bgcolor: "rgb(161, 252, 134,0.2)" } }}
-                onClick={openDeleteJournal}
-              >
-                Delete Journal
               </Button>
             </Tooltip>
 
