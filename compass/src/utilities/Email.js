@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import "../css/Email.css";
 
+//CREATE email function using EmailJs
 const Email = () => {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(window.localStorage.getItem("userData"))
@@ -77,6 +78,7 @@ const Email = () => {
     setToName("");
     setMessage("");
   }
+  //CREATE return method to display information for email
   return (
     <div className="Email">
       <Header />

@@ -29,6 +29,8 @@ import {
   where,
 } from "firebase/firestore";
 
+//AUTH context to help create and verify users with Firebase. 
+//CREATE functions to handle sign up and login verification
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -77,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     const userName = username;
    
     const q = query(collection(db, "users"), where("userId", "==", userName));
-
+//CREATE error messages including password attempts 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       signInWithEmailAndPassword(auth, doc.data().email, password)
@@ -112,7 +114,7 @@ export const AuthProvider = ({ children }) => {
         });
     });
   };
-
+//CREATE method to handle if user forgot password
   const forgotPassword = async (email, username, secretQ1A, secretQ2A) => {
     const q = query(collection(db, "users"), where("userId", "==", username));
     const querySnapshot = await getDocs(q);
@@ -130,12 +132,12 @@ export const AuthProvider = ({ children }) => {
       }
     });
   };
-
+//CREATE new password functin to create a new password
   const newPassword = async (email, username, password) => {
     console.log(auth.currentUser);
    
   };
-
+//Updating and creating a new user
   const CurrentUser = () => {
     const [user, loading, error] = useAuthState(auth);
     if (loading) {
@@ -158,7 +160,7 @@ export const AuthProvider = ({ children }) => {
       console.log(user);
     }
   };
-
+//CREATE object to handle user values
   const value = {
     createUser,
     user,

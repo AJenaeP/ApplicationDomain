@@ -30,7 +30,7 @@ import EditJournal from "./Journal/EditJournal";
 import Journal from "./Journal";
 
 
-
+//CREATE a ledger view to display more information on selection from journal page
 const Ledgers = () => {
   const [ledgerData, setLedgerData] = useState([{}]);
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
@@ -44,6 +44,7 @@ const Ledgers = () => {
   const [openJournal, setOpenJournal] = useState(false);
   const [journalRef, setJournalRef] = useState();
 
+  //CREATE data to input for searching
   const searchCriteria = {
     debit: -1,
     credit: -1,
@@ -58,7 +59,7 @@ const Ledgers = () => {
         setLedgerData(data);
       });
   }
-
+//CREATE search function
   function handleSearchField() {
     let value = document.getElementById("search").value;
 
@@ -78,7 +79,7 @@ const Ledgers = () => {
     } else {
       console.log("field is empty");
     }
-
+//USE fetch method with Get to access information and the create a JSON object -> string
     fetch("/api/ledger/" + JSON.stringify(searchCriteria), {
       method: "GET",
       headers: {
@@ -91,6 +92,7 @@ const Ledgers = () => {
         setLedgerData(data[0]);
       });
   }
+  //CREATE function to filter data
   const handleDateFilter = () => {
     let Array = ledgerData.slice().sort(function (a, b) {
       var objA = a.date;
@@ -100,7 +102,7 @@ const Ledgers = () => {
     setLedgerData(Array);
   };
 
-  
+  //USE use effect method to fetch from ledgers
   useEffect(() => {
     fetch("/api/ledgers")
       .then((response) => response.json())
@@ -109,7 +111,7 @@ const Ledgers = () => {
       });
   }, []);
 
- 
+ //CREATE function to handle selcting a ledger from journal
   function handleLedgerSelection(ledger, i) {
     if (selectedRow === i) {
       setIsRowSelected(false);
@@ -126,13 +128,13 @@ const Ledgers = () => {
   const closeJournalAccount = () => {
     setOpenJournal(false);
   };
-
+//CREATE function to display values in US currenct
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     }).format(value);
-
+//RETURN information including search and sticky table 
   return (
     <div className="App">
       <Header />

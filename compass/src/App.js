@@ -23,6 +23,7 @@ import EventLog from "./pages/EventLog";
 import Ledgers from "./pages/Ledgers";
 import FinStatements from "./pages/FinStatements";
 
+//CREATE all routes from pages to communicate with local host
 function App() {
   return (
     <>
