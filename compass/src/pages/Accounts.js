@@ -90,7 +90,7 @@ const Accounts = () => {
         setBackendData(data[0]);
       });
   }
-
+//CREATE filter options for accounts based on category
   function handleRadioFilter(e) {
     let filter = e.target.value;
     setStatusFilter(filter);
@@ -120,7 +120,7 @@ const Accounts = () => {
         });
     }
   }
-
+//CREATE filter options based on balance
   function handleBalanceFilter(e) {
     let balance = e.target.value;
     let Array = [];
@@ -153,6 +153,7 @@ const Accounts = () => {
       setBackendData(Array);
     }
   }
+  //CREATE use effect method to fetch accounts 
   useEffect(() => {
     fetch("/api/accounts")
       .then((response) => response.json())
@@ -161,6 +162,7 @@ const Accounts = () => {
       });
   }, []);
 
+  //CREATE boolean functions to handle Adding the Account
   const openAddAccount = () => {
     setOpenAdd(true);
   };
@@ -211,13 +213,15 @@ const Accounts = () => {
       row.classList.add("isSelected");
     }
   }
-
+//CREATE function to update numbers into currency form 
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     }).format(value);
 
+//CREATE sticky table to return the information 
+//INCLUDED role based with if selection statements to access to display appropriate information 
   return (
     <div className="App">
       <Header />
@@ -234,7 +238,7 @@ const Accounts = () => {
                 </IconButton>
                 <IconButton
                   onClick={clearSearchField}
-                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                 
                   edge="end"
                 >
                   <ClearIcon />

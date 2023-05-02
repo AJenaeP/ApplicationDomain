@@ -5,10 +5,10 @@ import Header from "./Header";
 
 import React, { useState } from "react";
 
-//CREATE role base to display only what each user can see
+//CREATE help page to explain features of the site. Created to think from an employee view not SWE view
 const HelpPage = () => {
   const [role, setRole] = useState(window.localStorage.getItem("userRole"));
-
+  //CREATE role base to display only what each user can see
   if (role === "Administrator")
     return (
       <>

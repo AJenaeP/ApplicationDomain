@@ -11,8 +11,6 @@ import Home from "./pages/Home";
 import PermissionDenied from "./pages/PermissionDenied";
 import DashboardAdmin from "./pages/AdminPages/DashboardAdmin";
 import ExpiredPasswords from "./pages/AdminPages/ExpiredPasswords";
-/*import CreateNewUser from './pages/AdminPages/CreateNewUser';
-import ExpiredPasswords from './pages/AdminPages/ExpiredPasswords';*/
 import Accounts from "./pages/Accounts";
 import HelpPage from "./pages/helppage";
 import DashboardManager from "./pages/ManagerPages/DashboardManager";

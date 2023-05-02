@@ -29,7 +29,7 @@ import AddJournal from "./Journal/AddJournal";
 import EditJournal from "./Journal/EditJournal";
 import Journal from "./Journal";
 
-//import JournalList from "./Journal/JournalList";
+
 
 const Ledgers = () => {
   const [ledgerData, setLedgerData] = useState([{}]);

@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 
 import "../../css/journal.css";
-
+//CREATE View Journal Page to show comments from rejected
 const ViewJournal = ({ journal }) => {
   const [journalData, setJournalData] = useState(journal.selectedJournal);
-
+//CREATE sticky table to return that informaiton 
   return (
     <div className="App">
       <Paper>

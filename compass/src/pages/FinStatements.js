@@ -210,7 +210,7 @@ const FinStatements = () => {
                 </IconButton>
                 <IconButton
                   onClick={clearSearchField}
-                  //onMouseDown={handleMouseDownPassword}// {showPassword ? <VisibilityOff /> : <Visibility />}
+                 
                   edge="end"
                 >
                   <ClearIcon />

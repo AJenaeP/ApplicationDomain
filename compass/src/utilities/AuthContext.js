@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (username, password) => {
     const userName = username;
-    //console.log(userName)
+   
     const q = query(collection(db, "users"), where("userId", "==", userName));
 
     const querySnapshot = await getDocs(q);
@@ -86,13 +86,11 @@ export const AuthProvider = ({ children }) => {
           setUser(user);
           setUserData(doc.data());
           setIsLoggedIn(true);
-          //console.log(user)
-          //console.log(auth)
+         
           console.log(doc.data());
           window.localStorage.setItem("userData", JSON.stringify(doc.data()));
           window.localStorage.setItem("userRole", doc.data().role);
-          //window.localStorage.setItem('user', JSON.stringify(user))
-          //console.log(user)
+        
           return true;
         })
         .catch((error) => {
@@ -135,34 +133,7 @@ export const AuthProvider = ({ children }) => {
 
   const newPassword = async (email, username, password) => {
     console.log(auth.currentUser);
-    /*reauthenticate = (email) => {
-            var user = firebase.auth().currentUser;
-            var cred = firebase.auth.EmailAuthProvider.credential(user.email, email);
-            return user.reauthenticateWithCredential(cred);
-
-        }*/
-
-    /*const user = auth.getUser;
-            updatePassword(user, password)
-            .then(()=> {
-                console.log('update successful')
-            })
-            .catch((error) => {
-                console.log(error)
-            })*/
-    /*const userName = username
-        //console.log(userName)
-        const q = query(collection(db, "users"), where("userId", "==", userName));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            console.log(doc)
-        }
-            /*updatePassword(user, password).then(() => {
-                alert('passwordUpdated')
-            }).catch((error) => {
-                console.log(error)
-            }))*/
-    // )*/
+   
   };
 
   const CurrentUser = () => {

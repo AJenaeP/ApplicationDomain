@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import "../../css/AddAccount.css";
-
+//CREATE a new account that includes all variables from current accounts
 const AddAccount = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [handleClose, setHandleClose] = useState(false);

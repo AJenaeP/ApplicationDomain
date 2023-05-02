@@ -22,7 +22,6 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import "../css/ViewAccount.css";
-import Ledger from "../images/Ledger.png";
 import Journal from "./Journal";
 
 //Call account to view Accounts created

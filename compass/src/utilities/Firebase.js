@@ -21,7 +21,5 @@ export const auth = initializeAuth(app, {
 console.log(auth);
 export const db = getFirestore(app);
 
-/*(async () => {
-    await setPersistence(auth,browserLocalPersistence);
-})();*/
+
 export default db;
