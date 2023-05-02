@@ -19,7 +19,7 @@ import Users from "./pages/AdminPages/Users";
 import Journal from "./pages/Journal";
 import Email from "./utilities/Email";
 import Journals from "./pages/Journals";
-import EventLog from "./pages/EventLog";
+import Events from "./pages/AdminPages/Events";
 import Ledgers from "./pages/Ledgers";
 import FinStatements from "./pages/FinStatements";
 
@@ -73,7 +73,7 @@ function App() {
             <Route path="/ledgers" element={<Ledgers />}></Route>
             <Route path="/journal" element={<Journal />}></Route>
             <Route path="/email" element={<Email />}></Route>
-            <Route path="/events"element={<EventLog/>}></Route>
+            <Route path="/events"element={<Events/>}></Route>
             <Route path="/finstate" element={<FinStatements />}></Route>
 
           </Routes>
